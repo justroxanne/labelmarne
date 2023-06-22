@@ -1,2 +1,12 @@
-.registration-form-group input {
+.registration-form {
+  width: 90dvw;
+  height: 60dvh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.registration-form-container {
+  display: grid;
 }
