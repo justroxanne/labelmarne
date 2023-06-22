@@ -1,0 +1,34 @@
+.HeaderAdmin {
+    height: 33vh;
+    background-image: url(../../assets/backgroundHeader.jpg);
+    background-size: cover;
+    justify-content: flex-end;
+    align-items: flex-start;
+    padding: 1em;
+    position: relative;
+  }
+  
+  .logo {
+    position: relative;
+    width: 100%;
+  }
+  
+  .header-content {
+    position: absolute;
+    top: 0em;
+    right: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 1em;
+  }
+  
+  .header-content h3 {
+    margin: 0.1em 0;
+    color: white;
+  }
+  
+  .icones-admin {
+    color: white;
+    margin-top: 0.5em;
+  }
