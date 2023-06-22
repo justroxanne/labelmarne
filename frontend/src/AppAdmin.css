@@ -1,0 +1,11 @@
+:root {
+  --clear-color: #c9c9c9;
+  --mouse-color: #797979;
+  --dark-color: #424242;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}

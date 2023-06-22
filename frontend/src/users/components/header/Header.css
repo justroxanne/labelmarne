@@ -1,0 +1,12 @@
+.header {
+  height: 33dvh;
+  background-image: url('../../assets/backgroundheader.jpg');
+  background-position: bottom;
+  background-size: cover;
+  background-position-y: 27em;
+}
+
+.header-logo-container img {
+  width: 15%;
+  padding-top: 0.9em;
+}

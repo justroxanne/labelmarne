@@ -1,0 +1,106 @@
+.edit-user-infos {
+  width: 100%;
+  height: 100%;
+  top: 0;
+  margin: auto;
+  background-color: rgba(0, 0, 0, 0.5);
+  border: 1px solid black;
+  position: fixed;
+  z-index: 4;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.edit-user-panel {
+  position: relative;
+  width: 60dvw;
+  height: 70dvh;
+  background-color: rgba(255, 255, 255, 0.9);
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 2em;
+}
+
+.close-edit {
+  width: 2em;
+  height: 2em;
+  position: absolute;
+  top: 1em;
+  right: 1em;
+}
+
+.close-edit:hover {
+  color: var(--main-color);
+}
+
+.address-edit,
+.edit-label {
+  width: 60%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.address-edit label,
+.edit-label label {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.2em;
+  padding-top: 0.2em;
+}
+
+.user-infos-label {
+  width: 100%;
+  height: 2.5em;
+  padding-left: 0.5em;
+  border-radius: 8px;
+  border: none;
+  outline: none;
+}
+
+.submit-infos-edition {
+  cursor: pointer;
+  position: relative;
+  padding: 0.5em 1em;
+  font-size: 1em;
+  color: var(--main-color);
+  border: 1.5px solid var(--main-color);
+  border-radius: 8px;
+  background-color: transparent;
+  font-weight: 600;
+  transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+  overflow: hidden;
+}
+
+.submit-infos-edition::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  width: 50px;
+  height: 50px;
+  border-radius: inherit;
+  scale: 0;
+  z-index: -1;
+  background-color: var(--main-color);
+  transition: all 1s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.submit-infos-edition:hover::before {
+  scale: 3;
+}
+
+.submit-infos-edition:hover {
+  color: white;
+  scale: 1.1;
+}
+
+.submit-infos-edition:active {
+  scale: 1;
+}
