@@ -61,7 +61,7 @@ const RegistrationForm = () => {
 
       const responseUser = await axios.post(`${url}/users`, {
         ...userInfos,
-        address_id: address_id,
+        address_id,
       });
 
       console.log(responseUser.data);
@@ -73,14 +73,14 @@ const RegistrationForm = () => {
   return (
     <div className='registration-form'>
       <h2>Enregistrez-vous:</h2>
-      <form>
+      <form className='registration-form-container'>
         <div className='registration-form-group'>
           <label htmlFor='company-name'>
-            Raison sociale:
             <input
               type='text'
               id='company-name'
               name='company_name'
+              placeholder='Raison sociale *'
               value={userInfos.company_name}
               onChange={handleChange}
               required
@@ -89,11 +89,11 @@ const RegistrationForm = () => {
         </div>
         <div className='registration-form-group'>
           <label htmlFor='siret'>
-            SIRET:
             <input
               type='text'
               id='siret'
               name='siret'
+              placeholder='SIRET *'
               value={userInfos.siret}
               onChange={handleChange}
               required
@@ -103,11 +103,11 @@ const RegistrationForm = () => {
         </div>
         <div className='registration-form-group'>
           <label htmlFor='lastname'>
-            Nom:
             <input
               type='text'
               id='lastname'
               name='lastname'
+              placeholder='Nom *'
               value={userInfos.lastname}
               onChange={handleChange}
               required
@@ -116,11 +116,11 @@ const RegistrationForm = () => {
         </div>
         <div className='registration-form-group'>
           <label htmlFor='firstname'>
-            Prénom:
             <input
               type='text'
               id='firstname'
               name='firstname'
+              placeholder='Prénom *'
               value={userInfos.firstname}
               onChange={handleChange}
               required
@@ -129,11 +129,11 @@ const RegistrationForm = () => {
         </div>
         <div className='registration-form-group'>
           <label htmlFor='phone'>
-            Téléphone:
             <input
               type='text'
               id='phone'
               name='phone'
+              placeholder='Téléphone *'
               value={userInfos.phone}
               onChange={handleChange}
               required
@@ -142,11 +142,11 @@ const RegistrationForm = () => {
         </div>
         <div className='registration-form-group'>
           <label htmlFor='email'>
-            Email:
             <input
               type='email'
               id='email'
               name='email'
+              placeholder='Email *'
               value={userInfos.email}
               onChange={handleChange}
               required
@@ -155,11 +155,11 @@ const RegistrationForm = () => {
         </div>
         <div className='registration-form-group'>
           <label htmlFor='street-number'>
-            Numéro de voie:
             <input
               type='number'
               id='street-number'
               name='number'
+              placeholder='Numéro de voie'
               value={addressInfos.number}
               onChange={handleChange}
               required
@@ -168,11 +168,11 @@ const RegistrationForm = () => {
         </div>
         <div className='registration-form-group'>
           <label htmlFor='street-type'>
-            Type de voie:
             <input
               type='text'
               id='street-type'
               name='type'
+              placeholder='Type de voie *'
               value={addressInfos.type}
               onChange={handleChange}
               required
@@ -181,11 +181,11 @@ const RegistrationForm = () => {
         </div>
         <div className='registration-form-group'>
           <label htmlFor='street-name'>
-            Nom de voie:
             <input
               type='text'
               id='street-name'
               name='street_name'
+              placeholder='Nom de voie *'
               value={addressInfos.street_name}
               onChange={handleChange}
               required
@@ -194,11 +194,11 @@ const RegistrationForm = () => {
         </div>
         <div className='registration-form-group'>
           <label htmlFor='complement'>
-            Complément d'adresse:
             <input
               type='text'
               id='complement'
               name='complement'
+              placeholder="Complément d'adresse"
               value={addressInfos.complement}
               onChange={handleChange}
             />
@@ -206,11 +206,11 @@ const RegistrationForm = () => {
         </div>
         <div className='registration-form-group'>
           <label htmlFor='zip-code'>
-            Code postal:
             <input
               type='text'
               id='zip-code'
               name='zip_code'
+              placeholder='Code postal *'
               value={addressInfos.zip_code}
               onChange={handleChange}
               required
@@ -219,11 +219,11 @@ const RegistrationForm = () => {
         </div>
         <div className='registration-form-group'>
           <label htmlFor='city'>
-            Ville:
             <input
               type='text'
               id='city'
               name='city'
+              placeholder='Ville *'
               value={addressInfos.city}
               onChange={handleChange}
               required
@@ -232,24 +232,23 @@ const RegistrationForm = () => {
         </div>
         <div className='registration-form-group'>
           <label htmlFor='website'>
-            Site web:
             <input
               type='text'
               id='website'
               name='website_url'
+              placeholder='Site web'
               value={userInfos.website_url}
               onChange={handleChange}
-              required
             />
           </label>
         </div>
         <div className='registration-form-group'>
           <label htmlFor='password'>
-            Mot de passe:
             <input
               type='password'
               id='password'
               name='password'
+              placeholder='Mot de passe *'
               value={userInfos.password}
               onChange={handleChange}
               required
@@ -268,11 +267,11 @@ const RegistrationForm = () => {
         </div>
         <div className='registration-form-group'>
           <label htmlFor='password-confirmation'>
-            Confirmation du mot de passe:
             <input
               type='password'
               id='password-confirmation'
               name='password-confirmation'
+              placeholder='Confirmation *'
               value={userInfos.passwordConfirmation}
               onChange={handleChange}
               required
