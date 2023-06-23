@@ -157,12 +157,19 @@ CREATE TABLE IF NOT EXISTS `la_marne_labels`.`admins` (
   `lastname` VARCHAR(90) NOT NULL,
   `email` VARCHAR(90) NOT NULL,
   `password` VARCHAR(255) NOT NULL,
+  `role_id` INT NOT NULL,
   `status_id` INT NOT NULL,
   PRIMARY KEY (`id`, `status_id`),
   INDEX `fk_admin_status1_idx` (`status_id` ASC) VISIBLE,
+  INDEX `fk_admin_role1_idx` (`role_id` ASC) VISIBLE,
   CONSTRAINT `fk_admin_status1`
     FOREIGN KEY (`status_id`)
     REFERENCES `la_marne_labels`.`status` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_admin_role1`
+    FOREIGN KEY (`role_id`)
+    REFERENCES `la_marne_labels`.`roles` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;

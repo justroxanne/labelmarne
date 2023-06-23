@@ -81,11 +81,9 @@ class AdminController {
     }
   }
 
-
   static logout = (req, res) => {
     res.clearCookie('token').status(200).json({ message: 'Logged out' });
   };
  }
-
 
 module.exports = AdminController;

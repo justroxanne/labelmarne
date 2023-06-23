@@ -2,7 +2,7 @@ USE la_marne_labels;
 
 INSERT INTO status (name) VALUES ('actif'), ('inactif'), ('membre'), ('en attente'), ('en cours'), ('validé'), ('refusé'), ('pas de demarche en cours');
 
-INSERT INTO roles (name) VALUES ('association'), ('entreprise');
+INSERT INTO roles (name) VALUES ('role_admin'), ('role_user');
 
 INSERT INTO categories (name) VALUES ('alimentaire'), ('logement');
 
