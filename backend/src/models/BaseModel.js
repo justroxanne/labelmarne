@@ -1,10 +1,10 @@
-const { db } = require('../config');
+const { db } = require('../config/db');
 
 class BaseModel {
   table;
   db;
 
-  constructor(table) {
+  constructor(table, db) {
     this.table = table;
     this.db = db;
   }

@@ -1,9 +1,9 @@
 const BaseModel = require('./BaseModel');
 
-class LabelModel extends BaseModel {
+class LabelsModel extends BaseModel {
   constructor() {
     super('labels');
   }
 }
 
-module.exports = LabelModel;
+module.exports = LabelsModel;

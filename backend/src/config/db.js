@@ -9,8 +9,6 @@ const db = mysql.createPool({
   port: process.env.DB_PORT,
 });
 
-console.log(db);
-
 db.getConnection().catch(() => {
   console.warn('Warning: DB failed');
 });

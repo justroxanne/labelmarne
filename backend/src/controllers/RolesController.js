@@ -1,11 +1,11 @@
 const BaseController = require('./BaseController');
 const models = require('../models');
 
-class UserHasLabelController extends BaseController {
+class RolesController extends BaseController {
   constructor(req, res) {
     super(req, res);
-    this.model = models.userHasLabel;
+    this.model = models.roles;
   }
-
-  // static async getLabelByUser(req, res)
 }
+
+module.exports = RolesController;
