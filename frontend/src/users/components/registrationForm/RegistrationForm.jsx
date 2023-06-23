@@ -3,7 +3,7 @@ import axios from 'axios';
 import './RegistrationForm.css';
 
 const RegistrationForm = () => {
-  const url = import.meta.env.VITE_BACKEND_URL;
+  const baseUrl = import.meta.env.VITE_BACKEND_URL;
   const [message, setMessage] = useState(false);
   const [userInfos, setUserInfos] = useState({
     company_name: '',
@@ -59,7 +59,7 @@ const RegistrationForm = () => {
       console.log(responseAddress.data);
       const address_id = responseAddress.data.id;
 
-      const responseUser = await axios.post(`${url}/users`, {
+      const responseUser = await axios.post(`${baseUrl}/users`, {
         ...userInfos,
         address_id,
       });
