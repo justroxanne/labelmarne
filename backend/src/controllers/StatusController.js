@@ -1,5 +1,7 @@
 const models = require('../models');
 
+// possibilité de getById, getAll, update
+
 class StatusController {
   static async getAll(req, res) {
     try {
