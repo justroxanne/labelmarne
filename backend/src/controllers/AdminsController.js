@@ -1,37 +1,13 @@
+const models = require('../models');
 const argon2 = require('argon2');
 const jwt = require('jsonwebtoken');
-const BaseController = require('./BaseController');
-const models = require('../models');
 
-class UserController extends BaseController {
-  constructor(req, res) {
-    super(req, res);
-    this.model = models.user;
-  }
-
+class AdminsController {
   static async register(req, res) {
-    const {
-      company_name,
-      firstname,
-      lastname,
-      siret,
-      phone,
-      email,
-      password,
-      website_url,
-    } = req.body;
+    const { firstname, lastname, email, password } = req.body;
 
     try {
-      if (
-        !email ||
-        !password ||
-        !company_name ||
-        !firstname ||
-        !lastname ||
-        !siret ||
-        !phone ||
-        !website_url
-      ) {
+      if (!email || !password || !firstname || !lastname) {
         throw new Error('Please fill all the fields');
       }
 
@@ -43,24 +19,20 @@ class UserController extends BaseController {
         hashLength: 50,
       });
 
-      const userData = {
-        company_name,
+      const adminData = {
         firstname,
         lastname,
-        siret,
-        phone,
         email,
         password: hashedPassword,
-        website_url,
-        role_id: 2,
+        role_id: 1, // 1 = admin,
       };
 
-      const [result] = await models.user.create(userData);
+      const [result] = await models.admins.create(adminData);
 
       res.status(200).json({
-        message: 'User registered successfully',
+        message: 'Admin registered successfully',
         id: result.insertId,
-        ...userData,
+        ...adminData,
       });
     } catch (err) {
       console.error(err);
@@ -78,19 +50,19 @@ class UserController extends BaseController {
     }
 
     try {
-      const [user] = await models.user.getOne(email);
+      const [admin] = await models.admins.getOne(email);
 
-      if (!user) {
-        return res.status(404).json({ error: 'User not found' });
+      if (!admin) {
+        return res.status(400).json({ error: 'Invalid credentials' });
       }
 
-      const passwordMatch = await argon2.verify(user.password, password);
+      constpasswordMatch = await argon2.verify(admin.password, password);
 
       if (!passwordMatch) {
         return res.status(401).json({ error: 'Incorrect password' });
       }
 
-      const payload = { id: user.id, role: user.role_id };
+      const payload = { id: admin.id, role: admin.role_id };
 
       const token = jwt.sign(payload, process.env.JWT_SECRET, {
         expiresIn: '1h',
@@ -109,9 +81,9 @@ class UserController extends BaseController {
     }
   }
 
-  static logout(req, res) {
-    res.clearCookie('token').json({ message: 'Logged out' });
-  }
+  static logout = (req, res) => {
+    res.clearCookie('token').status(200).json({ message: 'Logged out' });
+  };
 }
 
-module.exports = UserController;
+module.exports = AdminsController;

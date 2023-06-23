@@ -1,9 +1,9 @@
 const BaseModel = require('./BaseModel');
 
-class AddressModel extends BaseModel {
+class AddressesModel extends BaseModel {
   constructor() {
     super('addresses');
   }
 }
 
-module.exports = AddressModel;
+module.exports = AddressesModel;

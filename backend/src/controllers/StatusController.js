@@ -1,10 +1,11 @@
-const BaseController = require('./BaseController')
+const BaseController = require('./BaseController');
+const models = require('../models');
 
-class StatusController extends BaseController{
+class StatusController extends BaseController {
   constructor(req, res) {
-    super(req , res);
-    this.model = model.status;
+    super(req, res);
+    this.model = models.status;
   }
 }
 
-module.exports =StatusController;
+module.exports = StatusController;

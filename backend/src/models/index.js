@@ -2,11 +2,12 @@ const path = require('path');
 const fs = require('fs');
 
 const load = (models) => {
-  const modelsPath = path.join(__dirname, 'models');
-  const modelFiles = fs.readdirSync(modelsPath);
+  const modelFiles = fs.readdirSync(__dirname).filter((file) => {
+    return file !== 'index.js' && file !== 'BaseModel.js';
+  });
 
   modelFiles.forEach((file) => {
-    const model = require(path.join(modelsPath, file));
+    const model = require(path.join(__dirname, file));
     models[model.name] = model;
   });
 };
@@ -14,6 +15,7 @@ const load = (models) => {
 const models = {};
 
 load(models);
+console.log(models);
 
 const handler = {
   get(obj, prop) {
