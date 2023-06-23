@@ -81,62 +81,9 @@ class AdminController {
     }
   }
 
-  static authorization = (req, res, next) => {
-    const token = req.cookies.token;
-    if (!token) {
-      return res.status(401).json({ error: 'Unauthorized' });
-    }
-    try {
-      const data = jwt.verify(token, process.env.JWT_SECRET);
-      req.adminId = data.id;
-      req.adminRole = data.role_id;
-      next();
-    } catch (err) {
-      console.error(err);
-      res.status(401).json({ error: 'Unauthorized' });
-    }
-  };
-
-  static isAdmin = (req, res, next) => {
-    if (req.adminRole !== 1) {
-      return res.status(403).json({ error: 'Forbidden' });
-    } else {
-      next();
-    }
-  };
-
   static logout = (req, res) => {
     res.clearCookie('token').status(200).json({ message: 'Logged out' });
   };
-
-  static async editAdmin(req, res) {
-    const admin = req.body;
-
-    admin.id = parseInt(req.params.id);
-
-    try {
-      const [result] = await models.user.update(admin);
-
-      if (result.affectedRows === 0) {
-        return res.status(404).json({ error: 'Admin not found' });
-      }
-
-      res.status(200).json({ message: 'Admin updated successfully', ...admin });
-    } catch (err) {
-      console.error(err);
-      res.sendStatus(500);
-    }
-  }
-
-  static async deleteAdmin(req, res) {
-    try {
-      await models.user.delete(req.params.id);
-      res.status(200).json({ message: 'Admin deleted successfully' });
-    } catch (err) {
-      console.error(err);
-      res.sendStatus(500);
-    }
-  }
 }
 
 module.exports = AdminController;
