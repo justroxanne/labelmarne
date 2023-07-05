@@ -1,10 +1,10 @@
 const BaseModel = require('./BaseModel');
 const db = require('../config/db');
 
-class StatusModel extends BaseModel {
+class CategoryModel extends BaseModel {
   constructor(db) {
-    super('status', db);
+    super('category', db);
   }
 }
 
-module.exports = StatusModel;
+module.exports = CategoryModel;

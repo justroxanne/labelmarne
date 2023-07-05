@@ -3,13 +3,13 @@ const jwt = require('jsonwebtoken');
 const BaseController = require('./BaseController');
 const models = require('../models');
 
-class UsersController extends BaseController {
+class UserController extends BaseController {
   constructor(req, res) {
     super(req, res);
-    this.model = models.users;
+    this.model = models.UserModel;
   }
 
-  static async register(req, res) {
+  async register(req, res) {
     const {
       company_name,
       firstname,
@@ -54,7 +54,7 @@ class UsersController extends BaseController {
         role_id: 2,
       };
 
-      const [result] = await models.users.create(userData);
+      const [result] = await models.UserModel.create(userData);
 
       res.status(200).json({
         message: 'User registered successfully',
@@ -67,7 +67,7 @@ class UsersController extends BaseController {
     }
   }
 
-  static async login(req, res) {
+  async login(req, res) {
     const { email, password } = req.body;
 
     if (!email || !password) {
@@ -77,7 +77,7 @@ class UsersController extends BaseController {
     }
 
     try {
-      const [user] = await models.users.getOne(email);
+      const [user] = await models.UserModel.getOne(email);
 
       if (!user) {
         return res.status(404).json({ error: 'User not found' });
@@ -108,9 +108,9 @@ class UsersController extends BaseController {
     }
   }
 
-  static logout(req, res) {
+  logout(req, res) {
     res.clearCookie('token').json({ message: 'Logged out' });
   }
 }
 
-module.exports = UsersController;
+module.exports = UserController;

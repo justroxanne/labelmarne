@@ -9,7 +9,7 @@ class BaseController {
     this.model = model;
   }
 
-  static async getAll() {
+  async getAll() {
     try {
       const results = await this.model.getAll();
       this.res.status(200).json(results);
@@ -19,7 +19,7 @@ class BaseController {
     }
   }
 
-  static async getOne() {
+  async getOne() {
     try {
       const results = await this.model.getOne(this.req.params);
       this.res.status(200).json(results);
@@ -29,7 +29,7 @@ class BaseController {
     }
   }
 
-  static async create() {
+  async create() {
     try {
       const [result] = await this.model.create(this.req.body);
       this.res
@@ -46,7 +46,7 @@ class BaseController {
     }
   }
 
-  static async update() {
+  async update() {
     try {
       const [result] = await this.model.update(this.req.params, this.req.body);
       this.res
@@ -62,7 +62,7 @@ class BaseController {
     }
   }
 
-  static async delete() {
+  async delete() {
     try {
       await this.model.delete(this.req.params);
       this.res.status(204).json({ message: 'Deleted successfully' });

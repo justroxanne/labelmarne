@@ -1,10 +1,10 @@
-const { db } = require('../config/db');
+const { db } = require('../config');
 
 class BaseModel {
   table;
   db;
 
-  constructor(table, db) {
+  constructor(table) {
     this.table = table;
     this.db = db;
   }
@@ -22,24 +22,29 @@ class BaseModel {
   }
 
   create(data) {
-    const dataKey = Object.keys(data);
-    const dataValue = Object.values(data);
-    const fill = dataValue.map((value) => '?').join(', ');
+    console.log(data);
+    const dataKeys = Object.keys(data);
+    const dataValues = Object.values(data);
+    const fillKeys = dataKeys.map((key) => key).join(', ');
+    const fillValues = dataValues
+      .map((value) => (typeof value === 'string' ? `"${value}"` : value))
+      .join(', ');
     return this.db.query(
-      `INSERT INTO ${this.table} (${dataKey}) VALUES (${fill})`,
-      [dataValue]
+      `INSERT INTO ${this.table} (${fillKeys}) VALUES (${fillValues})`
     );
   }
 
   update(params, data) {
-    const paramsKey = Object.keys(params);
-    const paramsValue = Object.values(params);
-    const dataKey = Object.keys(data);
-    const dataValue = Object.values(data);
-    const fill = dataKey.map((key) => `${key} = ?`).join(', ');
+    const paramsKeys = Object.keys(params);
+    const paramsValues = Object.values(params);
+    const dataKeys = Object.keys(data);
+    const dataValues = Object.values(data);
+
+    const fill = dataKeys.map((key) => `${key} = ?`).join(', ');
+
     return this.db.query(
-      `UPDATE ${this.table} SET ${fill} WHERE ${paramsKey} = ?`,
-      [dataValue, paramsValue]
+      `UPDATE ${this.table} SET ${fill} WHERE ${paramsKeys} = ${paramsValues}`,
+      [...dataValues]
     );
   }
 
