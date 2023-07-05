@@ -1,9 +1,15 @@
+const BaseController = require('./BaseController');
 const models = require('../models');
 const argon2 = require('argon2');
 const jwt = require('jsonwebtoken');
 
-class AdminsController {
-  static async register(req, res) {
+class AdminController extends BaseController {
+  constructor(req, res) {
+    super(req, res);
+    this.model = models.AdminModel;
+  }
+
+  async register(req, res) {
     const { firstname, lastname, email, password } = req.body;
 
     try {
@@ -27,7 +33,7 @@ class AdminsController {
         role_id: 1, // 1 = admin,
       };
 
-      const [result] = await models.admins.create(adminData);
+      const [result] = await models.admin.create(adminData);
 
       res.status(200).json({
         message: 'Admin registered successfully',
@@ -40,7 +46,7 @@ class AdminsController {
     }
   }
 
-  static async login(req, res) {
+  async login(req, res) {
     const { email, password } = req.body;
 
     if (!email || !password) {
@@ -50,13 +56,13 @@ class AdminsController {
     }
 
     try {
-      const [admin] = await models.admins.getOne(email);
+      const [admin] = await models.admin.getOne(email);
 
       if (!admin) {
         return res.status(400).json({ error: 'Invalid credentials' });
       }
 
-      constpasswordMatch = await argon2.verify(admin.password, password);
+      const passwordMatch = await argon2.verify(admin.password, password);
 
       if (!passwordMatch) {
         return res.status(401).json({ error: 'Incorrect password' });
@@ -81,9 +87,9 @@ class AdminsController {
     }
   }
 
-  static logout = (req, res) => {
+  logout = () => {
     res.clearCookie('token').status(200).json({ message: 'Logged out' });
   };
 }
 
-module.exports = AdminsController;
+module.exports = AdminController;
