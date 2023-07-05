@@ -3,8 +3,8 @@ const argon2 = require('argon2');
 const jwt = require('jsonwebtoken');
 
 class AdminsController {
-  static async register(req, res) {
-    const { firstname, lastname, email, password } = req.body;
+  async register(req, res) {
+    const {email, password, firstname, lastname } = req.body;
 
     try {
       if (!email || !password || !firstname || !lastname) {
@@ -40,7 +40,7 @@ class AdminsController {
     }
   }
 
-  static async login(req, res) {
+  async login(req, res) {
     const { email, password } = req.body;
 
     if (!email || !password) {
@@ -56,7 +56,7 @@ class AdminsController {
         return res.status(400).json({ error: 'Invalid credentials' });
       }
 
-      constpasswordMatch = await argon2.verify(admin.password, password);
+      const passwordMatch = await argon2.verify(admin.password, password);
 
       if (!passwordMatch) {
         return res.status(401).json({ error: 'Incorrect password' });
@@ -74,16 +74,16 @@ class AdminsController {
           secure: process.env.NODE_ENV === 'production',
         })
         .status(200)
-        .json({ id, email, role_id });
+        .json({ id: admin.id, email: admin.email, role_id: admin.role_id });
     } catch (err) {
       console.error(err);
       res.status(500).json({ error: err.message });
     }
   }
 
-  static logout = (req, res) => {
+  logout = (req, res) => {
     res.clearCookie('token').status(200).json({ message: 'Logged out' });
   };
 }
 
-module.exports = AdminsController;
+module.exports =  new AdminsController;

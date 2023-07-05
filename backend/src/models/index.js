@@ -7,8 +7,9 @@ const load = (models) => {
   });
 
   modelFiles.forEach((file) => {
+    const modelName = path.parse(file).name;
     const model = require(path.join(__dirname, file));
-    models[model.name] = model;
+    models[modelName] = model;
   });
 };
 
