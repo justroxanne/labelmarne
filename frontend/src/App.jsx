@@ -3,7 +3,7 @@ import Header from './users/components/header/Header';
 import Footer from './users/components/footer/Footer';
 import UserDashboard from './users/pages/UserDashboard';
 import Registration from './users/pages/Registration';
-// import Home from './users/pages/Home';
+import Home from './users/pages/Home';
 
 import './App.css';
 
@@ -12,7 +12,7 @@ function App() {
     <div className='app'>
       <Header />
       <Routes>
-        {/* <Route path='/' element={<Home />} /> */}
+        <Route path='/' element={<Home />} />
         <Route path='/user' element={<UserDashboard />} />
         <Route path='/registration' element={<Registration />} />
       </Routes>
