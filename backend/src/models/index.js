@@ -6,8 +6,9 @@ const load = (models) => {
     return file !== 'index.js' && file !== 'BaseModel.js';
   });
   modelFiles.forEach((file) => {
-    const Model = require(path.join(__dirname, file));
-    models[Model.name] = new Model();
+    const modelName = path.parse(file).name;
+    const model = require(path.join(__dirname, file));
+    models[modelName] = model;
   });
 };
 

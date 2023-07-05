@@ -1,8 +1,10 @@
 const express = require('express');
-const controllers = require('./controllers');
+const {
+    AdminController,
+  } = require('./controllers');
 
 const router = express.Router();
 
-router.post('/register', controllers.UserController.register);
+router.post('/register-admin',(req,res) => new AdminController(req, res).register());
 
 module.exports = router;

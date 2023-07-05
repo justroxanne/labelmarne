@@ -9,7 +9,7 @@ class BaseController {
     this.model = model;
   }
 
-  async getAll() {
+  static async getAll() {
     try {
       const results = await this.model.getAll();
       this.res.status(200).json(results);
