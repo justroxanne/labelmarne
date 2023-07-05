@@ -6,6 +6,4 @@ class UserHasLabelController extends BaseController {
     super(req, res);
     this.model = models.userHasLabel;
   }
-
-  // static async getLabelByUser(req, res)
 }

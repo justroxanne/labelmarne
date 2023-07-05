@@ -1,11 +1,11 @@
 const BaseController = require('./BaseController');
 const models = require('../models');
 
-class LabelsController extends BaseController {
+class RoleController extends BaseController {
   constructor(req, res) {
     super(req, res);
-    this.model = models.labels;
+    this.model = models.RoleModel;
   }
 }
 
-module.exports = LabelsController;
+module.exports = RoleController;
