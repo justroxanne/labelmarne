@@ -5,8 +5,8 @@ class BaseModel {
   db;
 
   constructor(table) {
-    this.table = table;
     this.db = db;
+    this.table = table;
   }
 
   getAll() {
@@ -16,11 +16,18 @@ class BaseModel {
   getOne(params) {
     const paramsKeys = Object.keys(params);
     const paramsValues = Object.values(params);
-    return this.db.query(
-      `SELECT * FROM ${this.table} WHERE ${paramsKeys} = ?`,
-      [paramsValues]
+  
+    if (paramsKeys.length === 0) {
+      throw new Error('Invalid parameters');
+    }
+  
+    const placeholders = paramsKeys.map((key) => `${key} = ?`).join(' AND ');
+    return this.db.execute(
+      `SELECT * FROM ${this.table} WHERE ${placeholders}`,
+      paramsValues
     );
   }
+  
   
 
   create(data) {
