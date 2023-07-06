@@ -5,16 +5,19 @@ const load = (models) => {
   const modelFiles = fs.readdirSync(__dirname).filter((file) => {
     return file !== 'index.js' && file !== 'BaseModel.js';
   });
+
   modelFiles.forEach((file) => {
-    const modelName = path.parse(file).name;
+
     const model = require(path.join(__dirname, file));
-    models[modelName] = model;
+    models[model.name] = model;
+
   });
 };
 
 const models = {};
 
 load(models);
+console.log(models);
 
 const handler = {
   get(obj, prop) {

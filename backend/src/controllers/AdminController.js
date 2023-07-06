@@ -4,8 +4,14 @@ const argon2 = require('argon2');
 const jwt = require('jsonwebtoken');
 
 class AdminController extends BaseController {
-async register(req, res) {
-    const { email, password, firstname, lastname } = req.body;
+
+  constructor(req, res) {
+    super(req, res);
+    this.model = models.AdminModel;
+  }
+
+  async register(req, res) {
+    const {  email, password,firstname, lastname } = req.body;
 
     try {
       if (!email || !password || !firstname || !lastname) {
