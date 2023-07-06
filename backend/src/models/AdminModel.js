@@ -1,9 +1,9 @@
 const BaseModel = require('./BaseModel');
 
 class AdminModel extends BaseModel {
-  constructor(db) {
+  constructor() {
     super('admin');
   }
 }
 
-module.exports = AdminModel;
+module.exports = new AdminModel();

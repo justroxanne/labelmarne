@@ -4,13 +4,14 @@ const argon2 = require('argon2');
 const jwt = require('jsonwebtoken');
 
 class AdminController extends BaseController {
+
   constructor(req, res) {
     super(req, res);
     this.model = models.AdminModel;
   }
 
   async register(req, res) {
-    const { firstname, lastname, email, password } = req.body;
+    const {  email, password,firstname, lastname } = req.body;
 
     try {
       if (!email || !password || !firstname || !lastname) {
@@ -30,10 +31,10 @@ class AdminController extends BaseController {
         lastname,
         email,
         password: hashedPassword,
-        role_id: 1, // 1 = admin,
+        role_id: 1, // 1 = admin
       };
 
-      const [result] = await models.admin.create(adminData);
+      const result = await models.AdminsModel.create(adminData);
 
       res.status(200).json({
         message: 'Admin registered successfully',
@@ -56,7 +57,7 @@ class AdminController extends BaseController {
     }
 
     try {
-      const [admin] = await models.admin.getOne(email);
+      const admin = await models.AdminsModel.getOne(email);
 
       if (!admin) {
         return res.status(400).json({ error: 'Invalid credentials' });
@@ -80,16 +81,16 @@ class AdminController extends BaseController {
           secure: process.env.NODE_ENV === 'production',
         })
         .status(200)
-        .json({ id, email, role_id });
+        .json({ id: admin.id, email: admin.email, role_id: admin.role_id });
     } catch (err) {
       console.error(err);
       res.status(500).json({ error: err.message });
     }
   }
 
-  logout = () => {
+  logout(req, res) {
     res.clearCookie('token').status(200).json({ message: 'Logged out' });
-  };
+  }
 }
 
-module.exports = AdminController;
+module.exports =  AdminController;

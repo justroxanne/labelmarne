@@ -1,8 +1,10 @@
 const BaseModel = require('./BaseModel');
 
+const db = require('../config/db');
+
 class UserModel extends BaseModel {
-  constructor() {
-    super('user');
+  constructor(db) {
+    super('users', db);
   }
 }
 
