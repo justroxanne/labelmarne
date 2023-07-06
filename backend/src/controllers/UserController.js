@@ -65,11 +65,13 @@ class UserController extends BaseController {
       console.error(err);
       this.res.status(500).json({ error: err.message });
     }
+    
   }
+
 
   async login() {
     const { email, password } = this.req.body;
-
+ 
     if (!email || !password) {
       return this.res
         .status(400)
@@ -77,12 +79,13 @@ class UserController extends BaseController {
     }
 
     try {
-      const [user] = await models.UserModel.getOne(email);
+      const [user] = await this.model.getOne({ email: email });
 
       if (!user) {
         return this.res.status(404).json({ error: 'User not found' });
+        
       }
-
+     
       const passwordMatch = await argon2.verify(user.password, password);
 
       if (!passwordMatch) {
