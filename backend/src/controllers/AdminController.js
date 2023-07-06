@@ -10,7 +10,7 @@ class AdminController extends BaseController {
   }
 
   async register(req, res) {
-    const { firstname, lastname, email, password } = req.body;
+    const {  email, password,firstname, lastname } = req.body;
 
     try {
       if (!email || !password || !firstname || !lastname) {

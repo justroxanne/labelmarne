@@ -14,25 +14,29 @@ class BaseModel {
   }
 
   getOne(params) {
-    const paramsKey = Object.keys(params);
-    const paramsValue = Object.values(params);
-    return this.db.query(`SELECT * FROM ${this.table} WHERE ${paramsKey} = ?`, [
-      paramsValue,
-    ]);
+    const paramsKeys = Object.keys(params);
+    const paramsValues = Object.values(params);
+    return this.db.query(
+      `SELECT * FROM ${this.table} WHERE ${paramsKeys} = ?`,
+      [paramsValues]
+    );
   }
+  
 
   create(data) {
-    console.log(data);
     const dataKeys = Object.keys(data);
     const dataValues = Object.values(data);
     const fillKeys = dataKeys.map((key) => key).join(', ');
     const fillValues = dataValues
-      .map((value) => (typeof value === 'string' ? `"${value}"` : value))
+      .map((value) => (typeof value === 'string' ? `'${value}'` : value))
       .join(', ');
+
     return this.db.query(
-      `INSERT INTO ${this.table} (${fillKeys}) VALUES (${fillValues})`
+      `INSERT INTO ${this.table} (${fillKeys}) VALUES (${fillValues})`,
+      [dataValues]
     );
   }
+  
 
   update(params, data) {
     const paramsKeys = Object.keys(params);

@@ -1,37 +1,37 @@
 const argon2 = require('argon2');
 const jwt = require('jsonwebtoken');
 const BaseController = require('./BaseController');
-const models = require('../models');
+const { UserModel } = require('../models');
 
 class UserController extends BaseController {
   constructor(req, res) {
     super(req, res);
-    this.model = models.UserModel;
+    this.model = new UserModel();
   }
 
   async register(req, res) {
     const {
-      company_name,
+      raison_sociale,
       firstname,
       lastname,
       siret,
-      phone,
+      telephone,//a modifier!!!
       email,
       password,
-      website_url,
+      site_web_url,//a modifier!!!
     } = req.body;
 
     try {
       if (
         !email ||
         !password ||
-        !company_name ||
+        !raison_sociale ||
         !firstname ||
         !lastname ||
         !siret ||
-        !phone
+        !telephone//a modifier!!!
       ) {
-        throw new Error('Please fill all the fields');
+        throw new Error('Please fill in all the fields');
       }
 
       const hashedPassword = await argon2.hash(password, {
@@ -43,18 +43,18 @@ class UserController extends BaseController {
       });
 
       const userData = {
-        company_name,
+        raison_sociale,//a modifier!!!
         firstname,
         lastname,
         siret,
-        phone,
+        telephone,//a modifier!!!
         email,
         password: hashedPassword,
-        website_url,
+        site_web_url,//a modifier!!!
         role_id: 2,
       };
 
-      const [result] = await models.UserModel.create(userData);
+      const result = await this.model.create(userData);
 
       res.status(200).json({
         message: 'User registered successfully',
@@ -73,11 +73,11 @@ class UserController extends BaseController {
     if (!email || !password) {
       return res
         .status(400)
-        .json({ error: 'Please specify both email and password' });
+        .json({ error: 'Please provide both email and password' });
     }
 
     try {
-      const [user] = await models.UserModel.getOne(email);
+      const user = await this.model.getOne(email);
 
       if (!user) {
         return res.status(404).json({ error: 'User not found' });
@@ -101,7 +101,7 @@ class UserController extends BaseController {
           secure: process.env.NODE_ENV === 'production',
         })
         .status(200)
-        .json({ id, email, role_id });
+        .json({ id: user.id, email: user.email, role_id: user.role_id });
     } catch (err) {
       console.error(err);
       res.status(500).json({ error: err.message });

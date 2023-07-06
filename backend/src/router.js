@@ -1,8 +1,14 @@
 const express = require('express');
-const controllers = require('./controllers');
+const UserController = require('./controllers/UserController');
 
 const router = express.Router();
+const userController = new UserController({}, {});
 
-router.post('/register', controllers.UserController.register);
+router.post('/register', async (req, res) => {
+  await userController.register(req, res);
+});
+router.post('/login', async (req, res) => { 
+  await userController.login(req, res);
+});
 
 module.exports = router;
