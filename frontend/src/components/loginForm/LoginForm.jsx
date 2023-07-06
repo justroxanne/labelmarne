@@ -1,11 +1,19 @@
 import axios from 'axios';
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
+import { LoginContext } from '../../utils/Context';
 import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import { FiArrowRight } from 'react-icons/fi';
+import { IoCloseSharp } from 'react-icons/io5';
 import './loginForm.css';
 
 const LoginForm = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+
+  const url = import.meta.env.VITE_BACKEND_URL;
+
+  const { displayLogin } = useContext(LoginContext);
 
   const navigate = useNavigate();
 
@@ -44,9 +52,10 @@ const LoginForm = () => {
   return (
     <div className='login-form-container'>
       <form className='login-form'>
+        <IoCloseSharp className='close-login-form' onClick={displayLogin} />
         <h2>Accès à votre espace utilisateur</h2>
         <label htmlFor='email'>
-          <h3>Identifiant</h3>
+          <h3>Saisissez votre identifiant:</h3>
           <input
             type='email'
             name='email'
@@ -57,7 +66,7 @@ const LoginForm = () => {
           ></input>
         </label>
         <label htmlFor='password' required>
-          <h3>Password:</h3>
+          <h3>Saisissez votre mot de passe:</h3>
           <input
             type='password'
             name='password'
@@ -67,6 +76,17 @@ const LoginForm = () => {
             onChange={handlePasswordChange}
           />
         </label>
+        <span>
+          Si vous n'êtes pas encore inscrit,{' '}
+          <Link to='/registration'>cliquez ici</Link>.
+        </span>
+        <button
+          type='submit'
+          className='login-submit-btn'
+          onClick={handleSubmit}
+        >
+          ENTREZ <FiArrowRight className='arrow-login-btn' />
+        </button>
       </form>
     </div>
   );
