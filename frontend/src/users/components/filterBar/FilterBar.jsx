@@ -17,33 +17,30 @@ const FilterBar = ({ onSearch }) => {
   };
 
   return (
-    <div className="filter-bar">
-      <div className="filter-input-container">
+    <div className='filter-bar'>
+      <div className='filter-input-container'>
         <label></label>
         <div
-          contentEditable
           className={`filter-text ${destination === '' ? 'placeholder' : ''}`}
-          onInput={e => handleInput(e, setDestination)}
+          onInput={(e) => handleInput(e, setDestination)}
         >
           {destination === '' ? 'Destination' : destination}
         </div>
       </div>
-      <div className="filter-input-container">
+      <div className='filter-input-container'>
         <label></label>
         <div
-          contentEditable
           className={`filter-text ${categories === '' ? 'placeholder' : ''}`}
-          onInput={e => handleInput(e, setCategories)}
+          onInput={(e) => handleInput(e, setCategories)}
         >
           {categories === '' ? 'Categories' : categories}
         </div>
       </div>
-      <div className="filter-input-container">
+      <div className='filter-input-container'>
         <label></label>
         <div
-          contentEditable
           className={`filter-text ${labels === '' ? 'placeholder' : ''}`}
-          onInput={e => handleInput(e, setLabels)}
+          onInput={(e) => handleInput(e, setLabels)}
         >
           {labels === '' ? 'Labels' : labels}
         </div>

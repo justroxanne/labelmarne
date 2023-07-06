@@ -12,6 +12,7 @@ const controllers = fs
     return { ...controllerList, [key]: Controller.name };
   }, {});
 
+console.log(controllers);
 const handler = {
   get(obj, prop) {
     if (prop in obj) {

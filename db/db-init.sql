@@ -5,10 +5,6 @@ SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
 
 -- -----------------------------------------------------
--- Schema mydb
--- -----------------------------------------------------
-
--- -----------------------------------------------------
 -- Table `address`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `address` (
@@ -104,25 +100,27 @@ CREATE TABLE IF NOT EXISTS `user` (
   `address_id` INT NOT NULL,
   `status_id` INT NOT NULL,
   `step_id` INT NULL,
-  PRIMARY KEY (`id`, `address_id`, `status_id`, `step_id`),
+  `role_id` INT NOT NULL,
+  PRIMARY KEY (`id`, `address_id`, `step_id`, `role_id`),
   INDEX `fk_user_address_idx` (`address_id` ASC) VISIBLE,
-  INDEX `fk_user_status1_idx` (`status_id` ASC) VISIBLE,
   INDEX `fk_user_step1_idx` (`step_id` ASC) VISIBLE,
+  INDEX `fk_user_role1_idx` (`role_id` ASC) VISIBLE,
   CONSTRAINT `fk_user_address`
     FOREIGN KEY (`address_id`)
     REFERENCES `address` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_user_status1`
-    FOREIGN KEY (`status_id`)
-    REFERENCES `status` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_user_step1`
     FOREIGN KEY (`step_id`)
     REFERENCES `step` (`id`)
     ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+    ON UPDATE NO ACTION
+  CONSTRAINT `fk_user_role1`
+    FOREIGN KEY (`role_id`)
+    REFERENCES `role` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION
+    )
 ENGINE = InnoDB;
 
 

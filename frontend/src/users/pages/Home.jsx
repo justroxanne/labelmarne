@@ -1,13 +1,24 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { Link } from 'react-router-dom';
+import { LoginContext } from '../../utils/Context';
 import FilterBar from '../components/filterBar/FilterBar';
-import './Home.css'
+import './Home.css';
 
 const Home = () => {
-  return (
-    <div>
-        <FilterBar />
-    </div>
-  )
-}
+  const { displayLogin } = useContext(LoginContext);
 
-export default Home
+  return (
+    <div className='homepage'>
+      <div className='login-link'>
+        <Link to='/registration'>S'inscrire</Link>
+        <span>|</span>
+        <a className='open-login' onClick={displayLogin}>
+          Connexion
+        </a>
+      </div>
+      <FilterBar />
+    </div>
+  );
+};
+
+export default Home;

@@ -9,16 +9,16 @@ class UserController extends BaseController {
     this.model = new UserModel();
   }
 
-  async register(req, res) {
+  async register() {
     const {
       raison_sociale,
       firstname,
       lastname,
       siret,
-      telephone,//a modifier!!!
+      telephone, //a modifier!!!
       email,
       password,
-      site_web_url,//a modifier!!!
+      site_web_url, //a modifier!!!
     } = req.body;
 
     try {
@@ -29,7 +29,7 @@ class UserController extends BaseController {
         !firstname ||
         !lastname ||
         !siret ||
-        !telephone//a modifier!!!
+        !telephone //a modifier!!!
       ) {
         throw new Error('Please fill in all the fields');
       }
@@ -43,50 +43,50 @@ class UserController extends BaseController {
       });
 
       const userData = {
-        raison_sociale,//a modifier!!!
+        raison_sociale, //a modifier!!!
         firstname,
         lastname,
         siret,
-        telephone,//a modifier!!!
+        telephone, //a modifier!!!
         email,
         password: hashedPassword,
-        site_web_url,//a modifier!!!
+        site_web_url, //a modifier!!!
         role_id: 2,
       };
 
-      const result = await this.model.create(userData);
+      const [result] = await models.UserModel.create(userData);
 
-      res.status(200).json({
+      this.res.status(200).json({
         message: 'User registered successfully',
         id: result.insertId,
         ...userData,
       });
     } catch (err) {
       console.error(err);
-      res.status(500).json({ error: err.message });
+      this.res.status(500).json({ error: err.message });
     }
   }
 
-  async login(req, res) {
-    const { email, password } = req.body;
+  async login() {
+    const { email, password } = this.req.body;
 
     if (!email || !password) {
-      return res
+      return this.res
         .status(400)
         .json({ error: 'Please provide both email and password' });
     }
 
     try {
-      const user = await this.model.getOne(email);
+      const [user] = await models.UserModel.getOne(email);
 
       if (!user) {
-        return res.status(404).json({ error: 'User not found' });
+        return this.res.status(404).json({ error: 'User not found' });
       }
 
       const passwordMatch = await argon2.verify(user.password, password);
 
       if (!passwordMatch) {
-        return res.status(401).json({ error: 'Incorrect password' });
+        return this.res.status(401).json({ error: 'Incorrect password' });
       }
 
       const payload = { id: user.id, role: user.role_id };
@@ -95,7 +95,7 @@ class UserController extends BaseController {
         expiresIn: '1h',
       });
 
-      res
+      this.res
         .cookie('token', token, {
           httpOnly: true,
           secure: process.env.NODE_ENV === 'production',
@@ -104,12 +104,12 @@ class UserController extends BaseController {
         .json({ id: user.id, email: user.email, role_id: user.role_id });
     } catch (err) {
       console.error(err);
-      res.status(500).json({ error: err.message });
+      this.res.status(500).json({ error: err.message });
     }
   }
 
-  logout(req, res) {
-    res.clearCookie('token').json({ message: 'Logged out' });
+  logout() {
+    this.res.clearCookie('token').json({ message: 'Logged out' });
   }
 }
 
