@@ -1,51 +1,67 @@
 import React, { useState } from 'react';
 import './FilterBar.css'; // Import the CSS file for styling
 
-const FilterBar = ({ onSearch }) => {
+const FilterBar = () => {
   const [destination, setDestination] = useState('');
-  const [categories, setCategories] = useState('');
-  const [labels, setLabels] = useState('');
+  const [category, setCategory] = useState('');
+  const [label, setLabel] = useState('');
 
   const handleSearch = () => {
     // Call the filtering function with the selected parameters
-    onSearch(destination, categories, labels);
+    // onSearch(destination, category, label);
+    console.log(destination, category, label);
   };
 
-  const handleInput = (e, setState) => {
-    const text = e.target.textContent;
+  const handleChange = (e, setState) => {
+    const text = e.target.value;
     setState(text);
   };
 
   return (
     <div className='filter-bar'>
-      <div className='filter-input-container'>
-        <label></label>
-        <div
-          className={`filter-text ${destination === '' ? 'placeholder' : ''}`}
-          onInput={(e) => handleInput(e, setDestination)}
-        >
-          {destination === '' ? 'Destination' : destination}
-        </div>
-      </div>
-      <div className='filter-input-container'>
-        <label></label>
-        <div
-          className={`filter-text ${categories === '' ? 'placeholder' : ''}`}
-          onInput={(e) => handleInput(e, setCategories)}
-        >
-          {categories === '' ? 'Categories' : categories}
-        </div>
-      </div>
-      <div className='filter-input-container'>
-        <label></label>
-        <div
-          className={`filter-text ${labels === '' ? 'placeholder' : ''}`}
-          onInput={(e) => handleInput(e, setLabels)}
-        >
-          {labels === '' ? 'Labels' : labels}
-        </div>
-      </div>
-      <button onClick={handleSearch}>Search</button>
+      <ul className='filter-input-container'>
+        <li>
+          <label htmlFor='destination'>
+            <input
+              type='text'
+              name='destination'
+              id='destination'
+              placeholder='Destination'
+              className='filter-input'
+              onChange={(e) => handleChange(e, setDestination)}
+            ></input>
+          </label>
+        </li>
+        <li>|</li>
+        <li>
+          <label htmlFor='category'>
+            <input
+              type='text'
+              name='category'
+              id='category'
+              placeholder='Catégorie'
+              className='filter-input'
+              onChange={(e) => handleChange(e, setCategory)}
+            ></input>
+          </label>
+        </li>
+        <li>|</li>
+        <li>
+          <label htmlFor='label'>
+            <input
+              type='text'
+              name='label'
+              id='category'
+              placeholder='Label'
+              className='filter-input'
+              onChange={(e) => handleChange(e, setLabel)}
+            ></input>
+          </label>
+        </li>
+        <button className='filter-search-btn' onClick={handleSearch}>
+          Rechercher
+        </button>
+      </ul>
     </div>
   );
 };
