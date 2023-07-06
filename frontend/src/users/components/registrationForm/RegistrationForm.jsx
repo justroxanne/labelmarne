@@ -1,9 +1,13 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import './RegistrationForm.css';
 
 const RegistrationForm = () => {
   const baseUrl = import.meta.env.VITE_BACKEND_URL;
+
+  const navigate = useNavigate();
+
   const [message, setMessage] = useState(false);
   const [userInfos, setUserInfos] = useState({
     company_name: '',
