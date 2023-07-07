@@ -2,6 +2,7 @@ const argon2 = require('argon2');
 const jwt = require('jsonwebtoken');
 const BaseController = require('./BaseController');
 const { UserModel } = require('../models');
+require('dotenv').config();
 
 class UserController extends BaseController {
   constructor(req, res) {
@@ -19,7 +20,7 @@ class UserController extends BaseController {
       email,
       password,
       site_web_url, //a modifier!!!
-    } = req.body;
+    } = this.req.body;
 
     try {
       if (
@@ -54,7 +55,8 @@ class UserController extends BaseController {
         role_id: 2,
       };
 
-      const [result] = await models.UserModel.create(userData);
+      console.log(userData);
+      const [result] = await this.model.create(userData);
 
       this.res.status(200).json({
         message: 'User registered successfully',
@@ -65,11 +67,13 @@ class UserController extends BaseController {
       console.error(err);
       this.res.status(500).json({ error: err.message });
     }
+    
   }
+
 
   async login() {
     const { email, password } = this.req.body;
-
+ 
     if (!email || !password) {
       return this.res
         .status(400)
@@ -77,12 +81,13 @@ class UserController extends BaseController {
     }
 
     try {
-      const [user] = await models.UserModel.getOne(email);
+      const [user] = await this.model.getOne (email);
 
       if (!user) {
         return this.res.status(404).json({ error: 'User not found' });
+        
       }
-
+     
       const passwordMatch = await argon2.verify(user.password, password);
 
       if (!passwordMatch) {
@@ -91,7 +96,7 @@ class UserController extends BaseController {
 
       const payload = { id: user.id, role: user.role_id };
 
-      const token = jwt.sign(payload, process.env.JWT_SECRET, {
+      const token = jwt.sign(payload, process.env.JWT_AUTH_SECRET, {
         expiresIn: '1h',
       });
 

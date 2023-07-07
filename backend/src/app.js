@@ -19,7 +19,8 @@ app.use(
 app.use(express.json());
 app.use(express.static(path.join(__dirname, '../public')));
 
-const router = require('./router');
+const router= require('./routes/users.routes');
+const routerAdd= require('./routes/admins.routes');
 
 app.use(router);
 

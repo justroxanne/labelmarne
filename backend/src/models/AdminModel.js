@@ -6,4 +6,4 @@ class AdminModel extends BaseModel {
   }
 }
 
-module.exports = new AdminModel();
+module.exports = AdminModel;

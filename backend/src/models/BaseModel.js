@@ -5,8 +5,8 @@ class BaseModel {
   db;
 
   constructor(table) {
-    this.table = table;
     this.db = db;
+    this.table = table;
   }
 
   getAll() {
@@ -14,11 +14,11 @@ class BaseModel {
   }
 
   getOne(params) {
-    const paramsKeys = Object.keys(params);
-    const paramsValues = Object.values(params);
+    const paramsKey = Object.keys(params);
+    const paramsValue = Object.values(params);
+
     return this.db.query(
-      `SELECT * FROM ${this.table} WHERE ${paramsKeys} = ?`,
-      [paramsValues]
+      `SELECT * FROM ${this.table} WHERE ${paramsKey} = '${paramsValue}'`, [paramsValue]
     );
   }
   
