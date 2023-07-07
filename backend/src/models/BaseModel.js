@@ -14,20 +14,13 @@ class BaseModel {
   }
 
   getOne(params) {
-    const paramsKeys = Object.keys(params);
-    const paramsValues = Object.values(params);
-  
-    if (paramsKeys.length === 0) {
-      throw new Error('Invalid parameters');
-    }
-  
-    const placeholders = paramsKeys.map((key) => `${key} = ?`).join(' AND ');
-    return this.db.execute(
-      `SELECT * FROM ${this.table} WHERE ${placeholders}`,
-      paramsValues
+    const paramsKey = Object.keys(params);
+    const paramsValue = Object.values(params);
+
+    return this.db.query(
+      `SELECT * FROM ${this.table} WHERE ${paramsKey} = '${paramsValue}'`, [paramsValue]
     );
   }
-  
   
 
   create(data) {
