@@ -7,17 +7,14 @@ const load = (models) => {
   });
 
   modelFiles.forEach((file) => {
-
     const model = require(path.join(__dirname, file));
     models[model.name] = model;
-
   });
 };
 
 const models = {};
 
 load(models);
-console.log(models);
 
 const handler = {
   get(obj, prop) {

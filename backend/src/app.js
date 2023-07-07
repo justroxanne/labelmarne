@@ -19,9 +19,12 @@ app.use(
 app.use(express.json());
 app.use(express.static(path.join(__dirname, '../public')));
 
-const router= require('./routes/users.routes');
-const routerAdd= require('./routes/admins.routes');
+const userRouter = require('./routes/users.routes');
+const routerAdd = require('./routes/admins.routes');
+const addressRouter = require('./routes/address.routes');
 
-app.use(router);
+app.use('/api', userRouter);
+app.use('/api', routerAdd);
+app.use('/api', addressRouter);
 
 module.exports = app;
