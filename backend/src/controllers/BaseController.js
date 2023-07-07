@@ -21,7 +21,7 @@ class BaseController {
 
   async getOne() {
     try {
-      const results = await this.model.getOne(this.req.params);
+      const [results ]= await this.model.getOne(this.req.params);
       this.res.status(200).json(results);
     } catch (err) {
       console.error(err);
