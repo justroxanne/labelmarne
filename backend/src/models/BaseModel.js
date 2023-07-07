@@ -18,25 +18,22 @@ class BaseModel {
     const paramsValue = Object.values(params);
 
     return this.db.query(
-      `SELECT * FROM ${this.table} WHERE ${paramsKey} = '${paramsValue}'`, [paramsValue]
+      `SELECT * FROM ${this.table} WHERE ${paramsKey} = '${paramsValue}'`,
+      [paramsValue]
     );
   }
-  
 
   create(data) {
     const dataKeys = Object.keys(data);
     const dataValues = Object.values(data);
     const fillKeys = dataKeys.map((key) => key).join(', ');
-    const fillValues = dataValues
-      .map((value) => (typeof value === 'string' ? `'${value}'` : value))
-      .join(', ');
+    const fillValues = dataValues.map((value) => `?`).join(', ');
 
     return this.db.query(
       `INSERT INTO ${this.table} (${fillKeys}) VALUES (${fillValues})`,
-      [dataValues]
+      [...dataValues]
     );
   }
-  
 
   update(params, data) {
     const paramsKeys = Object.keys(params);

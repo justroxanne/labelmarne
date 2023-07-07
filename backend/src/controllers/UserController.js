@@ -12,25 +12,27 @@ class UserController extends BaseController {
 
   async register() {
     const {
-      raison_sociale,
+      company_name,
       firstname,
       lastname,
       siret,
-      telephone, //a modifier!!!
+      phone,
       email,
       password,
-      site_web_url, //a modifier!!!
+      website_url,
+      address_id,
     } = this.req.body;
 
     try {
       if (
-        !email ||
-        !password ||
-        !raison_sociale ||
+        !company_name ||
         !firstname ||
         !lastname ||
         !siret ||
-        !telephone //a modifier!!!
+        !phone ||
+        !email ||
+        !password ||
+        !address_id
       ) {
         throw new Error('Please fill in all the fields');
       }
@@ -44,15 +46,15 @@ class UserController extends BaseController {
       });
 
       const userData = {
-        raison_sociale, //a modifier!!!
+        company_name,
         firstname,
         lastname,
         siret,
-        telephone, //a modifier!!!
+        phone,
         email,
         password: hashedPassword,
-        site_web_url, //a modifier!!!
-        role_id: 2,
+        website_url,
+        address_id,
       };
 
       console.log(userData);
@@ -61,33 +63,29 @@ class UserController extends BaseController {
       this.res.status(200).json({
         message: 'User registered successfully',
         id: result.insertId,
-        ...userData,
       });
     } catch (err) {
       console.error(err);
       this.res.status(500).json({ error: err.message });
     }
-    
   }
-
 
   async login() {
     const { email, password } = this.req.body;
- 
+
     if (!email || !password) {
-      return this.res
-        .status(400)
-        .json({ error: 'Please provide both email and password' });
+      return this.res.status(400).json({
+        error: 'Merci de saisir votre email ainsi que votre mot de passe.',
+      });
     }
 
     try {
-      const [user] = await this.model.getOne (email);
+      const [user] = await this.model.getOne(email);
 
       if (!user) {
         return this.res.status(404).json({ error: 'User not found' });
-        
       }
-     
+
       const passwordMatch = await argon2.verify(user.password, password);
 
       if (!passwordMatch) {

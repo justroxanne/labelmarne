@@ -9,9 +9,12 @@ class BaseController {
     this.model = model;
   }
 
- async getAll() {
+  async getAll() {
     try {
       const [results] = await this.model.getAll();
+      if (this.model.table === 'user' || this.model.table === 'admin') {
+        results.forEach((result) => delete result.password);
+      }
       this.res.status(200).json(results);
     } catch (err) {
       console.error(err);
@@ -21,7 +24,10 @@ class BaseController {
 
   async getOne() {
     try {
-      const [results ]= await this.model.getOne(this.req.params);
+      const [results] = await this.model.getOne(this.req.params);
+      if (this.model.table === 'user' || this.model.table === 'admin') {
+        results.forEach((result) => delete result.password);
+      }
       this.res.status(200).json(results);
     } catch (err) {
       console.error(err);

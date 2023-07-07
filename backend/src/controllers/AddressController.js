@@ -1,10 +1,10 @@
 const BaseController = require('./BaseController');
-const models = require('../models');
+const { AddressModel } = require('../models');
 
 class AddressController extends BaseController {
   constructor(req, res) {
     super(req, res);
-    this.model = models.AddressModel;
+    this.model = new AddressModel();
   }
 }
 
