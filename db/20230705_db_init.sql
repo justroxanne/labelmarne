@@ -5,11 +5,15 @@ SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
 
 -- -----------------------------------------------------
+-- Schema mydb
+-- -----------------------------------------------------
+
+-- -----------------------------------------------------
 -- Table `address`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `address` (
   `id` INT NOT NULL AUTO_INCREMENT,
-  `number` INT NULL,
+  `address_number` INT NULL,
   `type` VARCHAR(90) NOT NULL,
   `street_name` VARCHAR(255) NOT NULL,
   `complement` VARCHAR(255) NULL,
@@ -99,10 +103,11 @@ CREATE TABLE IF NOT EXISTS `user` (
   `website_url` VARCHAR(90) NULL,
   `address_id` INT NOT NULL,
   `step_id` INT NULL,
-  PRIMARY KEY (`id`, `address_id`, `step_id`),
-  INDEX `fk_user_address1_idx` (`address_id` ASC) VISIBLE,
+  PRIMARY KEY (`id`),
+  INDEX `fk_user_address_idx` (`address_id` ASC) VISIBLE,
   INDEX `fk_user_step1_idx` (`step_id` ASC) VISIBLE,
-  CONSTRAINT `fk_user_address1`
+  UNIQUE INDEX `email_UNIQUE` (`email` ASC) VISIBLE,
+  CONSTRAINT `fk_user_address`
     FOREIGN KEY (`address_id`)
     REFERENCES `address` (`id`)
     ON DELETE NO ACTION
@@ -111,8 +116,7 @@ CREATE TABLE IF NOT EXISTS `user` (
     FOREIGN KEY (`step_id`)
     REFERENCES `step` (`id`)
     ON DELETE NO ACTION
-    ON UPDATE NO ACTION
-    )
+    ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
@@ -123,8 +127,8 @@ CREATE TABLE IF NOT EXISTS `admin` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `firstname` VARCHAR(90) NOT NULL,
   `lastname` VARCHAR(90) NOT NULL,
-  `username` VARCHAR(90) UNIQUE NOT NULL,
-  `email` VARCHAR(90) UNIQUE NOT NULL,
+  `username` VARCHAR(45) NOT NULL,
+  `email` VARCHAR(90) NOT NULL,
   `password` VARCHAR(255) NOT NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;
@@ -136,7 +140,6 @@ ENGINE = InnoDB;
 CREATE TABLE IF NOT EXISTS `user_has_label` (
   `user_id` INT NOT NULL,
   `label_id` INT NOT NULL,
-  PRIMARY KEY (`user_id`, `label_id`),
   INDEX `fk_user_has_label_label1_idx` (`label_id` ASC) VISIBLE,
   INDEX `fk_user_has_label_user1_idx` (`user_id` ASC) VISIBLE,
   CONSTRAINT `fk_user_has_label_user1`
