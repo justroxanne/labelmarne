@@ -57,7 +57,6 @@ class UserController extends BaseController {
         address_id,
       };
 
-      console.log(userData);
       const [result] = await this.model.create(userData);
 
       this.res.status(200).json({
@@ -89,7 +88,7 @@ class UserController extends BaseController {
       const passwordMatch = await argon2.verify(user.password, password);
 
       if (!passwordMatch) {
-        return this.res.status(401).json({ error: 'Incorrect password' });
+        return this.res.status(401).json({ error: 'Mot de passe incorrect' });
       }
 
       const payload = { id: user.id, role: user.role_id };

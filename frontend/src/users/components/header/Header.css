@@ -2,9 +2,8 @@
   width: 100%;
   height: 33dvh;
   background-image: url('../../assets/backgroundheader.jpg');
-  background-position: bottom;
   background-size: cover;
-  background-position-y: 27em;
+  background-position: center;
   top: 0;
 }
 
