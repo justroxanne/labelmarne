@@ -1,9 +1,9 @@
 const BaseController = require('./BaseController');
-const models = require('../models');
+const { user } = require('../models');
 
 class UserHasLabelController extends BaseController {
   constructor(req, res) {
     super(req, res);
-    this.model = models.userHasLabel;
+    this.model = new userHasLabel();
   }
 }

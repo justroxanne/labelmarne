@@ -1,17 +1,17 @@
 const BaseController = require('./BaseController');
-const models = require('../models');
+const { AdminModel } = require('../models');
 const argon2 = require('argon2');
 const jwt = require('jsonwebtoken');
+require('dotenv').config();
 
 class AdminController extends BaseController {
-
   constructor(req, res) {
     super(req, res);
-    this.model = models.AdminModel;
+    this.model = new AdminModel();
   }
 
-  async register(req, res) {
-    const {  email, password,firstname, lastname } = req.body;
+  async register() {
+    const { email, password, firstname, lastname } = this.req.body;
 
     try {
       if (!email || !password || !firstname || !lastname) {
@@ -26,47 +26,50 @@ class AdminController extends BaseController {
         hashLength: 50,
       });
 
+      const username = firstname.slice(0, 1) + lastname + '-admin';
+
       const adminData = {
         firstname,
         lastname,
+        username: username,
         email,
         password: hashedPassword,
-        role_id: 1, // 1 = admin
       };
 
-      const result = await models.AdminsModel.create(adminData);
+      const [result] = await this.model.create(adminData);
 
-      res.status(200).json({
+      this.res.status(200).json({
         message: 'Admin registered successfully',
         id: result.insertId,
-        ...adminData,
+        username: adminData.username,
       });
     } catch (err) {
       console.error(err);
-      res.status(500).json({ error: err.message });
+      this.res.status(500).json({ error: err.message });
     }
   }
 
-  async login(req, res) {
-    const { email, password } = req.body;
+  async login() {
+    const { username, password } = this.req.body;
 
-    if (!email || !password) {
-      return res
-        .status(400)
-        .json({ error: 'Please specify both email and password' });
+    if (!username || !password) {
+      return this.res.status(400).json({
+        error:
+          "Merci de saisir votre nom d'utilisateur ainsi que votre mot de passe.",
+      });
     }
 
     try {
-      const admin = await models.AdminsModel.getOne(email);
+      const admin = await this.model.getOne(email);
 
       if (!admin) {
-        return res.status(400).json({ error: 'Invalid credentials' });
+        return this.res.status(400).json({ error: 'Invalid credentials' });
       }
 
       const passwordMatch = await argon2.verify(admin.password, password);
 
       if (!passwordMatch) {
-        return res.status(401).json({ error: 'Incorrect password' });
+        return this.res.status(401).json({ error: 'Mot de passe incorrect' });
       }
 
       const payload = { id: admin.id, role: admin.role_id };
@@ -75,7 +78,7 @@ class AdminController extends BaseController {
         expiresIn: '1h',
       });
 
-      res
+      this.res
         .cookie('token', token, {
           httpOnly: true,
           secure: process.env.NODE_ENV === 'production',
@@ -84,13 +87,13 @@ class AdminController extends BaseController {
         .json({ id: admin.id, email: admin.email, role_id: admin.role_id });
     } catch (err) {
       console.error(err);
-      res.status(500).json({ error: err.message });
+      this.res.status(500).json({ error: err.message });
     }
   }
 
-  logout(req, res) {
-    res.clearCookie('token').status(200).json({ message: 'Logged out' });
+  logout() {
+    this.res.clearCookie('token').status(200).json({ message: 'Logged out' });
   }
 }
 
-module.exports =  AdminController;
+module.exports = AdminController;

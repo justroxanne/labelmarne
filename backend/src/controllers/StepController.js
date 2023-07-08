@@ -1,10 +1,10 @@
 const BaseController = require('./BaseController');
-const models = require('../models');
+const { StepModel } = require('../models');
 
 class StepController extends BaseController {
   constructor(req, res) {
     super(req, res);
-    this.model = models.StepModel;
+    this.model = new StepModel();
   }
 }
 

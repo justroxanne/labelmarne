@@ -1,10 +1,10 @@
 const BaseController = require('./BaseController');
-const models = require('../models');
+const { StatusModel } = require('../models');
 
 class StatusController extends BaseController {
   constructor(req, res) {
     super(req, res);
-    this.model = models.StatusModel;
+    this.model = new StatusModel();
   }
 }
 
