@@ -49,8 +49,8 @@
   text-align: center;
 }
 
-#email,
-#password {
+.login-form #email,
+.login-form #password {
   text-align: center;
   width: 80%;
   height: 2.5em;
@@ -61,8 +61,8 @@
   font-weight: 300;
 }
 
-#email:focus,
-#password:focus {
+.login-form #email:focus,
+.login-form #password:focus {
   outline: none;
 }
 

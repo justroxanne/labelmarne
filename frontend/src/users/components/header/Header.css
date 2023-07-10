@@ -11,3 +11,7 @@
   width: 15%;
   padding-top: 0.9em;
 }
+
+.header-logo-container img:hover {
+  cursor: pointer;
+}

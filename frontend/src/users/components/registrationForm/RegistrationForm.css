@@ -1,12 +1,110 @@
 .registration-form {
-  width: 90dvw;
+  width: 70dvw;
   height: 60dvh;
   display: flex;
   justify-content: center;
   align-items: center;
-  flex-direction: column;
+  border: 1px solid black;
+  transform: translateY(-10vh);
+  background-color: white;
 }
 
 .registration-form-container {
+  width: 90%;
+  height: 90%;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5em;
+}
+
+.registration-form-group {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+
+.registration-form-subdivision {
+  width: 100%;
+  height: 100%;
   display: grid;
+  grid-template-rows: repeat(4, 1fr);
+  grid-template-columns: repeat(3, 1fr);
+  column-gap: 1em;
+  row-gap: 0.5em;
+}
+
+.registration-form h2 {
+  color: var(--second-color);
+  font-weight: 600;
+}
+
+.register-lastname {
+  grid-row: 1/2;
+  grid-column: 1/2;
+  width: 90%;
+}
+
+.register-firstname {
+  grid-row: 1/2;
+  grid-column: 2/3;
+  width: 90%;
+}
+
+.register-address {
+  grid-row: 2/3;
+  grid-column: 1/3;
+  width: 90%;
+}
+
+.register-complement {
+  grid-row: 3/4;
+  grid-column: 1/3;
+  width: 90%;
+}
+
+.register-zip-code {
+  grid-row: 4/5;
+  grid-column: 1/2;
+}
+
+.register-zip-code input {
+  width: 60%;
+}
+
+.register-city {
+  grid-row: 4/5;
+  grid-column: 2/3;
+  width: 90%;
+}
+
+.register-email {
+  grid-row: 1/2;
+  grid-column: 3/4;
+}
+
+.register-phone {
+  grid-row: 2/3;
+  grid-column: 3/4;
+  width: 80%;
+}
+.registration-form-group label {
+  display: flex;
+  flex-direction: column;
+  color: #626161;
+  font-weight: 200;
+}
+
+.registration-form input {
+  border: 1px solid #dedede;
+  height: 1.8em;
+}
+
+.registration-form input:focus {
+  outline: 1px solid var(--second-color);
+}
+
+.registration-form hr {
+  border: 0.9px solid var(--second-color);
 }

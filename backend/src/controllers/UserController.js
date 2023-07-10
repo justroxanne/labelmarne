@@ -10,8 +10,12 @@ class UserController extends BaseController {
     this.model = new UserModel();
   }
 
-  async register() {
+  async userRegistration() {
     const {
+      address,
+      complement,
+      zip_code,
+      city,
       company_name,
       firstname,
       lastname,
@@ -20,19 +24,20 @@ class UserController extends BaseController {
       email,
       password,
       website_url,
-      address_id,
     } = this.req.body;
 
     try {
       if (
+        !address ||
+        !zip_code ||
+        !city ||
         !company_name ||
         !firstname ||
         !lastname ||
         !siret ||
         !phone ||
         !email ||
-        !password ||
-        !address_id
+        !password
       ) {
         throw new Error('Please fill in all the fields');
       }
@@ -45,6 +50,13 @@ class UserController extends BaseController {
         hashLength: 50,
       });
 
+      const addressData = {
+        address,
+        complement,
+        zip_code,
+        city,
+      };
+
       const userData = {
         company_name,
         firstname,
@@ -54,10 +66,9 @@ class UserController extends BaseController {
         email,
         password: hashedPassword,
         website_url,
-        address_id,
       };
 
-      const [result] = await this.model.create(userData);
+      const [result] = await this.model.register(addressData, userData);
 
       this.res.status(200).json({
         message: 'User registered successfully',
