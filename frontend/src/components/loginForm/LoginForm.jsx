@@ -32,13 +32,13 @@ const LoginForm = () => {
     } else {
       axios
         .post(
-          `${url}/login`,
+          `${url}/api/login`,
           { email: email, password: password },
           { withCredentials: true }
         )
         .then((res) => {
           if (res.status === 200) {
-            console.log(res.data);
+            displayLogin();
             navigate('/dashboard');
           }
         })
