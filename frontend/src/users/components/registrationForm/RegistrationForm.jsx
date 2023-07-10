@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { IoCloseSharp } from 'react-icons/io5';
 import './RegistrationForm.css';
 
 const RegistrationForm = () => {
@@ -65,8 +66,16 @@ const RegistrationForm = () => {
     }
   };
 
+  const handleCancel = () => {
+    navigate('/');
+  };
+
   return (
     <div className='registration-form'>
+      <IoCloseSharp
+        className='close-registration-form'
+        onClick={handleCancel}
+      />
       <form className='registration-form-container'>
         <div className='registration-form-group'>
           <h2>Candidat</h2>
@@ -224,44 +233,50 @@ const RegistrationForm = () => {
 
         <div className='registration-form-group'>
           <h2>Entreprise</h2>
-          <label htmlFor='website'>
-            <input
-              type='text'
-              id='website'
-              name='website_url'
-              placeholder='Site web'
-              value={userInfos.website_url}
-              onChange={handleChange}
-            />
-          </label>
+          <div className='registration-form-company-subdivision'>
+            <label htmlFor='company-name' className='register-company-name'>
+              Raison sociale *
+              <input
+                type='text'
+                id='company-name'
+                name='company_name'
+                value={userInfos.company_name}
+                onChange={handleChange}
+                required
+              />
+            </label>
 
-          <label htmlFor='company-name'>
-            <input
-              type='text'
-              id='company-name'
-              name='company_name'
-              placeholder='Raison sociale *'
-              value={userInfos.company_name}
-              onChange={handleChange}
-              required
-            />
-          </label>
+            <label htmlFor='website' className='register-website'>
+              Site web
+              <input
+                type='text'
+                id='website'
+                name='website_url'
+                value={userInfos.website_url}
+                onChange={handleChange}
+              />
+            </label>
 
-          <label htmlFor='siret'>
-            <input
-              type='text'
-              id='siret'
-              name='siret'
-              placeholder='SIRET *'
-              value={userInfos.siret}
-              onChange={handleChange}
-              required
-              pattern='^\d{14}$'
-            />
-          </label>
+            <label htmlFor='siret' className='register-siret'>
+              SIRET *
+              <input
+                type='text'
+                id='siret'
+                name='siret'
+                value={userInfos.siret}
+                onChange={handleChange}
+                required
+                pattern='^\d{14}$'
+              />
+            </label>
+          </div>
         </div>
-        <button type='submit-registration-btn' onClick={handleSubmit}>
-          S'inscrire
+        <button
+          type='submit'
+          onClick={handleSubmit}
+          className='submit-registration-btn'
+        >
+          Créer un compte
         </button>
       </form>
     </div>
