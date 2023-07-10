@@ -13,9 +13,7 @@ SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,N
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `address` (
   `id` INT NOT NULL AUTO_INCREMENT,
-  `address_number` INT NULL,
-  `type` VARCHAR(90) NOT NULL,
-  `street_name` VARCHAR(255) NOT NULL,
+  `address` VARCHAR(255) NOT NULL,
   `complement` VARCHAR(255) NULL,
   `zip_code` INT NOT NULL,
   `city` VARCHAR(90) NOT NULL,

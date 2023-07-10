@@ -4,12 +4,22 @@ import axios from 'axios';
 import './RegistrationForm.css';
 
 const RegistrationForm = () => {
-  const baseUrl = import.meta.env.VITE_BACKEND_URL;
+  const url = import.meta.env.VITE_BACKEND_URL;
 
   const navigate = useNavigate();
 
   const [message, setMessage] = useState(false);
+  const [messagePassword, setMessagePassword] = useState(false);
+
+  // const [userPassword, setUserPassword] = useState({
+  //   password: '',
+  // });
+
   const [userInfos, setUserInfos] = useState({
+    address: '',
+    complement: '',
+    zip_code: '',
+    city: '',
     company_name: '',
     siret: '',
     lastname: '',
@@ -17,56 +27,37 @@ const RegistrationForm = () => {
     phone: '',
     email: '',
     website_url: '',
-    adress_id: '',
+    address_id: '',
     password: '',
   });
 
-  const [addressInfos, setAddressInfos] = useState({
-    number: '',
-    type: '',
-    street_name: '',
-    complement: '',
-    zip_code: '',
-    city: '',
-  });
-
   const handleChange = (e) => {
-    e.preventDefault();
+    // const passwordRegex = /^(?=.*d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/;
+    // if (!passwordRegex.test(e.target.password)) {
+    //   setMessagePassword(true);
+    //   return;
+    // }
+
+    // if (e.target.passwordConfirmation !== e.target.password) {
+    //   setMessage(true);
+    //   return;
+    // } else {
+    //   setUserPassword({ password: e.target.password });
+    // }
+
     const { name, value } = e.target;
 
     if (name === 'siret' && value.length > 14) {
       return;
     }
-
     setUserInfos({ ...userInfos, [name]: value });
-    setAddressInfos({ ...addressInfos, [name]: value });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const passwordRegex = /^(?=.*d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/;
-    if (!passwordRegex.test(e.target.password)) {
-      setMessage(true);
-      return;
-    }
-
-    if (e.target.password !== e.target.passwordConfirmation) {
-      setMessage(true);
-      return;
-    }
 
     try {
-      const responseAddress = await axios.post(
-        `${url}/addresses`,
-        addressInfos
-      );
-      console.log(responseAddress.data);
-      const address_id = responseAddress.data.id;
-
-      const responseUser = await axios.post(`${baseUrl}/users`, {
-        ...userInfos,
-        address_id,
-      });
+      const responseUser = await axios.post(`${url}/api/register`, userInfos);
 
       console.log(responseUser.data);
     } catch (error) {
@@ -76,9 +67,174 @@ const RegistrationForm = () => {
 
   return (
     <div className='registration-form'>
-      <h2>Enregistrez-vous:</h2>
       <form className='registration-form-container'>
         <div className='registration-form-group'>
+          <h2>Candidat</h2>
+          <div className='registration-form-subdivision'>
+            <label htmlFor='lastname' className='register-lastname'>
+              Nom *
+              <input
+                type='text'
+                id='lastname'
+                name='lastname'
+                value={userInfos.lastname}
+                onChange={handleChange}
+                required
+              />
+            </label>
+
+            <label htmlFor='firstname' className='register-firstname'>
+              Prénom *
+              <input
+                type='text'
+                id='firstname'
+                name='firstname'
+                value={userInfos.firstname}
+                onChange={handleChange}
+                required
+              />
+            </label>
+
+            <label htmlFor='address' className='register-address'>
+              Adresse *
+              <input
+                type='text'
+                id='address'
+                name='address'
+                value={userInfos.address}
+                onChange={handleChange}
+                required
+              />
+            </label>
+
+            <label htmlFor='complement' className='register-complement'>
+              <input
+                type='text'
+                id='complement'
+                name='complement'
+                value={userInfos.complement}
+                onChange={handleChange}
+              />
+            </label>
+
+            <label htmlFor='zip-code' className='register-zip-code'>
+              Code postal *
+              <input
+                type='text'
+                id='zip-code'
+                name='zip_code'
+                value={userInfos.zip_code}
+                onChange={handleChange}
+                required
+              />
+            </label>
+
+            <label htmlFor='city' className='register-city'>
+              Ville *
+              <input
+                type='text'
+                id='city'
+                name='city'
+                value={userInfos.city}
+                onChange={handleChange}
+                required
+              />
+            </label>
+
+            <label htmlFor='email' className='register-email'>
+              Email *
+              <input
+                type='email'
+                id='email'
+                name='email'
+                value={userInfos.email}
+                onChange={handleChange}
+                required
+              />
+            </label>
+
+            <label htmlFor='phone' className='register-phone'>
+              Téléphone *
+              <input
+                type='text'
+                id='phone'
+                name='phone'
+                value={userInfos.phone}
+                onChange={handleChange}
+                required
+              />
+            </label>
+
+            <label htmlFor='password' className='register-password'>
+              Mot de passe *
+              <input
+                type='password'
+                id='password'
+                name='password'
+                value={userInfos.password}
+                onChange={handleChange}
+                onChangeCapture={(e) => setMessagePassword(false)}
+                required
+              />
+              {messagePassword && (
+                <p
+                  className='password-error'
+                  style={{
+                    color: 'red',
+                    fontSize: '0.9em',
+                    position: 'fixed',
+                    zIndex: '10',
+                    transform: 'translateY(100%)',
+                    backgroundColor: 'white',
+                  }}
+                >
+                  Le mot de passe doit contenir au moins 8 caractères, dont au
+                  moins une majuscule, une minuscule, un chiffre et un caractère
+                  spécial
+                </p>
+              )}
+            </label>
+
+            {/* <label
+              htmlFor='password-confirmation'
+              className='register-password-confirmation'
+            >
+              Confirmation *
+              <input
+                type='password'
+                id='password-confirmation'
+                name='password-confirmation'
+                value={userInfos.passwordConfirmation}
+                onChange={handleChange}
+                required
+              />
+              {message && (
+                <p
+                  className='password-confirmation-error'
+                  style={{ color: 'red', fontSize: '0.9em' }}
+                >
+                  Les mots de passe ne correspondent pas
+                </p>
+              )}
+            </label> */}
+          </div>
+        </div>
+
+        <hr></hr>
+
+        <div className='registration-form-group'>
+          <h2>Entreprise</h2>
+          <label htmlFor='website'>
+            <input
+              type='text'
+              id='website'
+              name='website_url'
+              placeholder='Site web'
+              value={userInfos.website_url}
+              onChange={handleChange}
+            />
+          </label>
+
           <label htmlFor='company-name'>
             <input
               type='text'
@@ -90,8 +246,7 @@ const RegistrationForm = () => {
               required
             />
           </label>
-        </div>
-        <div className='registration-form-group'>
+
           <label htmlFor='siret'>
             <input
               type='text'
@@ -103,191 +258,6 @@ const RegistrationForm = () => {
               required
               pattern='^\d{14}$'
             />
-          </label>
-        </div>
-        <div className='registration-form-group'>
-          <label htmlFor='lastname'>
-            <input
-              type='text'
-              id='lastname'
-              name='lastname'
-              placeholder='Nom *'
-              value={userInfos.lastname}
-              onChange={handleChange}
-              required
-            />
-          </label>
-        </div>
-        <div className='registration-form-group'>
-          <label htmlFor='firstname'>
-            <input
-              type='text'
-              id='firstname'
-              name='firstname'
-              placeholder='Prénom *'
-              value={userInfos.firstname}
-              onChange={handleChange}
-              required
-            />
-          </label>
-        </div>
-        <div className='registration-form-group'>
-          <label htmlFor='phone'>
-            <input
-              type='text'
-              id='phone'
-              name='phone'
-              placeholder='Téléphone *'
-              value={userInfos.phone}
-              onChange={handleChange}
-              required
-            />
-          </label>
-        </div>
-        <div className='registration-form-group'>
-          <label htmlFor='email'>
-            <input
-              type='email'
-              id='email'
-              name='email'
-              placeholder='Email *'
-              value={userInfos.email}
-              onChange={handleChange}
-              required
-            />
-          </label>
-        </div>
-        <div className='registration-form-group'>
-          <label htmlFor='street-number'>
-            <input
-              type='number'
-              id='street-number'
-              name='number'
-              placeholder='Numéro de voie'
-              value={addressInfos.number}
-              onChange={handleChange}
-              required
-            />
-          </label>
-        </div>
-        <div className='registration-form-group'>
-          <label htmlFor='street-type'>
-            <input
-              type='text'
-              id='street-type'
-              name='type'
-              placeholder='Type de voie *'
-              value={addressInfos.type}
-              onChange={handleChange}
-              required
-            />
-          </label>
-        </div>
-        <div className='registration-form-group'>
-          <label htmlFor='street-name'>
-            <input
-              type='text'
-              id='street-name'
-              name='street_name'
-              placeholder='Nom de voie *'
-              value={addressInfos.street_name}
-              onChange={handleChange}
-              required
-            />
-          </label>
-        </div>
-        <div className='registration-form-group'>
-          <label htmlFor='complement'>
-            <input
-              type='text'
-              id='complement'
-              name='complement'
-              placeholder="Complément d'adresse"
-              value={addressInfos.complement}
-              onChange={handleChange}
-            />
-          </label>
-        </div>
-        <div className='registration-form-group'>
-          <label htmlFor='zip-code'>
-            <input
-              type='text'
-              id='zip-code'
-              name='zip_code'
-              placeholder='Code postal *'
-              value={addressInfos.zip_code}
-              onChange={handleChange}
-              required
-            />
-          </label>
-        </div>
-        <div className='registration-form-group'>
-          <label htmlFor='city'>
-            <input
-              type='text'
-              id='city'
-              name='city'
-              placeholder='Ville *'
-              value={addressInfos.city}
-              onChange={handleChange}
-              required
-            />
-          </label>
-        </div>
-        <div className='registration-form-group'>
-          <label htmlFor='website'>
-            <input
-              type='text'
-              id='website'
-              name='website_url'
-              placeholder='Site web'
-              value={userInfos.website_url}
-              onChange={handleChange}
-            />
-          </label>
-        </div>
-        <div className='registration-form-group'>
-          <label htmlFor='password'>
-            <input
-              type='password'
-              id='password'
-              name='password'
-              placeholder='Mot de passe *'
-              value={userInfos.password}
-              onChange={handleChange}
-              required
-            />
-            {message && (
-              <p
-                className='password-error'
-                style={{ color: 'red', fontSize: '0.9em' }}
-              >
-                Le mot de passe doit contenir au moins 8 caractères, dont au
-                moins une majuscule, une minuscule, un chiffre et un caractère
-                spécial
-              </p>
-            )}
-          </label>
-        </div>
-        <div className='registration-form-group'>
-          <label htmlFor='password-confirmation'>
-            <input
-              type='password'
-              id='password-confirmation'
-              name='password-confirmation'
-              placeholder='Confirmation *'
-              value={userInfos.passwordConfirmation}
-              onChange={handleChange}
-              required
-            />
-            {message && (
-              <p
-                className='password-confirmation-error'
-                style={{ color: 'red', fontSize: '0.9em' }}
-              >
-                Les mots de passe ne correspondent pas
-              </p>
-            )}
           </label>
         </div>
         <button type='submit-registration-btn' onClick={handleSubmit}>

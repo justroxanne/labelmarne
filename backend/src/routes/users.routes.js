@@ -19,7 +19,7 @@ userRouter.put('/users/:id', authorization, isAdmin, async (req, res, next) =>
 );
 
 userRouter.post('/register', async (req, res) =>
-  new UserController(req, res).register()
+  new UserController(req, res).userRegistration()
 );
 
 userRouter.post('/login', async (req, res) => {
