@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { IoCloseSharp } from 'react-icons/io5';
+import { BiCheck } from 'react-icons/bi';
 import './RegistrationForm.css';
 
 const RegistrationForm = () => {
@@ -9,12 +10,11 @@ const RegistrationForm = () => {
 
   const navigate = useNavigate();
 
-  const [message, setMessage] = useState(false);
-  const [messagePassword, setMessagePassword] = useState(false);
+  const passwordRegex = new RegExp(
+    /^(?=.*d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/
+  );
 
-  // const [userPassword, setUserPassword] = useState({
-  //   password: '',
-  // });
+  const [message, setMessage] = useState(false);
 
   const [userInfos, setUserInfos] = useState({
     address: '',
@@ -33,19 +33,6 @@ const RegistrationForm = () => {
   });
 
   const handleChange = (e) => {
-    // const passwordRegex = /^(?=.*d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/;
-    // if (!passwordRegex.test(e.target.password)) {
-    //   setMessagePassword(true);
-    //   return;
-    // }
-
-    // if (e.target.passwordConfirmation !== e.target.password) {
-    //   setMessage(true);
-    //   return;
-    // } else {
-    //   setUserPassword({ password: e.target.password });
-    // }
-
     const { name, value } = e.target;
 
     if (name === 'siret' && value.length > 14) {
@@ -182,50 +169,55 @@ const RegistrationForm = () => {
                 name='password'
                 value={userInfos.password}
                 onChange={handleChange}
-                onChangeCapture={(e) => setMessagePassword(false)}
                 required
               />
-              {messagePassword && (
-                <p
-                  className='password-error'
-                  style={{
-                    color: 'red',
-                    fontSize: '0.9em',
-                    position: 'fixed',
-                    zIndex: '10',
-                    transform: 'translateY(100%)',
-                    backgroundColor: 'white',
-                  }}
+              <ul
+                style={{
+                  listStyle: 'none',
+                  fontSize: '0.7em',
+                  position: 'fixed',
+                  transform: 'translateY(5em)',
+                }}
+              >
+                <li
+                  className={
+                    userInfos.password.length >= 8
+                      ? 'valid-password'
+                      : 'invalid-password'
+                  }
                 >
-                  Le mot de passe doit contenir au moins 8 caractères, dont au
-                  moins une majuscule, une minuscule, un chiffre et un caractère
-                  spécial
-                </p>
-              )}
+                  8 caractères minimum
+                  {userInfos.password.length >= 8 && <BiCheck />}
+                </li>
+                <li
+                  className={
+                    userInfos.password.match(/[A-Z]/)
+                      ? 'valid-password'
+                      : 'invalid-password'
+                  }
+                >
+                  1 majuscule {userInfos.password.match(/[A-Z]/) && <BiCheck />}
+                </li>
+                <li
+                  className={
+                    userInfos.password.match(/[a-z]/)
+                      ? 'valid-password'
+                      : 'invalid-password'
+                  }
+                >
+                  1 minuscule {userInfos.password.match(/[a-z]/) && <BiCheck />}
+                </li>
+                <li
+                  className={
+                    userInfos.password.match(/[0-9]/)
+                      ? 'valid-password'
+                      : 'invalid-password'
+                  }
+                >
+                  1 chiffre {userInfos.password.match(/[0-9]/) && <BiCheck />}
+                </li>
+              </ul>
             </label>
-
-            {/* <label
-              htmlFor='password-confirmation'
-              className='register-password-confirmation'
-            >
-              Confirmation *
-              <input
-                type='password'
-                id='password-confirmation'
-                name='password-confirmation'
-                value={userInfos.passwordConfirmation}
-                onChange={handleChange}
-                required
-              />
-              {message && (
-                <p
-                  className='password-confirmation-error'
-                  style={{ color: 'red', fontSize: '0.9em' }}
-                >
-                  Les mots de passe ne correspondent pas
-                </p>
-              )}
-            </label> */}
           </div>
         </div>
 

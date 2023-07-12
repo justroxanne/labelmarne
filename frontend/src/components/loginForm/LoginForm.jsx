@@ -1,6 +1,7 @@
 import axios from 'axios';
 import React, { useState, useContext } from 'react';
-import { LoginContext } from '../../utils/Context';
+import { LoginContext } from '../../Context';
+import { UserContext } from '../../Context';
 import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import { FiArrowRight } from 'react-icons/fi';
@@ -14,6 +15,7 @@ const LoginForm = () => {
   const url = import.meta.env.VITE_BACKEND_URL;
 
   const { displayLogin } = useContext(LoginContext);
+  const { storeUser } = useContext(UserContext);
 
   const navigate = useNavigate();
 
@@ -39,6 +41,7 @@ const LoginForm = () => {
         .then((res) => {
           if (res.status === 200) {
             displayLogin();
+            storeUser(res.data);
             navigate('/dashboard');
           }
         })

@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
+import { UserContext } from '../../Context';
 import './userDashboard.css';
 import UserCard from '../components/userCard/UserCard';
 import EditInfos from '../components/userInfosEdit/EditInfos';
@@ -6,15 +7,9 @@ import EditInfos from '../components/userInfosEdit/EditInfos';
 const UserDashboard = () => {
   const [isEditOpen, setIsEditOpen] = useState(false);
 
-  const [userInfos, setUserInfos] = useState({
-    phone: '01 02 03 04 05',
-    email: 'monadresse@mail.fr',
-    number: 23,
-    type: 'rue',
-    streetname: 'du Temple',
-    zipcode: '12345',
-    city: 'Quelquepart',
-  });
+  const { user } = useContext(UserContext);
+
+  console.log(user);
 
   const handleClick = () => {
     setIsEditOpen(!isEditOpen);
@@ -22,18 +17,8 @@ const UserDashboard = () => {
 
   return (
     <div className='user-dashboard'>
-      {isEditOpen && (
-        <EditInfos
-          handleClick={handleClick}
-          userInfos={userInfos}
-          setUserInfos={setUserInfos}
-        />
-      )}
-      <UserCard
-        handleClick={handleClick}
-        userInfos={userInfos}
-        setUserInfos={setUserInfos}
-      />
+      {isEditOpen && <EditInfos handleClick={handleClick} />}
+      <UserCard handleClick={handleClick} />
       <div className='my-steps'>
         Mes demandes en cours
         <hr />
