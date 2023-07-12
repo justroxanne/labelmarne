@@ -17,8 +17,6 @@ class BaseModel {
     const paramsKey = Object.keys(params).join();
     const paramsValue = Object.values(params).join();
 
-    console.log(paramsKey, paramsValue);
-
     return this.db.query(`SELECT * FROM ${this.table} WHERE ${paramsKey} = ?`, [
       paramsValue,
     ]);

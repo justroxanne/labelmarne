@@ -92,12 +92,13 @@ class UserController extends BaseController {
     const userEmail = { email };
 
     try {
-      const [user] = await this.model.getOne(userEmail);
+      const [result] = await this.model.getOne(userEmail);
 
-      if (!user) {
+      if (!result) {
         return this.res.status(404).json({ error: 'User not found' });
       } else {
-        const hashedPassword = user[0].password;
+        const user = result[0];
+        const hashedPassword = user.password;
         const passwordMatch = await argon2.verify(hashedPassword, password);
 
         if (!passwordMatch) {
@@ -116,7 +117,15 @@ class UserController extends BaseController {
             secure: process.env.NODE_ENV === 'production',
           })
           .status(200)
-          .json({ id: user.id, email: user.email, role_id: user.role_id });
+          .json({
+            id: user.id,
+            company_name: user.company_name,
+            email: user.email,
+            firstname: user.firstname,
+            lastname: user.lastname,
+            phone: user.phone,
+            website_url: user.website_url,
+          });
       }
     } catch (err) {
       console.error(err);

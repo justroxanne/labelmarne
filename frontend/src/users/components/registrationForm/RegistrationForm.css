@@ -166,3 +166,11 @@
 .close-registration-form:hover {
   color: var(--second-color);
 }
+
+.valid-password {
+  color: var(--second-color);
+}
+
+.invalid-password {
+  color: #8e8e8e;
+}

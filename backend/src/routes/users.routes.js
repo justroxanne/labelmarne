@@ -14,6 +14,10 @@ userRouter.get('/users/:id', async (req, res, next) =>
   new UserController(req, res, next).getOne()
 );
 
+userRouter.post('/users/:id/logout', authorization, async (req, res, next) =>
+  new UserController(req, res, next).logout()
+);
+
 userRouter.put('/users/:id', authorization, isAdmin, async (req, res, next) =>
   new UserController(req, res, next).update()
 );
