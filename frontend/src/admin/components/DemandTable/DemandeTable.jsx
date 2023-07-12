@@ -1,40 +1,63 @@
-import React, {useState} from 'react';
-import PopupDemand from '../PopUpDemandAdmin/PopUpDemandAdmin';
+// DemandeTable.jsx
+import React, { useState, useEffect } from 'react';
+import HistoryTable from '../HistoryTable/HistoryTable';
+import AdminIdentity from '../AdminIdentity/AdminIdentity';
 import './DemandeTable.css';
+import PopupDemandAdmin from '../PopUpDemandAdmin/PopUpDemandAdmin';
 
 const DemandeTable = () => {
-  const [rowCount, setRowCount] = useState(1);
   const [popupOpen, setPopupOpen] = useState(false);
-  const [selectedRow, setSelectedRow] = useState(null);
+  const [selectedDemande, setSelectedDemande] = useState(null);
+  const [demandes, setDemandes] = useState([
+    { id: 1, label: 'Label 1', date: new Date(), avancement: 0  },
+    // Autres demandes...
+  ]);
+  const [historiqueDemandes, setHistoriqueDemandes] = useState([]);
+  const [demandesVisibles, setDemandesVisibles] = useState([]);
 
-  const incrementRowCount = () => {
-    setRowCount(rowCount + 1);
+  useEffect(() => {
+    setDemandesVisibles(demandes.filter((demande) => !demande.validee && !demande.rejetee));
+  }, [demandes]);
+
+  const handleOpenPopup = (demandeId) => {
+    const demandeIndex = demandes.findIndex((demande) => demande.id === demandeId);
+    setSelectedRow(demandeIndex);
+    setPopupOpen(true);
   };
-
-  const decrementRowCount = () => {
-    if (rowCount > 1) {
-      setRowCount(rowCount - 1);
-    }
-  };
-
-  const openPopup = (rowIndex) => {
-    setSelectedRow(rowIndex);
+  
+  const openPopup = (demande) => {
+    setSelectedDemande(demande);
     setPopupOpen(true);
   };
 
   const closePopup = () => {
     setPopupOpen(false);
-    setSelectedRow(null);
+    setSelectedDemande(null);
   };
 
-  const handleTraitement = () => {
+  const handleValiderDemande = () => {
+    const updatedDemande = { ...selectedDemande, validee: true };
+
+    setHistoriqueDemandes([...historiqueDemandes, updatedDemande]);
+    setDemandes(demandes.filter((demande) => demande.id !== selectedDemande.id));
+    setDemandesVisibles(demandesVisibles.filter((demande) => demande.id !== selectedDemande.id));
     closePopup();
-    setRowCount(rowCount - 1);
+  };
+
+  const handleRejeterDemande = () => {
+    const updatedDemande = { ...selectedDemande, rejetee: true };
+
+    setHistoriqueDemandes([...historiqueDemandes, updatedDemande]);
+    setDemandes(demandes.filter((demande) => demande.id !== selectedDemande.id));
+    setDemandesVisibles(demandesVisibles.filter((demande) => demande.id !== selectedDemande.id));
+    closePopup();
   };
 
   return (
     <div className='Base-table'>
-      <table className="table">
+      <AdminIdentity />
+      <table className='table-A-Traiter'>
+        <caption className='title-tableAdmin'>Demandes à traiter</caption>
         <thead>
           <tr>
             <th>Numéro de demande</th>
@@ -44,34 +67,34 @@ const DemandeTable = () => {
           </tr>
         </thead>
         <tbody>
-          {Array.from({ length: rowCount }, (_, index) => (
-            <tr key={index}>
+          {demandesVisibles.map((demande) => (
+            <tr key={demande.id}>
+              <td> Numéro{demande.id}</td>
+              <td>{demande.date.toLocaleString()}</td>
+              <td>{demande.label}</td>
               <td>
-                <a href="#" onClick={() => openPopup(index)}>
-                  Lien {index + 1}
-                </a>
+                <button className='avancement' onClick={() => openPopup(demande)}>Traiter</button>
               </td>
-              <td>Donnée {index + 1}</td>
-              <td>Donnée {index + 1}</td>
-              <td>Donnée {index + 1}</td>
-              <td><button onClick={incrementRowCount}>Ajouter une ligne</button></td>
-              <td><button onClick={decrementRowCount}>Supprimer une ligne</button></td>
             </tr>
           ))}
         </tbody>
       </table>
-    
-
-    {popupOpen && (
-      <PopupDemand
-        demandeIndex={selectedRow}
-        onTraitement={handleTraitement}
-        onClose={closePopup}
+      {popupOpen && (
+        <PopupDemandAdmin
+          demande={selectedDemande}
+          handleValider={handleValiderDemande}
+          handleRejeter={handleRejeterDemande}
+          onClose={closePopup}
+        />
+      )}
+      <HistoryTable 
+      onOpenPopup={openPopup} 
+      demandes={historiqueDemandes} 
+      selectedDemandeIndex={selectedDemande?.id} 
+      avancement
       />
-    )}
- 
-  </div>
-);
+    </div>
+  );
 };
 
-export default DemandeTable
+export default DemandeTable;
