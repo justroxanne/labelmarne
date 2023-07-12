@@ -6,7 +6,7 @@ const authorization = (req, res, next) => {
     return res.status(401).json({ error: 'Unauthorized' });
   }
   try {
-    const data = jwt.verify(token, process.env.JWT_AUTH_SECRET);
+    const data = jwt.verify(token, process.env.JWT_SECRET);
     req.userId = data.id;
     req.userRole = data.role;
     next();

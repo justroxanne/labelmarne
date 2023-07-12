@@ -1,5 +1,5 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { LoginContext } from './utils/Context';
+import { LoginContext } from './Context';
 import { useContext } from 'react';
 import Header from './users/components/header/Header';
 import LoginForm from './components/loginForm/LoginForm';
@@ -18,7 +18,7 @@ function App() {
       <Header />
       <Routes>
         <Route path='/' element={<Home />} />
-        <Route path='/user' element={<UserDashboard />} />
+        <Route path='/dashboard' element={<UserDashboard />} />
         <Route path='/registration' element={<Registration />} />
       </Routes>
       <Footer />

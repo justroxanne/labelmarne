@@ -1,55 +1,93 @@
-import React, { useState, useContext } from 'react';
-import authAdmin from '../../../utils/Context/authAdmin';
-import './LoginAdmin.css';
+import React, {useState, useContext} from "react";
+import axios from "axios";;
+import { useNavigate } from "react-router-dom";
+import { LoginContext } from "../../../Context";
+import { AdminContext } from "../../../Context";
+import './LoginAdmin.css'
+import { FiArrowRight } from "react-icons/fi";
 
 const LoginAdmin = () => {
-  const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const { isAuthenticated } = useContext(authAdmin);
+  const [username, setUsername] = useState('');
+  
+  const url = import.meta.env.VITE_BACKEND_URL;
 
-  const handleLogin = () => {
-    const data = {
-        username: username,
-        password: password,
-    };
-
-    axios.post('http://localhost:''/api/login_check', data)
-    .then((response) => {
-        // Gérer la réponse de l'API
-      // Par exemple, vérifier si les informations d'identification sont valides
-      if(response.data.sucesse){
-        isAuthenticated = true;
-      }else{
-        alert('Mauvais identifiants');
-        }
-    })
-    .catch((error) => {
-        // Gérer l'erreur
-        console.log(error);
-    });
+  const {displayLogin} = useContext(LoginContext);
+  const {storeAdmin} = useContext(AdminContext)
+  const navigate = useNavigate();
 
 
-    // Vérifier les informations d'identification ici (par exemple, avec une requête API)
-    // Si les informations sont valides, définissez le contexte isAuthenticated sur true
-    // Sinon, affichez un message d'erreur ou effectuez toute autre action nécessaire
+  const handlePasswordChange = (e) => {
+    setPassword(e.target.value);
+  };
+
+  const handleUsernameChange = (e) => {
+    setUsername(e.target.value);
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (!username || !password) {
+      alert("Merci de remplir le nom d'utilisateur et le mot de passe");
+    } else {
+      axios
+        .post(
+          `${url}/api/admin-login`,
+          { username: username, password: password },
+          { withCredentials: true }
+        )
+        .then((res) => {
+          if (res.status === 200) {
+            displayLogin();
+            storeAdmin(res.data);
+            navigate("/admin");
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+          console.log(err.request); // Affiche les détails de la requête
+          console.log(err.message); // Affiche le message d'erreur
+          console.log(err.config); // Affiche la configuration de la requête Axios
+         
+          alert("Nom d'utilisateur ou mot de passe incorrect");
+        });
+    }
   };
 
   return (
-    <div className="login-admin">
-      <h1>Admin Login</h1>
-      <input
-        type="text"
-        placeholder="Username"
-        value={username}
-        onChange={(e) => setUsername(e.target.value)}
-      />
-      <input
-        type="password"
-        placeholder="Password"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-      />
-      <button onClick={handleLogin}>Login</button>
+    <div className="loginAdmin-form-container">
+      <form className="loginAdmin-form">
+        <h2>Accès à votre espace administrateur</h2>
+        <h3>Saisissez votre nom d'utilisateur:</h3>
+        <label htmlFor="username">
+          <input
+            type="username"
+            name="username"
+            id="username"
+            placeholder="admin"
+            value={username}
+            onChange={handleUsernameChange}
+          ></input>
+        </label>
+        <label htmlFor="password-admin" required>
+          <h3>Saisissez votre mot de passe:</h3>
+          <input
+            type="password"
+            name="password-admin"
+            id="password-admin"
+            placeholder="********"
+            value={password}
+            onChange={handlePasswordChange}
+          />
+        </label>
+        <button
+          type="submit"
+          className="login-submit-btn-admin"
+          onClick={handleSubmit}
+        >
+          ENTREZ <FiArrowRight className="login-arrow-right" />
+        </button>
+      </form>
     </div>
   );
 };

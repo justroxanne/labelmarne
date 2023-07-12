@@ -10,8 +10,12 @@ class UserController extends BaseController {
     this.model = new UserModel();
   }
 
-  async register() {
+  async userRegistration() {
     const {
+      address,
+      complement,
+      zip_code,
+      city,
       company_name,
       firstname,
       lastname,
@@ -20,19 +24,20 @@ class UserController extends BaseController {
       email,
       password,
       website_url,
-      address_id,
     } = this.req.body;
 
     try {
       if (
+        !address ||
+        !zip_code ||
+        !city ||
         !company_name ||
         !firstname ||
         !lastname ||
         !siret ||
         !phone ||
         !email ||
-        !password ||
-        !address_id
+        !password
       ) {
         throw new Error('Please fill in all the fields');
       }
@@ -45,6 +50,13 @@ class UserController extends BaseController {
         hashLength: 50,
       });
 
+      const addressData = {
+        address,
+        complement,
+        zip_code,
+        city,
+      };
+
       const userData = {
         company_name,
         firstname,
@@ -54,10 +66,9 @@ class UserController extends BaseController {
         email,
         password: hashedPassword,
         website_url,
-        address_id,
       };
 
-      const [result] = await this.model.create(userData);
+      const [result] = await this.model.register(addressData, userData);
 
       this.res.status(200).json({
         message: 'User registered successfully',
@@ -78,32 +89,44 @@ class UserController extends BaseController {
       });
     }
 
+    const userEmail = { email };
+
     try {
-      const [user] = await this.model.getOne(email);
+      const [result] = await this.model.getOne(userEmail);
 
-      if (!user) {
+      if (!result) {
         return this.res.status(404).json({ error: 'User not found' });
+      } else {
+        const user = result[0];
+        const hashedPassword = user.password;
+        const passwordMatch = await argon2.verify(hashedPassword, password);
+
+        if (!passwordMatch) {
+          return this.res.status(401).json({ error: 'Mot de passe incorrect' });
+        }
+
+        const payload = { id: user.id, role: user.role_id };
+
+        const token = jwt.sign(payload, process.env.JWT_SECRET, {
+          expiresIn: '1h',
+        });
+
+        this.res
+          .cookie('token', token, {
+            httpOnly: true,
+            secure: process.env.NODE_ENV === 'production',
+          })
+          .status(200)
+          .json({
+            id: user.id,
+            company_name: user.company_name,
+            email: user.email,
+            firstname: user.firstname,
+            lastname: user.lastname,
+            phone: user.phone,
+            website_url: user.website_url,
+          });
       }
-
-      const passwordMatch = await argon2.verify(user.password, password);
-
-      if (!passwordMatch) {
-        return this.res.status(401).json({ error: 'Mot de passe incorrect' });
-      }
-
-      const payload = { id: user.id, role: user.role_id };
-
-      const token = jwt.sign(payload, process.env.JWT_AUTH_SECRET, {
-        expiresIn: '1h',
-      });
-
-      this.res
-        .cookie('token', token, {
-          httpOnly: true,
-          secure: process.env.NODE_ENV === 'production',
-        })
-        .status(200)
-        .json({ id: user.id, email: user.email, role_id: user.role_id });
     } catch (err) {
       console.error(err);
       this.res.status(500).json({ error: err.message });

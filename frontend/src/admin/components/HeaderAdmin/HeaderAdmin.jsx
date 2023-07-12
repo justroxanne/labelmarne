@@ -1,12 +1,9 @@
 import React from 'react'
 import { MdAdminPanelSettings } from 'react-icons/Md';
 import logo_marne from'../../assets/logoMarne_partenariat_white.png'
-import { useContext } from 'react';
 import './HeaderAdmin.css'
-import { NavLink } from 'react-router-dom';
 
 const HeaderAdmin = () => {
-const{isAutenficated} = useContext(authAdmin)
 
   return (
     <div className='HeaderAdmin'>

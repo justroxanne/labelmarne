@@ -20,12 +20,12 @@ adminRouter.post('/admin-login', async (req, res) =>
   new AdminController(req, res).login()
 );
 
-adminRouter.put('/admins/:id', authorization, isAdmin, async (req, res, next) =>
+adminRouter.put('/admin/:id', authorization, isAdmin, async (req, res, next) =>
   new AdminController(req, res, next).update()
 );
 
 adminRouter.delete(
-  '/admins/:id',
+  '/admin/:id',
   authorization,
   isAdmin,
   async (req, res, next) => new AdminController(req, res, next).delete()

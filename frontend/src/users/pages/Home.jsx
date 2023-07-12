@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
-import { LoginContext } from '../../utils/Context';
+import { LoginContext } from '../../Context';
 import FilterBar from '../components/filterBar/FilterBar';
 import './Home.css';
 

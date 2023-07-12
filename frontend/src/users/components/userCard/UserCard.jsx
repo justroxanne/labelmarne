@@ -1,9 +1,12 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { AiOutlineEdit } from 'react-icons/ai';
+import { UserContext } from '../../../Context';
 import Leia from '../../assets/userprofile.png';
 import './userCard.css';
 
-const UserCard = ({ handleClick, userInfos }) => {
+const UserCard = ({ handleClick }) => {
+  const { user } = useContext(UserContext);
+
   return (
     <>
       <div className='usercard'>
@@ -13,16 +16,16 @@ const UserCard = ({ handleClick, userInfos }) => {
           alt='user profile picture'
         />
         <div className='user-infos'>
-          <h3>Ma super société</h3>
+          <h3>{user.company_name}</h3>
           <br />
           <span>
-            {userInfos.number} {userInfos.type} {userInfos.streetname}
+            {user.number} {user.type} {user.streetname}
           </span>
           <span>
-            {userInfos.zipcode} {userInfos.city}
+            {user.zipcode} {user.city}
           </span>
-          <span>{userInfos.email}</span>
-          <span>{userInfos.phone}</span>
+          <span>{user.email}</span>
+          <span>{user.phone}</span>
         </div>
         <AiOutlineEdit
           style={{ width: '1.5em', height: '1.5em' }}

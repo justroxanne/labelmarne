@@ -51,7 +51,7 @@ const FilterBar = () => {
             <input
               type='text'
               name='label'
-              id='category'
+              id='label'
               placeholder='Label'
               className='filter-input'
               onChange={(e) => handleChange(e, setLabel)}

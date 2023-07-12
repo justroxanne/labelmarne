@@ -14,13 +14,12 @@ class BaseModel {
   }
 
   getOne(params) {
-    const paramsKey = Object.keys(params);
-    const paramsValue = Object.values(params);
+    const paramsKey = Object.keys(params).join();
+    const paramsValue = Object.values(params).join();
 
-    return this.db.query(
-      `SELECT * FROM ${this.table} WHERE ${paramsKey} = '${paramsValue}'`,
-      [paramsValue]
-    );
+    return this.db.query(`SELECT * FROM ${this.table} WHERE ${paramsKey} = ?`, [
+      paramsValue,
+    ]);
   }
 
   create(data) {
