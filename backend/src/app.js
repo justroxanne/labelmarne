@@ -22,9 +22,11 @@ app.use(express.static(path.join(__dirname, '../public')));
 const userRouter = require('./routes/users.routes');
 const adminRouter = require('./routes/admins.routes');
 const addressRouter = require('./routes/address.routes');
+const labelRouter = require('./routes/labels.routes');
 
 app.use('/api', userRouter);
 app.use('/api', adminRouter);
 app.use('/api', addressRouter);
+app.use('/api', labelRouter);
 
 module.exports = app;

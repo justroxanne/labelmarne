@@ -60,7 +60,7 @@ class AdminController extends BaseController {
     }
 
     try {
-      const admin = await this.model.getOne(username);
+      const [result] = await this.model.getOne(username);
 
       if (!result) {
         return this.res.status(400).json({ error: 'Invalid credentials' });
