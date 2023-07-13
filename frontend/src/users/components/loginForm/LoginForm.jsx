@@ -1,7 +1,7 @@
 import axios from 'axios';
 import React, { useState, useContext } from 'react';
-import { LoginContext } from '../../Context';
-import { UserContext } from '../../Context';
+import { LoginContext } from '../../../Context';
+import { UserContext } from '../../../Context';
 import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import { FiArrowRight } from 'react-icons/fi';
@@ -42,7 +42,7 @@ const LoginForm = () => {
           if (res.status === 200) {
             displayLogin();
             storeUser(res.data);
-            navigate('/dashboard');
+            navigate('/user-dashboard');
           }
         })
         .catch((err) => {
@@ -81,7 +81,10 @@ const LoginForm = () => {
         </label>
         <span>
           Si vous n'êtes pas encore inscrit,{' '}
-          <Link to='/registration'>cliquez ici</Link>.
+          <Link to='/registration' onClick={displayLogin}>
+            cliquez ici
+          </Link>
+          .
         </span>
         <button
           type='submit'

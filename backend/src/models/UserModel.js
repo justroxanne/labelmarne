@@ -29,6 +29,13 @@ class UserModel extends BaseModel {
         );
       });
   }
+
+  async getUserByEmail(email) {
+    return this.db.query(
+      `SELECT user.*, address.* FROM user INNER JOIN address ON user.address_id = address.id WHERE user.email = ?`,
+      [email]
+    );
+  }
 }
 
 module.exports = UserModel;

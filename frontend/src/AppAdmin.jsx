@@ -19,9 +19,9 @@ function AppAdmin() {
       {isLoginDisplayedAdmin && <LoginForm />}
       <HeaderAdmin />
         <Routes>
-        <Route path='/' element={<HomeAdmin />} />
-        <Route path='/admin' element={<AdminDashboard/>} />
-      </Routes>
+          <Route path='/' element={<HomeAdmin />} />
+          <Route path='/admin' element={<AdminDashboard/>} />
+        </Routes>
       <FooterAdmin />
     </div>
   );

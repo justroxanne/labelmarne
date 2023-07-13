@@ -47,6 +47,7 @@ ENGINE = InnoDB;
 CREATE TABLE IF NOT EXISTS `label` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(90) NOT NULL,
+  `logo` VARCHAR(255) NOT NULL,
   `url` VARCHAR(255) NOT NULL,
   `category_id` INT NOT NULL,
   PRIMARY KEY (`id`, `category_id`),
@@ -97,6 +98,7 @@ CREATE TABLE IF NOT EXISTS `user` (
   `siret` VARCHAR(14) UNIQUE NOT NULL COMMENT '14 chiffres obligatoires',
   `phone` VARCHAR(40) NOT NULL,
   `email` VARCHAR(90) UNIQUE NOT NULL,
+  `profile_picture` VARCHAR(255) NULL,
   `password` VARCHAR(255) NOT NULL,
   `website_url` VARCHAR(90) NULL,
   `address_id` INT NOT NULL,
@@ -127,6 +129,7 @@ CREATE TABLE IF NOT EXISTS `admin` (
   `lastname` VARCHAR(90) NOT NULL,
   `username` VARCHAR(45) UNIQUE NOT NULL,
   `email` VARCHAR(90) UNIQUE NOT NULL,
+  `profile_picture` VARCHAR(255) NULL,
   `password` VARCHAR(255) NOT NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB;

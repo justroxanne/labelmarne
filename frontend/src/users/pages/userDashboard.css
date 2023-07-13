@@ -6,6 +6,15 @@
   margin-bottom: 3em;
 }
 
+.logout {
+  width: 2em;
+  height: 2em;
+  color: white;
+  position: fixed;
+  top: 2em;
+  right: 2em;
+}
+
 .my-steps,
 .my-labels {
   width: 90dvw;
