@@ -36,7 +36,7 @@ class AdminController extends BaseController {
         password: hashedPassword,
       };
 
-      const [result] = await this.model.create(adminData);
+      const [result] = await this.model.create(adminData);//admin?
 
       this.res.status(200).json({
         message: 'Admin registered successfully',
@@ -73,15 +73,6 @@ class AdminController extends BaseController {
       
         if (!passwordMatchAdmin) {
           return this.res.status(401).json({error:'Mot de passe incorrect'});
-      }
-
-
-      const admin = result[0];
-      const hashedPassword = admin.password;
-      const passwordMatch = await argon2.verify(hashedPassword, password);
-
-      if (!passwordMatch) {
-        return this.res.status(401).json({ error: 'Mot de passe incorrect' });
       }
 
       const payload = { id: admin.id };

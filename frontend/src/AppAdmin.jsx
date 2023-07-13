@@ -20,7 +20,7 @@ function AppAdmin() {
       <HeaderAdmin />
         <Routes>
         <Route path='/' element={<HomeAdmin />} />
-        <Route path='/admin-dashboard' element={<AdminDashboard/>} />
+        <Route path='/dashboard' element={<AdminDashboard/>} />
       </Routes>
       <FooterAdmin />
     </div>
