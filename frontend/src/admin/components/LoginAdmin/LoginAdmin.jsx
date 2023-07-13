@@ -3,8 +3,8 @@ import axios from "axios";;
 import { useNavigate } from "react-router-dom";
 import { LoginContext } from "../../../Context";
 import { AdminContext } from "../../../Context";
-import './LoginAdmin.css'
 import { FiArrowRight } from "react-icons/fi";
+import './LoginAdmin.css'
 
 const LoginAdmin = () => {
   const [password, setPassword] = useState('');
@@ -12,7 +12,6 @@ const LoginAdmin = () => {
   
   const url = import.meta.env.VITE_BACKEND_URL;
 
-  const {displayLogin} = useContext(LoginContext);
   const {storeAdmin} = useContext(AdminContext)
   const navigate = useNavigate();
 
@@ -38,9 +37,8 @@ const LoginAdmin = () => {
         )
         .then((res) => {
           if (res.status === 200) {
-            displayLogin();
             storeAdmin(res.data);
-            navigate("/admin");
+            navigate("/admin-dashboard");
           }
         })
         .catch((err) => {
@@ -64,7 +62,7 @@ const LoginAdmin = () => {
             type="username"
             name="username"
             id="username"
-            placeholder="admin"
+            placeholder="Nom d'utilisateur"
             value={username}
             onChange={handleUsernameChange}
           ></input>

@@ -28,7 +28,34 @@
     color: white;
   }
   
-  .icones-admin {
-    color: white;
-    margin-top: 0.5em;
+ 
+
+  /* Styles pour la version mobile */
+
+@media only screen and (max-width: 600px) {
+  .HeaderAdmin{
+    height: 10vh;
   }
+
+  .logo {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+
+  .header-content {
+    top: initial;
+    bottom: 0;
+    align-items: center;
+    margin: 0.5em;
+  }
+
+  .header-content h3 {
+    margin: 0.5em 0;
+    font-size: 1.2em;
+  }
+
+  .icones-admin {
+    margin-top: 0.3em;
+  }
+}

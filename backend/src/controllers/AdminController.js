@@ -58,13 +58,24 @@ class AdminController extends BaseController {
           "Merci de saisir votre nom d'utilisateur ainsi que votre mot de passe.",
       });
     }
+      const adminUsername = {username}
 
     try {
-      const admin = await this.model.getOne(username);
 
-      if (!result) {
+      const [admin] = await this.model.getOne(adminUsername);
+      
+      if (!admin) {
         return this.res.status(400).json({ error: 'Invalid credentials' });
+      }else{
+        const loggedInAdmin = admin[0];
+        const hashedPassword = loggedInAdmin.password;
+        const passwordMatchAdmin = await argon2.verify(hashedPassword, password);
+      
+        if (!passwordMatchAdmin) {
+          return this.res.status(401).json({error:'Mot de passe incorrect'});
       }
+
+
       const admin = result[0];
       const hashedPassword = admin.password;
       const passwordMatch = await argon2.verify(hashedPassword, password);
@@ -85,7 +96,13 @@ class AdminController extends BaseController {
           secure: process.env.NODE_ENV === 'production',
         })
         .status(200)
-        .json({ id: admin.id, email: admin.email });
+
+        .json({ 
+          id: admin.id, 
+          email: admin.email
+          });
+        }
+   
     } catch (err) {
       console.error(err);
       this.res.status(500).json({ error: err.message });

@@ -115,3 +115,30 @@
    width: 1.5em;
     height: 1.5em;
 }
+
+/* Styles pour la version mobile */
+
+@media only screen and (max-width: 700px) {
+    .loginAdmin-form {
+      width: 80%;
+      height: auto;
+    }
+  
+    .loginAdmin-form h2 {
+      font-size: 1.4em;
+    }
+  
+    .loginAdmin-form h3 {
+      font-size: 1em;
+    }
+  
+    .loginAdmin-form #username,
+    .loginAdmin-form #password-admin {
+      width: 100%;
+    }
+  
+    .login-submit-btn-admin {
+      width: 70%;
+    }
+  }
+  
