@@ -1,6 +1,6 @@
 const express = require('express');
 const AddressController = require('../controllers/AddressController');
-const { authorization, isAdmin } = require('..//middleware/auth');
+const { authorization, isAdmin } = require('../middleware/auth');
 
 const addressRouter = express.Router();
 
@@ -19,7 +19,7 @@ addressRouter.post('/address', async (req, res) =>
   new AddressController(req, res).create()
 ); // Route OK
 
-addressRouter.put('/address/:id', authorization, async (req, res, next) =>
+addressRouter.put('/address/:id', async (req, res, next) =>
   new AddressController(req, res, next).update()
 ); // Route OK
 

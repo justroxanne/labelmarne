@@ -18,11 +18,9 @@ const UserCard = ({ handleClick }) => {
         <div className='user-infos'>
           <h3>{user.company_name}</h3>
           <br />
+          <span>{user.address}</span>
           <span>
-            {user.number} {user.type} {user.streetname}
-          </span>
-          <span>
-            {user.zipcode} {user.city}
+            {user.zip_code} {user.city}
           </span>
           <span>{user.email}</span>
           <span>{user.phone}</span>

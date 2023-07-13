@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { UserContext } from '../../../Context';
 import axios from 'axios';
 import { IoCloseSharp } from 'react-icons/io5';
 import { BiCheck } from 'react-icons/bi';
@@ -8,13 +9,13 @@ import './RegistrationForm.css';
 const RegistrationForm = () => {
   const url = import.meta.env.VITE_BACKEND_URL;
 
+  const { storeUser } = useContext(UserContext);
+
   const navigate = useNavigate();
 
   const passwordRegex = new RegExp(
     /^(?=.*d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/
   );
-
-  const [message, setMessage] = useState(false);
 
   const [userInfos, setUserInfos] = useState({
     address: '',
@@ -45,9 +46,13 @@ const RegistrationForm = () => {
     e.preventDefault();
 
     try {
-      const responseUser = await axios.post(`${url}/api/register`, userInfos);
-
-      console.log(responseUser.data);
+      if (!passwordRegex.test(userInfos.password)) {
+        return;
+      } else {
+        const responseUser = await axios.post(`${url}/api/register`, userInfos);
+        storeUser(responseUser.data);
+        navigate('/user-dashboard');
+      }
     } catch (error) {
       console.error(error);
     }

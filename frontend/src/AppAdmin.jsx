@@ -13,7 +13,7 @@ function AppAdmin() {
       <AdminIdentity />
       <DemandeTable />
       <Routes>
-        <Route path='/admin/*' element={<AdminDashboard />} />
+        <Route path='/admins/*' element={<AdminDashboard />} />
       </Routes>
       <FooterAdmin />
     </div>

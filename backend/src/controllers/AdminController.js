@@ -58,23 +58,25 @@ class AdminController extends BaseController {
           "Merci de saisir votre nom d'utilisateur ainsi que votre mot de passe.",
       });
     }
+    const adminUsername = { username };
 
     try {
-      const admin = await this.model.getOne(email);
+      const [result] = await this.model.getOne(adminUsername);
 
-      if (!admin) {
+      if (!result) {
         return this.res.status(400).json({ error: 'Invalid credentials' });
       }
-
-      const passwordMatch = await argon2.verify(admin.password, password);
+      const admin = result[0];
+      const hashedPassword = admin.password;
+      const passwordMatch = await argon2.verify(hashedPassword, password);
 
       if (!passwordMatch) {
         return this.res.status(401).json({ error: 'Mot de passe incorrect' });
       }
 
-      const payload = { id: admin.id, role: admin.role_id };
+      const payload = { id: admin.id };
 
-      const token = jwt.sign(payload, process.env.JWT_SECRET, {
+      const token = jwt.sign(payload, process.env.JWT_AUTH_SECRET, {
         expiresIn: '1h',
       });
 
@@ -84,7 +86,7 @@ class AdminController extends BaseController {
           secure: process.env.NODE_ENV === 'production',
         })
         .status(200)
-        .json({ id: admin.id, email: admin.email, role_id: admin.role_id });
+        .json({ id: admin.id, email: admin.email });
     } catch (err) {
       console.error(err);
       this.res.status(500).json({ error: err.message });

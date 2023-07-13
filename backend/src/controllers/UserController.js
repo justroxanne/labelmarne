@@ -73,6 +73,16 @@ class UserController extends BaseController {
       this.res.status(200).json({
         message: 'User registered successfully',
         id: result.insertId,
+        company_name: userData.company_name,
+        email: userData.email,
+        firstname: userData.firstname,
+        lastname: userData.lastname,
+        phone: userData.phone,
+        website_url: userData.website_url,
+        address: addressData.address,
+        complement: addressData.complement,
+        zip_code: addressData.zip_code,
+        city: addressData.city,
       });
     } catch (err) {
       console.error(err);
@@ -83,16 +93,14 @@ class UserController extends BaseController {
   async login() {
     const { email, password } = this.req.body;
 
-    if (!email || !password) {
-      return this.res.status(400).json({
-        error: 'Merci de saisir votre email ainsi que votre mot de passe.',
-      });
-    }
-
-    const userEmail = { email };
-
     try {
-      const [result] = await this.model.getOne(userEmail);
+      if (!email || !password) {
+        return this.res.status(400).json({
+          error: 'Merci de saisir votre email ainsi que votre mot de passe.',
+        });
+      }
+
+      const [result] = await this.model.getUserByEmail(email);
 
       if (!result) {
         return this.res.status(404).json({ error: 'User not found' });
@@ -105,9 +113,9 @@ class UserController extends BaseController {
           return this.res.status(401).json({ error: 'Mot de passe incorrect' });
         }
 
-        const payload = { id: user.id, role: user.role_id };
+        const payload = { id: user.id };
 
-        const token = jwt.sign(payload, process.env.JWT_SECRET, {
+        const token = jwt.sign(payload, process.env.JWT_AUTH_SECRET, {
           expiresIn: '1h',
         });
 
@@ -125,6 +133,10 @@ class UserController extends BaseController {
             lastname: user.lastname,
             phone: user.phone,
             website_url: user.website_url,
+            address: user.address,
+            complement: user.complement,
+            zip_code: user.zip_code,
+            city: user.city,
           });
       }
     } catch (err) {
