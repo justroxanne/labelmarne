@@ -2,8 +2,8 @@
 import React, { useState, useEffect } from 'react';
 import HistoryTable from '../HistoryTable/HistoryTable';
 import AdminIdentity from '../AdminIdentity/AdminIdentity';
-import './DemandeTable.css';
 import PopupDemandAdmin from '../PopUpDemandAdmin/PopUpDemandAdmin';
+import './DemandeTable.css';
 
 const DemandeTable = () => {
   const [popupOpen, setPopupOpen] = useState(false);
@@ -55,7 +55,6 @@ const DemandeTable = () => {
 
   return (
     <div className='Base-table'>
-      <AdminIdentity />
       <table className='table-A-Traiter'>
         <caption className='title-tableAdmin'>Demandes à traiter</caption>
         <thead>

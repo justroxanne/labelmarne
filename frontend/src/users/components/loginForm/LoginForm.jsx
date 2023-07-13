@@ -42,7 +42,7 @@ const LoginForm = () => {
           if (res.status === 200) {
             displayLogin();
             storeUser(res.data);
-            navigate('/user-dashboard');
+            navigate('/admin-dashboard');
           }
         })
         .catch((err) => {
@@ -79,13 +79,6 @@ const LoginForm = () => {
             onChange={handlePasswordChange}
           />
         </label>
-        <span>
-          Si vous n'êtes pas encore inscrit,{' '}
-          <Link to='/registration' onClick={displayLogin}>
-            cliquez ici
-          </Link>
-          .
-        </span>
         <button
           type='submit'
           className='login-submit-btn'
