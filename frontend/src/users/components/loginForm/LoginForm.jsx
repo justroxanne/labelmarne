@@ -1,7 +1,7 @@
 import axios from 'axios';
 import React, { useState, useContext } from 'react';
-import { LoginContext } from '../../Context';
-import { UserContext } from '../../Context';
+import { LoginContext } from '../../../Context';
+import { UserContext } from '../../../Context';
 import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import { FiArrowRight } from 'react-icons/fi';

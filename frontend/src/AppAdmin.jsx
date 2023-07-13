@@ -5,7 +5,7 @@ import FooterAdmin from './admin/components/FooterAdmin/FooterAdmin';
 import HomeAdmin from './admin/pages/HomeAdmin';
 import AdminDashboard from './admin/pages/AdminDashboard';
 import { LoginContext } from './Context';
-import LoginForm from './components/loginForm/LoginForm';
+import LoginAdmin from './admin/components/LoginAdmin/LoginAdmin';
 import './AppAdmin.css';
 
 
@@ -16,11 +16,11 @@ function AppAdmin() {
 
   return (
     <div className='app-admin'>
-      {isLoginDisplayedAdmin && <LoginForm />}
+      {isLoginDisplayedAdmin && <LoginAdmin />}
       <HeaderAdmin />
         <Routes>
         <Route path='/' element={<HomeAdmin />} />
-        <Route path='/admin' element={<AdminDashboard/>} />
+        <Route path='/admin-dashboard' element={<AdminDashboard/>} />
       </Routes>
       <FooterAdmin />
     </div>

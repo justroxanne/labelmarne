@@ -24,4 +24,25 @@
   .newsletter {
     width: 30%;
   }
-  
+  /* Styles pour la version mobile */
+
+@media only screen and (max-width: 600px) {
+  .footerAdmin {
+    flex-direction: row;
+    height: auto;
+  }
+
+  .logo-container {
+    align-self: center;
+    margin-bottom: 1em;
+  }
+
+  .contact,
+  .newsletter {
+    width: 80%;
+    font-size: 0.5em;
+    margin: 0,5em;
+    padding:0.5em;
+    overflow-wrap: normal;
+  }
+}
