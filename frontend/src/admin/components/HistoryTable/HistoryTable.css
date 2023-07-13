@@ -1,0 +1,59 @@
+.Base-tableHistory{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 70%;
+}
+
+.table-history{
+    margin: 5dvw;
+    justify-content: center;
+    width: 100%;
+    border: 2px solid #DEDEDE;  
+    border-radius: 0.5em;
+    box-shadow: 0px 15px 12px rgba(0, 0, 0, 0.15);
+  }
+  
+  .table-history th{
+    padding: 8px;
+    text-align: left;
+  }
+  
+  .table-history td {
+    padding: 8px;
+    text-align: left;
+    flex-direction: row;
+    align-items: center;
+  }
+  
+  .table-history th {
+    background-color: white;
+  }
+  
+  .table-history tbody tr:nth-child(even) {
+    background-color: white;
+  }
+  
+  .table-history tbody tr:hover {
+    background-color: var(--clear-color)
+  }
+  
+  .table-history a {
+    color: black;
+    text-decoration: underline;
+  }
+
+  .title-tableAdmin{
+   text-align:start;
+   font-size: large;
+   padding-left: 1dvh;
+ }
+  
+.iconevalid{
+  color : var(--main-color);
+}
+
+.iconeinvalid{
+  color : red;
+}

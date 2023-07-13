@@ -58,10 +58,9 @@ class AdminController extends BaseController {
           "Merci de saisir votre nom d'utilisateur ainsi que votre mot de passe.",
       });
     }
-    const adminUsername = { username };
 
     try {
-      const [result] = await this.model.getOne(adminUsername);
+      const admin = await this.model.getOne(username);
 
       if (!result) {
         return this.res.status(400).json({ error: 'Invalid credentials' });
