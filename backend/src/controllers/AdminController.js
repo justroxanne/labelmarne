@@ -1,4 +1,5 @@
 const BaseController = require('./BaseController');
+const fs = require('fs');
 const { AdminModel } = require('../models');
 const argon2 = require('argon2');
 const jwt = require('jsonwebtoken');
@@ -11,10 +12,22 @@ class AdminController extends BaseController {
   }
 
   async register() {
-    const { email, password, firstname, lastname } = this.req.body;
+    const { 
+      email, 
+      password, 
+      firstname, 
+      lastname
+    } = this.req.body;
+
+    const profilImage = req.file.path;
 
     try {
-      if (!email || !password || !firstname || !lastname) {
+      if (!email || 
+        !password || 
+        !firstname || 
+        !lastname || 
+        !profilImage
+         ) {
         throw new Error('Please fill all the fields');
       }
 
@@ -34,6 +47,7 @@ class AdminController extends BaseController {
         username: username,
         email,
         password: hashedPassword,
+        profilImage: profilImage.path, //enregistrer le chemin de l'image dans la base de données
       };
 
       const [result] = await this.model.create(adminData);//admin?
@@ -42,8 +56,15 @@ class AdminController extends BaseController {
         message: 'Admin registered successfully',
         id: result.insertId,
         username: adminData.username,
+        email: adminData.email,
+        firstname: adminData.firstname,
+        lastname: adminData.lastname,
+        profilImage: adminData.profilImage,
       });
     } catch (err) {
+      if(profilImage){
+        fs.unlinkSync(profilImage.path);
+      }
       console.error(err);
       this.res.status(500).json({ error: err.message });
     }
@@ -74,8 +95,8 @@ class AdminController extends BaseController {
         if (!passwordMatchAdmin) {
           return this.res.status(401).json({error:'Mot de passe incorrect'});
       }
-
-      const payload = { id: admin.id };
+console.log(loggedInAdmin)
+      const payload = { id: loggedInAdmin.id };
 
       const token = jwt.sign(payload, process.env.JWT_AUTH_SECRET, {
         expiresIn: '1h',
@@ -87,10 +108,12 @@ class AdminController extends BaseController {
           secure: process.env.NODE_ENV === 'production',
         })
         .status(200)
-
         .json({ 
-          id: admin.id, 
-          email: admin.email
+          id: loggedInAdmin.id, 
+          email: loggedInAdmin.email,
+          firstname: loggedInAdmin.firstname,
+          lastname: loggedInAdmin.lastname,
+          profilImage: loggedInAdmin.profilImage,
           });
         }
    

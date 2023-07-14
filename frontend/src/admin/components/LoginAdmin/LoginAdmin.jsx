@@ -38,7 +38,7 @@ const LoginAdmin = () => {
         .then((res) => {
           if (res.status === 200) {
             storeAdmin(res.data);
-            navigate("/admin-dashboard");
+            navigate("/admin/dashboard");
           }
         })
         .catch((err) => {
