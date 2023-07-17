@@ -16,7 +16,7 @@ const authorization = (req, res, next) => {
 };
 
 const isAdmin = (req, res, next) => {
-  if (table !== 'admin') {
+  if (req.user.role !== 'admin') {
     return res.status(403).json({ error: 'Forbidden' });
   } else {
     next();

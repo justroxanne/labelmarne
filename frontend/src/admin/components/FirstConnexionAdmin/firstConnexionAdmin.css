@@ -102,13 +102,17 @@
     scale:1;
     transition:all 0.25s ease-in-out;
 
-    .Adminlogin-arrow-right{
+    .adminlogin-arrow-right{
         transform: translateX(1em);
         transition: all 0.25s ease-in;
     }
 }
 
-.Adminlogin-arrow-right{
+.adminlogin-arrow-right{
     width: 1.5em;
     height: 1.5em;
+}
+.adminConnect-input-file{
+    background-color: var(--dark-color);
+    color: white;
 }
