@@ -1,0 +1,75 @@
+.labels-carousel-container {
+  width: 100%;
+  padding-left: 2em;
+  display: flex;
+  flex-direction: column;
+  gap: 2em;
+}
+
+.labels-carousel {
+  width: 100vw;
+  height: 40vh;
+}
+
+.labels-list {
+  list-style: none;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  overflow: scroll;
+  gap: 5em;
+}
+
+.labels-list::-webkit-scrollbar {
+  display: none;
+}
+
+.labels-list li {
+  min-width: 200px;
+  height: 90%;
+  border-radius: 7px;
+  border: 1px solid #e0e0e0;
+  overflow: hidden;
+}
+
+.label-container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  text-align: center;
+  color: rgb(103, 103, 103);
+}
+
+.label-logo {
+  margin: 1em;
+  max-height: 80%;
+  width: 60%;
+  object-fit: cover;
+}
+
+.go-to-website {
+  width: 100%;
+  height: 15%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1em;
+  background-color: var(--main-color);
+  text-decoration: none;
+  color: white;
+  font-weight: 500;
+  .arrow {
+    width: 1.5em;
+    height: 1.5em;
+  }
+}
+
+.go-to-website:hover {
+  .arrow {
+    transform: translateX(1em);
+    transition: transform 0.25s ease-in;
+  }
+}

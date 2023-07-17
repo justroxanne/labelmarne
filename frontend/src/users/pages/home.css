@@ -12,7 +12,7 @@
   gap: 1em;
   color: white;
   font-size: 1.3em;
-  position: fixed;
+  position: absolute;
   top: 1em;
   right: 1em;
   font-weight: 500;
