@@ -1,9 +1,8 @@
 const express = require('express');
-const multer = require("multer");
+const upload = require('../middleware/multer');
 
 const AdminController = require('../controllers/AdminController');
 const { authorization, isAdmin } = require('../middleware/auth');
-const upload  =  multer ({dest: './public/uploads/'});
 
 const adminRouter = express.Router();
 
@@ -15,7 +14,7 @@ adminRouter.get('/admins/:id', authorization, isAdmin, async (req, res, next) =>
   new AdminController(req, res, next).getOne()
 );
 
-adminRouter.post('/admin-register', upload.single ('profilWoman'), async (req, res) =>
+adminRouter.post('/admin-register', upload.single ('file'), async (req, res) =>
   new AdminController(req, res).register()
 );
 

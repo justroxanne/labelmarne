@@ -1,7 +1,6 @@
 import React, {useState, useContext} from "react";
 import axios from "axios";;
 import { useNavigate } from "react-router-dom";
-import { LoginContext } from "../../../Context";
 import { AdminContext } from "../../../Context";
 import { FiArrowRight } from "react-icons/fi";
 import './LoginAdmin.css'

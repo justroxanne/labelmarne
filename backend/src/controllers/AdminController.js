@@ -1,5 +1,6 @@
 const BaseController = require('./BaseController');
-const fs = require('fs');
+const fs = require('fs');//pour supprimer l'image
+const upload = require('../middleware/multer');//pour l'upload de l'image de profil
 const { AdminModel } = require('../models');
 const argon2 = require('argon2');
 const jwt = require('jsonwebtoken');
@@ -16,12 +17,11 @@ class AdminController extends BaseController {
       email, 
       password, 
       firstname, 
-      lastname
+      lastname,
+      profilImage
     } = this.req.body;
 
-    const profilImage = req.file.path;
-
-    try {
+    try {//vérifie que tous les champs sont remplis
       if (!email || 
         !password || 
         !firstname || 
@@ -41,18 +41,20 @@ class AdminController extends BaseController {
 
       const username = firstname.slice(0, 1) + lastname + '-admin';
 
-      const adminData = {
+      const adminData = {//crée un objet avec les données de l'admin
         firstname,
         lastname,
         username: username,
         email,
         password: hashedPassword,
-        profilImage: profilImage.path, //enregistrer le chemin de l'image dans la base de données
-      };
+      }
+        if(profilImage){//si il y a une image de profil
+          adminData.profilImage = profilImage//utilise le chemin de l'image
+        };
 
-      const [result] = await this.model.create(adminData);//admin?
+      const [result] = await this.model.create(adminData);
 
-      this.res.status(200).json({
+      this.res.status(200).json({//renvoie les données de l'admin
         message: 'Admin registered successfully',
         id: result.insertId,
         username: adminData.username,
@@ -61,13 +63,25 @@ class AdminController extends BaseController {
         lastname: adminData.lastname,
         profilImage: adminData.profilImage,
       });
-    } catch (err) {
+    } catch (err) { 
       if(profilImage){
-        fs.unlinkSync(profilImage.path);
+        fs.unlinkSync(profilImage.path);//supprime l'image si il y a une erreur
       }
-      console.error(err);
+      console.log(err)
       this.res.status(500).json({ error: err.message });
     }
+  }
+
+  profilImage() {//upload de l'image de profil
+    return new Promise((resolve, reject) => {
+      upload.single('profilImage')(this.req, this.res, (err) => {//utilise le middleware multer
+        if (err) {
+          reject(err);//renvoie une erreur si il y a un problème
+        } else {
+          resolve(this.req.file ? this.req.file.path : null);//renvoie le chemin de l'image
+        }
+      });
+    });
   }
 
   async login() {
