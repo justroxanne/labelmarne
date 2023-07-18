@@ -6,8 +6,7 @@ const storage = multer.diskStorage({// définit le dossier de destination et le 
   },
   filename: function (req, file, cb) {
     // Génère un nom de fichier unique
-    const timestamp = Date.now();
-    const filename = `${timestamp}-${file.originalname}`;
+    const filename = file.originalname;
     cb(null, filename); // Nom du fichier
   },
 });

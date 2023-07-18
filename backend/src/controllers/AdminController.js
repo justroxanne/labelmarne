@@ -18,16 +18,16 @@ class AdminController extends BaseController {
       password, 
       firstname, 
       lastname,
-      profilImage
     } = this.req.body;
 
     try {//vérifie que tous les champs sont remplis
       if (!email || 
         !password || 
         !firstname || 
-        !lastname || 
-        !profilImage
+        !lastname 
          ) {
+          console.log(email, password, firstname, lastname, profile_picture)
+          console.log(this.req.file)
         throw new Error('Please fill all the fields');
       }
 
@@ -48,9 +48,9 @@ class AdminController extends BaseController {
         email,
         password: hashedPassword,
       }
-        if(profilImage){//si il y a une image de profil
-          adminData.profilImage = profilImage//utilise le chemin de l'image
-        };
+      if (this.req.file && this.req.file.path) {
+        adminData.profile_picture = this.req.file.path;
+      }
 
       const [result] = await this.model.create(adminData);
 
@@ -61,20 +61,21 @@ class AdminController extends BaseController {
         email: adminData.email,
         firstname: adminData.firstname,
         lastname: adminData.lastname,
-        profilImage: adminData.profilImage,
+        profile_picture: adminData.profile_picture,
       });
-    } catch (err) { 
-      if(profilImage){
-        fs.unlinkSync(profilImage.path);//supprime l'image si il y a une erreur
+    } catch (err) {
+      if (this.req.file && this.req.file.path) {
+        fs.unlinkSync(this.req.file.path);
       }
-      console.log(err)
+      console.log(err);
       this.res.status(500).json({ error: err.message });
     }
   }
+  
 
-  profilImage() {//upload de l'image de profil
+  profile_picture() {//upload de l'image de profil
     return new Promise((resolve, reject) => {
-      upload.single('profilImage')(this.req, this.res, (err) => {//utilise le middleware multer
+      upload.single('profile_picture')(this.req, this.res, (err) => {//utilise le middleware multer
         if (err) {
           reject(err);//renvoie une erreur si il y a un problème
         } else {
@@ -127,7 +128,7 @@ console.log(loggedInAdmin)
           email: loggedInAdmin.email,
           firstname: loggedInAdmin.firstname,
           lastname: loggedInAdmin.lastname,
-          profilImage: loggedInAdmin.profilImage,
+          profile_picture: loggedInAdmin.profile_picture,
           });
         }
    
