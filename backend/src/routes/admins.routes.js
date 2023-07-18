@@ -14,7 +14,7 @@ adminRouter.get('/admins/:id', authorization, isAdmin, async (req, res, next) =>
   new AdminController(req, res, next).getOne()
 );
 
-adminRouter.post('/admin-register', upload.single ('file'), async (req, res) =>
+adminRouter.post('/admin-register', upload.single ('profile_picture'), async (req, res) =>
   new AdminController(req, res).register()
 );
 
