@@ -9,9 +9,10 @@ const controllers = fs
 
     const Controller = require(path.join(__dirname, file));
 
-    return { ...controllerList, [key]: Controller };
+    return { ...controllerList, [key]: Controller.name };
   }, {});
 
+console.log(controllers);
 const handler = {
   get(obj, prop) {
     if (prop in obj) {

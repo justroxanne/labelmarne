@@ -1,0 +1,31 @@
+.container-admin{
+    height: Auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+}
+
+.box-admin{
+    display: flex;
+    gap: 1em;
+    margin: -2em;
+    width: 50%;
+    height: 100%;
+    background: #FFFFFF;
+    border: 1px solid #DEDEDE;
+    box-shadow: 0px 15px 12px rgba(0, 0, 0, 0.15);
+}
+
+.identity{
+    display:flex;
+    flex-direction:column;
+}
+
+.img-profil{
+    width: 30%;
+}
+
+.img-profil img{
+    width: 100%;
+}

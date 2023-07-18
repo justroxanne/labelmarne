@@ -1,0 +1,17 @@
+.adminconnect{
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  top: 2em;
+  right: 2em;
+}
+.icones-admin {
+    color: white;
+    margin-top: 0.5em;
+  }
+
+  .adminconnect h3 {
+    color: white;
+    margin-top: 0.5em;
+  }

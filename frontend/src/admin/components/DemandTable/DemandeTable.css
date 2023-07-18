@@ -1,0 +1,65 @@
+.Base-table{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.table-A-Traiter {
+  margin: 5dvw;
+  justify-content: center;
+  width: 70%;
+  border: 2px solid #DEDEDE;  
+  border-radius: 0.5em;
+  box-shadow: 0px 15px 12px rgba(0, 0, 0, 0.15);
+}
+
+.table-A-Traiter th,
+.table-A-Traiter td {
+  padding: 8px;
+  text-align: left;
+}
+
+.table-A-Traiter th {
+  background-color: white;
+}
+
+.table-A-Traiter tbody tr:nth-child(even) {
+  background-color: white;
+}
+
+.table-A-Traiter tbody tr:hover {
+  background-color: var(--clear-color)
+}
+
+.table-A-Traiter a {
+  color: black;
+  text-decoration: underline;
+}
+
+.title-tableAdmin{
+ text-align:start;
+ font-size: large;
+ padding-left: 1dvh;
+}
+
+/*boutton*/
+
+.avancement {
+font-size: 17px;
+padding: 0.2em 1em;
+border: transparent;
+box-shadow: 1px 1px 2px rgba(0,0,0,0.4);
+background: var(--clear-color);
+color: white;
+border-radius: 2px;
+}
+
+.avancement:hover{
+background: rgb(2,0,36);
+background: linear-gradient(90deg, var(--clear-color) 0%, var(--clear-color)100%);
+}
+
+.avancement:active {
+transform: translate(0em, 0.2em);
+}
