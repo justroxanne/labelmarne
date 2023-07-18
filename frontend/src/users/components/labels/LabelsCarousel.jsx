@@ -13,8 +13,6 @@ const LabelsCarousel = () => {
     });
   }, []);
 
-  console.log(labels);
-
   return (
     <div className='labels-carousel-container'>
       <h2>Les labels de la région:</h2>

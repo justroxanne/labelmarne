@@ -31,6 +31,7 @@ const RegistrationForm = () => {
     website_url: '',
     address_id: '',
     password: '',
+    profile_picture: '',
   });
 
   const handleChange = (e) => {
@@ -68,7 +69,11 @@ const RegistrationForm = () => {
         className='close-registration-form'
         onClick={handleCancel}
       />
-      <form className='registration-form-container'>
+      <form
+        className='registration-form-container'
+        encType='multipart/form-data'
+        method='post'
+      >
         <div className='registration-form-group'>
           <h2>Candidat</h2>
           <div className='registration-form-subdivision'>
@@ -222,6 +227,18 @@ const RegistrationForm = () => {
                   1 chiffre {userInfos.password.match(/[0-9]/) && <BiCheck />}
                 </li>
               </ul>
+            </label>
+            <label
+              htmlFor='profile-picture'
+              className='register-profile-picture'
+            >
+              Photo de profil
+              <input
+                type='file'
+                id='profile-picture'
+                name='profile_picture'
+                onChange={handleChange}
+              />
             </label>
           </div>
         </div>

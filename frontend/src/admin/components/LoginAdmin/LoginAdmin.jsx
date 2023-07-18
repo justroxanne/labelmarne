@@ -1,7 +1,6 @@
 import React, {useState, useContext} from "react";
 import axios from "axios";;
 import { useNavigate } from "react-router-dom";
-import { LoginContext } from "../../../Context";
 import { AdminContext } from "../../../Context";
 import { FiArrowRight } from "react-icons/fi";
 import './LoginAdmin.css'
@@ -38,7 +37,7 @@ const LoginAdmin = () => {
         .then((res) => {
           if (res.status === 200) {
             storeAdmin(res.data);
-            navigate("/admin-dashboard");
+            navigate("/admin/dashboard");
           }
         })
         .catch((err) => {

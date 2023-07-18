@@ -1,6 +1,6 @@
 const express = require('express');
 const UserController = require('../controllers/UserController'); // Assurez-vous que le chemin d'accès est correct
-const { authorization, isAdmin } = require('..//middleware/auth');
+const { authorization, isAdmin } = require('../middleware/auth');
 
 const userRouter = express.Router();
 

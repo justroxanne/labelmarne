@@ -24,6 +24,7 @@ class UserController extends BaseController {
       email,
       password,
       website_url,
+      profile_picture,
     } = this.req.body;
 
     try {
@@ -66,6 +67,7 @@ class UserController extends BaseController {
         email,
         password: hashedPassword,
         website_url,
+        profile_picture,
       };
 
       const [result] = await this.model.register(addressData, userData);
@@ -83,6 +85,7 @@ class UserController extends BaseController {
         complement: addressData.complement,
         zip_code: addressData.zip_code,
         city: addressData.city,
+        profile_picture: userData.profile_picture,
       });
     } catch (err) {
       console.error(err);
@@ -137,6 +140,7 @@ class UserController extends BaseController {
             complement: user.complement,
             zip_code: user.zip_code,
             city: user.city,
+            profile_picture: user.profile_picture,
           });
       }
     } catch (err) {
