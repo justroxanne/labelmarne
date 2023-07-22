@@ -45,7 +45,7 @@
 .adminConnect-form #email,
 .adminConnect-form #firstname,
 .adminConnect-form #lastname,
-.adminConnect-form #password-admin,
+.adminConnect-form #password-admin1,
 .adminConnect-form #profile_picture{
     text-align: center;
     margin-top: 1em;
@@ -60,7 +60,7 @@
 .adminConnect-form #email:focus
 .adminConnect-form #firstname:focus,
 .adminConnect-form #lastname:focus,
-.adminConnect-form #password-admin:focus,
+.adminConnect-form #password-admin1:focus,
 .adminConnect-form #profile_picture:focus
 {
     outline: none;
@@ -172,7 +172,7 @@
     .adminConnect-form #email,
     .adminConnect-form #firstname,
     .adminConnect-form #lastname,
-    .adminConnect-form #password-admin,
+    .adminConnect-form #password-admin1,
     .adminConnect-form #profile_picture{
       width: 100%;
     }
