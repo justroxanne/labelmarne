@@ -1,4 +1,4 @@
-.adminconnect{
+.adminconnect {
   position: fixed;
   display: flex;
   flex-direction: column;
@@ -6,12 +6,56 @@
   top: 2em;
   right: 2em;
 }
+
 .icones-admin {
-    color: white;
-    margin-top: 0.5em;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: white;
+  margin-top: 0.5em;
+  background-color: transparent;
+  border: none;
+  cursor: pointer; 
+}
+
+.icones-admin:hover, 
+.icones-admin-text:hover{
+  color: #adacac;
+}
+
+.icones-admin-text {
+  color: white;
+  margin-top: 0.2em;
+  font-size: small;
+}
+
+.adminconnect h3 {
+  color: white;
+  margin-top: 0.5em;
+}
+
+@media screen and (max-width: 768px) {
+  .adminconnect {
+    top: 1em;
+    right: 1em;
+  }
+
+  .icones-admin {
+    margin-top: 0.2em;
   }
 
   .adminconnect h3 {
-    color: white;
-    margin-top: 0.5em;
+    font-size: 16px;
+    margin-top: 0.2em;
   }
+
+  .icones-admin-text {
+    display: none;
+  }
+
+  .icones-admin svg {
+    width: 1.5em;
+    height: 1.5em;
+  }
+}
+

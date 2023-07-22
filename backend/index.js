@@ -2,7 +2,7 @@ require('dotenv').config();
 
 const app = require('./src/app');
 
-const port = parseInt(process.env.APP_PORT ?? '5001', 10);
+const port = parseInt(process.env.APP_PORT ?? '5002', 10);
 
 app.listen(port, (err) => {
   if (err) {
@@ -11,3 +11,4 @@ app.listen(port, (err) => {
     console.warn(`Server is listening on ${port}`);
   }
 });
+  

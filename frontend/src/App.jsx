@@ -11,6 +11,7 @@ import './App.css';
 
 function App() {
   const { isLoginDisplayed } = useContext(LoginContext);
+  
 
   return (
     <div className='app'>
