@@ -1,61 +1,78 @@
+/* AdminDashboard.css */
+.admin-dashboard-container {
+  padding: 20px;
+}
+
 .adminconnect {
-  position: fixed;
   display: flex;
-  flex-direction: column;
+  justify-content: space-between;
   align-items: center;
-  top: 2em;
-  right: 2em;
+  margin-bottom: 20px;
 }
 
 .icones-admin {
   display: flex;
-  flex-direction: column;
   align-items: center;
-  color: white;
-  margin-top: 0.5em;
-  background-color: transparent;
+  background: #f5f5f5;
   border: none;
-  cursor: pointer; 
-}
-
-.icones-admin:hover, 
-.icones-admin-text:hover{
-  color: #adacac;
+  border-radius: 5px;
+  padding: 5px 10px;
+  cursor: pointer;
 }
 
 .icones-admin-text {
-  color: white;
-  margin-top: 0.2em;
-  font-size: small;
+  margin-left: 5px;
 }
 
-.adminconnect h3 {
-  color: white;
-  margin-top: 0.5em;
+.tab-buttons {
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 20px;
 }
 
-@media screen and (max-width: 768px) {
-  .adminconnect {
-    top: 1em;
-    right: 1em;
-  }
-
-  .icones-admin {
-    margin-top: 0.2em;
-  }
-
-  .adminconnect h3 {
-    font-size: 16px;
-    margin-top: 0.2em;
-  }
-
-  .icones-admin-text {
-    display: none;
-  }
-
-  .icones-admin svg {
-    width: 1.5em;
-    height: 1.5em;
-  }
+.tab-buttons button {
+  flex: 1;
+  border: none;
+  background: none;
+  cursor: pointer;
+  padding: 10px;
+  font-size: 16px;
+  color: #333;
+  transition: background 0.3s ease-in-out;
 }
 
+.tab-buttons button:hover {
+  background: #025dbf;
+}
+
+.tab-buttons .active-tab {
+  background: #007bff;
+  color: #fff;
+}
+
+.data-visualization-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 20px auto;
+}
+
+.tab-content {
+  max-width: 100%;
+}
+
+/* Media Query pour les appareils mobiles */
+@media (max-width: 768px) {
+  .tab-buttons {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .tab-buttons button {
+    margin-bottom: 10px;
+  }
+
+  .data-visualization-container {
+    max-width: 60%;
+  }
+}
