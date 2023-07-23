@@ -1,0 +1,111 @@
+.admin-label-container{
+  display:flex;
+  flex-direction:column;
+  margin: 4em;
+}
+
+.admin-label-container h2{
+  color: var(--mouse-color);
+  font-size: 1.5em;
+  font-weight: 200;
+}
+
+.label-list{
+  height: auto;
+  list-style: none;
+}
+
+.label-list li{
+  margin: 1em;
+  border: 1px solid var(--mouse-color);
+  border-radius: 5px;
+  padding: 0.5em 1em;
+  cursor: pointer;
+  height: 100%;
+}
+
+.label-info{
+  display: flex;
+  align-items: center;
+  margin:1em;
+}
+
+.btn-modif{
+  margin-left: auto;
+  margin-right: 1em;
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+}
+.btn-adminLabel {
+  text-align: center;
+  font-size: 1em;
+  color: white;
+  border-radius: 5px;
+  background-color: var(--mouse-color);
+  font-weight: 300;
+  overflow: hidden;
+  width: auto;
+  margin-left: 1em;
+  padding: 0.3em;
+}
+
+.btn-adminLabel:hover{
+  background-color: var(--dark-color);
+  color: white;
+  scale:1;
+}
+
+.add-label-form{
+  margin: 1em;
+  border: 1px solid var(--mouse-color);
+  border-radius: 5px;
+  padding: 0.5em 1em;
+  cursor: pointer;
+  height: auto;
+  width: 50%;
+}
+
+.form-row input{
+  width: 100%;
+  margin: 0.5em 0;
+  padding: 0.5em;
+  border: 1px solid var(--mouse-color);
+  border-radius: 5px;
+}
+
+.add-button{
+  text-align: center;
+  font-size: 1em;
+  color: white;
+  border-radius: 5px;
+  background-color: var(--mouse-color);
+  font-weight: 300;
+  overflow: hidden;
+  width: auto;
+  margin-left: 1em;
+  padding: 0.3em;
+}
+
+.link-button {
+  display: inline-block;
+  padding: 0.5em 1em;
+  background-color: var(--mouse-color);
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  text-decoration: none;
+}
+.link-button:hover {
+  background-color: var(--dark-color);
+}
+
+.label-url{
+  border: none;
+  margin-left: 1em;
+  background-color: transparent;
+  cursor: pointer;
+  color: var(--mouse-color);
+}
+
