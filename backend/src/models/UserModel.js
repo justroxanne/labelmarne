@@ -30,6 +30,8 @@ class UserModel extends BaseModel {
       });
   }
 
+  // Problème au niveau de la requête SQL: l'id du user est confondu avec celui de l'adresse
+
   async getUserByEmail(email) {
     return this.db.query(
       `SELECT user.*, address.* FROM user INNER JOIN address ON user.address_id = address.id WHERE user.email = ?`,

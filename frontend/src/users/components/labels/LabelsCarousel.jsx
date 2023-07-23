@@ -24,7 +24,7 @@ const LabelsCarousel = () => {
                 <div className='label-container'>
                   <img
                     className='label-logo'
-                    src={`../../../${label.logo}`}
+                    src={`/api/public/uploads/${label.logo}`}
                     alt={`logo ${label.name}`}
                   />
                   <span>{label.name}</span>

@@ -13,11 +13,13 @@ class AdminController extends BaseController {
   }
 
   async register() {
-    const { email, password, firstname, lastname, profilImage } = this.req.body;
+    const { email, password, firstname, lastname } = this.req.body;
 
     try {
       //vérifie que tous les champs sont remplis
-      if (!email || !password || !firstname || !lastname || !profilImage) {
+      if (!email || !password || !firstname || !lastname) {
+        console.log(email, password, firstname, lastname, profile_picture);
+        console.log(this.req.file);
         throw new Error('Please fill all the fields');
       }
 
@@ -39,12 +41,11 @@ class AdminController extends BaseController {
         email,
         password: hashedPassword,
       };
-      if (profilImage) {
-        //si il y a une image de profil
-        adminData.profilImage = profilImage; //utilise le chemin de l'image
+      if (this.req.file && this.req.file.path) {
+        adminData.profile_picture = this.req.file.path;
       }
 
-      const [result] = await this.model.create(adminData); //admin?
+      const [result] = await this.model.create(adminData);
 
       this.res.status(200).json({
         //renvoie les données de l'admin
@@ -54,21 +55,21 @@ class AdminController extends BaseController {
         email: adminData.email,
         firstname: adminData.firstname,
         lastname: adminData.lastname,
-        profilImage: adminData.profilImage,
+        profile_picture: adminData.profile_picture,
       });
     } catch (err) {
-      if (profilImage) {
-        fs.unlinkSync(profilImage.path); //supprime l'image si il y a une erreur
+      if (this.req.file && this.req.file.path) {
+        fs.unlinkSync(this.req.file.path);
       }
       console.log(err);
       this.res.status(500).json({ error: err.message });
     }
   }
 
-  profilImage() {
+  profile_picture() {
     //upload de l'image de profil
     return new Promise((resolve, reject) => {
-      upload.single('profilImage')(this.req, this.res, (err) => {
+      upload.single('profile_picture')(this.req, this.res, (err) => {
         //utilise le middleware multer
         if (err) {
           reject(err); //renvoie une erreur si il y a un problème
@@ -106,8 +107,8 @@ class AdminController extends BaseController {
         if (!passwordMatchAdmin) {
           return this.res.status(401).json({ error: 'Mot de passe incorrect' });
         }
-
-        const payload = { id: admin.id };
+        console.log(loggedInAdmin);
+        const payload = { id: loggedInAdmin.id };
 
         const token = jwt.sign(payload, process.env.JWT_AUTH_SECRET, {
           expiresIn: '1h',
@@ -119,10 +120,12 @@ class AdminController extends BaseController {
             secure: process.env.NODE_ENV === 'production',
           })
           .status(200)
-
           .json({
-            id: admin.id,
-            email: admin.email,
+            id: loggedInAdmin.id,
+            email: loggedInAdmin.email,
+            firstname: loggedInAdmin.firstname,
+            lastname: loggedInAdmin.lastname,
+            profile_picture: loggedInAdmin.profile_picture,
           });
       }
     } catch (err) {

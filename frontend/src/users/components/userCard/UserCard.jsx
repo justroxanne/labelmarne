@@ -1,18 +1,21 @@
 import React, { useContext } from 'react';
 import { AiOutlineEdit } from 'react-icons/ai';
 import { UserContext } from '../../../Context';
-import Leia from '../../assets/userprofile.png';
+import Avatar from '../../assets/avatar.png';
 import './userCard.css';
 
 const UserCard = ({ handleClick }) => {
   const { user } = useContext(UserContext);
   console.log(user);
-
   return (
     <>
       <div className='usercard'>
         <img
-          src={user.profile_picture ? user.profile_picture : Leia}
+          src={
+            user.profile_picture
+              ? `/api/public/uploads/${user.profile_picture}`
+              : Avatar
+          }
           className='profile-picture'
           alt='user profile picture'
         />

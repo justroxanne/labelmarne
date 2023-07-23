@@ -3,7 +3,6 @@ import React, { useState, useContext } from 'react';
 import { LoginContext } from '../../../Context';
 import { UserContext } from '../../../Context';
 import { useNavigate } from 'react-router-dom';
-import { Link } from 'react-router-dom';
 import { FiArrowRight } from 'react-icons/fi';
 import { IoCloseSharp } from 'react-icons/io5';
 import './loginForm.css';
@@ -42,7 +41,7 @@ const LoginForm = () => {
           if (res.status === 200) {
             displayLogin();
             storeUser(res.data);
-            navigate('/admin-dashboard');
+            navigate('/user-dashboard');
           }
         })
         .catch((err) => {

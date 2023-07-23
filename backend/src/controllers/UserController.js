@@ -1,7 +1,9 @@
 const argon2 = require('argon2');
 const jwt = require('jsonwebtoken');
 const BaseController = require('./BaseController');
+const fs = require('fs');
 const { UserModel } = require('../models');
+const upload = require('../middleware/multer');
 require('dotenv').config();
 
 class UserController extends BaseController {
@@ -24,7 +26,6 @@ class UserController extends BaseController {
       email,
       password,
       website_url,
-      profile_picture,
     } = this.req.body;
 
     try {
@@ -67,8 +68,10 @@ class UserController extends BaseController {
         email,
         password: hashedPassword,
         website_url,
-        profile_picture,
       };
+      if (this.req.file) {
+        userData.profile_picture = this.req.file.filename;
+      }
 
       const [result] = await this.model.register(addressData, userData);
 
@@ -88,9 +91,26 @@ class UserController extends BaseController {
         profile_picture: userData.profile_picture,
       });
     } catch (err) {
+      if (this.req.file && this.req.file.path) {
+        fs.unlinkSync(this.req.file.path);
+      }
       console.error(err);
       this.res.status(500).json({ error: err.message });
     }
+  }
+
+  profile_picture() {
+    //upload de l'image de profil
+    return new Promise((resolve, reject) => {
+      upload.single('profile_picture')(this.req, this.res, (err) => {
+        //utilise le middleware multer
+        if (err) {
+          reject(err); //renvoie une erreur si il y a un problème
+        } else {
+          resolve(this.req.file ? this.req.file.path : null); //renvoie le chemin de l'image
+        }
+      });
+    });
   }
 
   async login() {
@@ -104,6 +124,7 @@ class UserController extends BaseController {
       }
 
       const [result] = await this.model.getUserByEmail(email);
+      console.log(result);
 
       if (!result) {
         return this.res.status(404).json({ error: 'User not found' });
@@ -136,6 +157,7 @@ class UserController extends BaseController {
             lastname: user.lastname,
             phone: user.phone,
             website_url: user.website_url,
+            address_id: user.address_id,
             address: user.address,
             complement: user.complement,
             zip_code: user.zip_code,

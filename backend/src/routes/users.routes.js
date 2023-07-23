@@ -1,6 +1,7 @@
 const express = require('express');
 const UserController = require('../controllers/UserController'); // Assurez-vous que le chemin d'accès est correct
 const { authorization, isAdmin } = require('../middleware/auth');
+const upload = require('../middleware/multer');
 
 const userRouter = express.Router();
 
@@ -22,8 +23,10 @@ userRouter.put('/users/:id', async (req, res, next) =>
   new UserController(req, res, next).update()
 );
 
-userRouter.post('/register', async (req, res) =>
-  new UserController(req, res).userRegistration()
+userRouter.post(
+  '/register',
+  upload.single('profile_picture'),
+  async (req, res) => new UserController(req, res).userRegistration()
 );
 
 userRouter.post('/login', async (req, res) => {
