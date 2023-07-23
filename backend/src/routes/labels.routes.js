@@ -6,4 +6,18 @@ const labelRouter = express.Router();
 
 labelRouter.get('/labels', async (req, res) => {
   new LabelController(req, res).getAll();
-});
+});//route OK
+
+labelRouter.post('/labels', async (req, res) => {
+  new LabelController(req, res).create();
+});//route OK
+
+labelRouter.delete('/labels/:id', async (req, res) => {
+  new LabelController(req, res).delete();
+});//route OK
+
+labelRouter.put('/labels/:id', async (req, res) => {
+  new LabelController(req, res).update();
+});//route OK
+
+module.exports = labelRouter;

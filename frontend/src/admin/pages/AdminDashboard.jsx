@@ -2,8 +2,9 @@ import React, { useContext } from 'react';
 import { MdAdminPanelSettings } from 'react-icons/md';
 import { useNavigate } from 'react-router-dom';
 import { AdminContext } from '../../Context/AdminContext';
-import './AdminDashboard.css';
 import AdminIdentity from '../components/AdminIdentity/AdminIdentity';
+import AdminLabel from '../components/AdminLabel/AdminLabel';
+import './AdminDashboard.css';
 
 function AdminDashboard() {
   const { admin, setAdmin } = useContext(AdminContext);
@@ -25,6 +26,7 @@ function AdminDashboard() {
          <h3>{admin.firstname}</h3>
       </div>
       <AdminIdentity />
+      <AdminLabel/>
     </div>
   );
 }
