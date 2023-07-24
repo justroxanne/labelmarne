@@ -31,8 +31,9 @@ class UserModel extends BaseModel {
   }
 
   async getUserByEmail(email) {
+    const addressFields = ['address.id as addressId'];
     return this.db.query(
-      `SELECT user.*, address.* FROM user INNER JOIN address ON user.address_id = address.id WHERE user.email = ?`,
+      `SELECT user.*, ${addressFields} FROM user INNER JOIN address ON user.address_id = address.id WHERE user.email = ?`,
       [email]
     );
   }
