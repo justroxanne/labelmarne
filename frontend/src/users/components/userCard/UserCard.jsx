@@ -6,6 +6,7 @@ import './userCard.css';
 
 const UserCard = ({ handleClick }) => {
   const { user } = useContext(UserContext);
+
   return (
     <>
       <div className='usercard'>
@@ -20,6 +21,9 @@ const UserCard = ({ handleClick }) => {
         />
         <div className='user-infos'>
           <h3>{user.company_name}</h3>
+          <h4>
+            {user.firstname} {user.lastname}
+          </h4>
           <br />
           <span>{user.address}</span>
           <span>
@@ -34,7 +38,7 @@ const UserCard = ({ handleClick }) => {
           onClick={handleClick}
         />
       </div>
-      <button className='new-step-btn'>Faire une demande</button>
+      <button className='new-step-btn'>Tester mon éligibilité</button>
     </>
   );
 };

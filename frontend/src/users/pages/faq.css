@@ -1,0 +1,30 @@
+.faq {
+  display: flex;
+  flex-direction: column;
+  gap: 2em;
+  width: 95%;
+  margin: auto;
+  margin-bottom: 5em;
+}
+
+.faq h1 {
+  font-weight: 400;
+  margin: 1em;
+  align-self: center;
+  display: flex;
+  flex-direction: column;
+}
+
+.faq h1:after {
+  content: '';
+  width: 15%;
+  height: 2px;
+  background-color: black;
+  margin: 1em auto;
+}
+
+.faq-question-container h3 {
+  font-weight: 400;
+  color: var(--main-color);
+  margin-bottom: 1em;
+}
