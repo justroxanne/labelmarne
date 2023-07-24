@@ -5,7 +5,7 @@ const fs = require('fs');
 
 const app = require('./src/app');
 
-const port = parseInt(process.env.APP_PORT ?? '5001', 10);
+const port = parseInt(process.env.APP_PORT ?? '5002', 10);
 
 const route = path.join(__dirname, './public/');
 
@@ -19,3 +19,4 @@ app.listen(port, (err) => {
     console.warn(`Server is listening on ${port}`);
   }
 });
+  

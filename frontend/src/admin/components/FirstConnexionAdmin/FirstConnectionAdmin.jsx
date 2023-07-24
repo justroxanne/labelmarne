@@ -1,6 +1,6 @@
 import React, { useState, useContext, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { AdminContext } from '../../../Context';
+import { AdminContext } from './../../../Context/AdminContext';
 import axios from 'axios';
 import { FiArrowRight } from 'react-icons/fi';
 import './firstConnexionAdmin.css';
@@ -11,36 +11,49 @@ const FirstConnectionAdmin = () => {
   const navigate = useNavigate();
   const inputRef = useRef(null);
 
-  const { setAdmin } = useContext(AdminContext);
+  const { storeAdmin } = useContext(AdminContext);
 
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [firstname, setFirstname] = useState('');
-  const [lastname, setLastname] = useState('');
-  const [profile_picture, setProfile_picture] = useState(null);
+  const [formData, setFormData] = useState({
+    email: '',
+    password: '',
+    firstname: '',
+    lastname: '',
+    profile_picture: null,
+  });
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
+
+  const handleFileChange = (e) => {
+    setFormData((prevData) => ({
+      ...prevData,
+      profile_picture: e.target.files[0],
+    }));
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
-      const formData = new FormData();
-      formData.append('email', email);
-      formData.append('password', password);
-      formData.append('firstname', firstname);
-      formData.append('lastname', lastname);
-      formData.append('profile_picture', profile_picture);
+      const formDataToSend = new FormData();
+      formDataToSend.append('email', formData.email);
+      formDataToSend.append('password', formData.password);
+      formDataToSend.append('firstname', formData.firstname);
+      formDataToSend.append('lastname', formData.lastname);
+      formDataToSend.append('profile_picture', formData.profile_picture);
 
-      const response = await axios.post(`${url}/api/admin-register`, formData);
-      setAdmin(response.data);
-      navigate('/admin-dashboard');
+      const response = await axios.post(`${url}/api/admin-register`, formDataToSend);
+      storeAdmin(response.data);
+      navigate('/admin/dashboard');
     } catch (error) {
       console.log('error', error);
       console.log('URL:', url);
     }
-  };
-
-  const handleFileChange = (e) => {
-    setProfile_picture(e.target.files[0]);
   };
 
   return (
@@ -53,8 +66,8 @@ const FirstConnectionAdmin = () => {
           id="email"
           name="email"
           placeholder="Email"
-          onChange={(e) => setEmail(e.target.value)}
-          value={email}
+          onChange={handleChange}
+          value={formData.email}
           required
         />
         <label htmlFor="firstname">Prénom</label>
@@ -63,8 +76,8 @@ const FirstConnectionAdmin = () => {
           id="firstname"
           name="firstname"
           placeholder="Prénom"
-          onChange={(e) => setFirstname(e.target.value)}
-          value={firstname}
+          onChange={handleChange}
+          value={formData.firstname}
           required
         />
         <label htmlFor="lastname">Nom</label>
@@ -73,18 +86,18 @@ const FirstConnectionAdmin = () => {
           id="lastname"
           name="lastname"
           placeholder="Nom"
-          onChange={(e) => setLastname(e.target.value)}
-          value={lastname}
+          onChange={handleChange}
+          value={formData.lastname}
           required
         />
         <label htmlFor="password">Mot de passe</label>
         <input
           type="password"
           id="password-admin1"
-          name="password-admin"
+          name="password"
           placeholder="*******"
-          onChange={(e) => setPassword(e.target.value)}
-          value={password}
+          onChange={handleChange}
+          value={formData.password}
           required
         />
         <label className="label-input" htmlFor="profile_picture">

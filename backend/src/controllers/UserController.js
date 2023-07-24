@@ -124,7 +124,6 @@ class UserController extends BaseController {
       }
 
       const [result] = await this.model.getUserByEmail(email);
-      console.log(result);
 
       if (!result) {
         return this.res.status(404).json({ error: 'User not found' });

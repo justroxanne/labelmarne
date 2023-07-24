@@ -6,22 +6,18 @@ const labelRouter = express.Router();
 
 labelRouter.get('/labels', async (req, res) => {
   new LabelController(req, res).getAll();
-});
+}); //route OK
 
-labelRouter.get('/labels/:id', async (req, res) => {
-  new LabelController(req, res).getOne();
-});
+labelRouter.post('/labels', async (req, res) => {
+  new LabelController(req, res).create();
+}); //route OK
 
-labelRouter.post('/labels', authorization, isAdmin, async (req, res) => {
-  new LabelController(req, res).newLabel();
-});
-
-labelRouter.put('/labels/:id', authorization, isAdmin, async (req, res) => {
-  new LabelController(req, res).update();
-});
-
-labelRouter.delete('/labels/:id', authorization, isAdmin, async (req, res) => {
+labelRouter.delete('/labels/:id', async (req, res) => {
   new LabelController(req, res).delete();
-});
+}); //route OK
+
+labelRouter.put('/labels/:id', async (req, res) => {
+  new LabelController(req, res).update();
+}); //route OK
 
 module.exports = labelRouter;
