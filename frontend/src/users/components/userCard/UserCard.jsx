@@ -1,17 +1,27 @@
 import React, { useContext } from 'react';
 import { AiOutlineEdit } from 'react-icons/ai';
 import { UserContext } from '../../../Context';
-import Leia from '../../assets/userprofile.png';
+import { useNavigate } from 'react-router-dom'; 
+import Avatar from '../../assets/avatar.png';
 import './userCard.css';
 
-const UserCard = ({ handleClick }) => {
+const UserCard = () => {
   const { user } = useContext(UserContext);
+  const navigate = useNavigate();
+
+  const handleClick = () => {
+    navigate('/testermoneligibilite'); 
+  };
 
   return (
     <>
       <div className='usercard'>
         <img
-          src={Leia}
+          src={
+            user.profile_picture
+              ? `/api/public/uploads/${user.profile_picture}`
+              : Avatar
+          }
           className='profile-picture'
           alt='user profile picture'
         />
@@ -31,7 +41,9 @@ const UserCard = ({ handleClick }) => {
           onClick={handleClick}
         />
       </div>
-      <button className='new-step-btn'>Faire une demande</button>
+      <button className='new-step-btn' onClick={handleClick}>
+        Faire une demande
+      </button>
     </>
   );
 };

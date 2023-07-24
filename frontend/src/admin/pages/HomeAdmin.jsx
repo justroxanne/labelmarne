@@ -1,14 +1,15 @@
 import React, { useContext } from 'react';
-import './HomeAdmin';
 import LoginAdmin from '../components/LoginAdmin/LoginAdmin';
 import FirstConnectionAdmin from '../components/FirstConnexionAdmin/FirstConnectionAdmin';
+import './HomeAdmin.css'
+
 
 const HomeAdmin = () => {
 
   return (
     <div className='homeadmin'>
-      <FirstConnectionAdmin />
-      <LoginAdmin />
+      <FirstConnectionAdmin  className="FirstConnection"/>
+      <LoginAdmin className="LoginConnection"/>
       </div>
   );
 };

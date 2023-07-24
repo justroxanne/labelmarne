@@ -11,6 +11,9 @@
 }
 
 .footer-logo-container {
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
   align-self: flex-start;
   height: 10dvh;
 }
@@ -24,3 +27,45 @@
 .newsletter {
   width: 30%;
 }
+
+.contact a {
+  color: white;
+  text-decoration: none;
+}
+
+.signatures{
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  align-items: center;
+}
+
+.signatures a {
+  color: white;
+}
+
+.newsletter {
+  text-align:right;
+}
+/* Media Query pour les appareils ayant une largeur d'écran maximale de 768px */
+@media (max-width: 768px) {
+  .footer {
+    display: flex;
+  }
+
+  .contact{
+    width: 100%;
+    text-align: center;
+  }
+
+  .footer-logo-container {
+    height: 10dvh;
+    font-size: x-small;
+  }
+  .newsletter {
+    width: 100%;
+    text-align: center;
+    font-size: x-small;
+  }
+}
+  

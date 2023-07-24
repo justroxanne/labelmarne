@@ -6,6 +6,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    text-align: center;
 }
 
 .adminConnect-form{
@@ -130,7 +131,6 @@
     background-color: transparent;
     font-weight: 500;
     overflow: hidden;
-    width: 50%;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -148,6 +148,9 @@
     }
 }
 
+.adminConnect-form label{
+  padding-top: 0.5em;
+}
 .adminlogin-arrow-right{
     width: 1.5em;
     height: 1.5em;

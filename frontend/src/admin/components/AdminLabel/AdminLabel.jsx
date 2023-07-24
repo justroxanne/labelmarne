@@ -51,7 +51,7 @@ const AdminLabel = () => {
     setEditLabelLogo(labelLogo);
   };
 
-  const handleEditLabelSubmit = async (labelId) => {
+  const handleEditLabelSubmit = async () => {
     try {
       const updatedData = {
         name: editLabelName,
@@ -59,8 +59,8 @@ const AdminLabel = () => {
         logo: editLabelLogo,
       };
 
-      await axios.put(`${backendUrlInput}/api/labels/${labelId}`, updatedData);
-      setLabels(labels.map((label) => (label.id === labelId ? { ...label, ...updatedData } : label)));
+      await axios.put(`${backendUrlInput}/api/labels/${editLabelId}`, updatedData);
+      setLabels(labels.map((label) => (label.id === editLabelId ? { ...label, ...updatedData } : label)));
       setEditLabelId(null);
       setEditLabelName('');
       setEditLabelUrl('');
@@ -86,6 +86,12 @@ const AdminLabel = () => {
 
   // Fonction pour gérer l'upload de l'image et l'ajout du label
   const handleAddNewLabel = async () => {
+    // Vérification des champs requis
+    if (!newLabel || !newLabelUrl || !newLabelCategory) {
+      console.error('Veuillez remplir tous les champs obligatoires.');
+      return;
+    }
+
     try {
       const newLabelData = {
         name: newLabel,
@@ -97,7 +103,7 @@ const AdminLabel = () => {
 
       if (newLabelLogoFile) {
         const formData = new FormData();
-        formData.append('image', newLabelLogoFile);
+        formData.append('label', newLabelLogoFile);
 
         const logoUploadResponse = await axios.post(
           `${backendUrlInput}/api/labels/${response.data.id}/logo`,
@@ -168,8 +174,8 @@ const AdminLabel = () => {
                       onChange={(e) => setEditLabelLogo(e.target.value)}
                     />
                   </div>
-                  <button className="link-button" onClick={() => handleEditLabelSubmit(label.id)}>Enregistrer</button>
-                  <button className="link-button" onClick={() => handleCancelEdit()}>Annuler</button>
+                  <button className="link-button" onClick={handleEditLabelSubmit}>Enregistrer</button>
+                  <button className="link-button" onClick={handleCancelEdit}>Annuler</button>
                 </div>
               ) : (
                 <>

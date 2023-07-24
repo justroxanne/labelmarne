@@ -1,4 +1,4 @@
-INSERT INTO category VALUES (`Tourisme`, `Alimentatation`);
+INSERT INTO category (name) VALUES ('Tourisme'), ('Alimentation');
 
-INSERT INTO label VALUES (`Appelation d'Origine Controllée`, `../../../../public/AOC-logo.png`, `https://www.inao.gouv.fr/`, 2);
-
+INSERT INTO label (name, logo, url, category_id) VALUES ('Appelation d\'Origine Controllée (AOC)', 'AOC-logo.png', 'https://www.inao.gouv.fr/Les-signes-officiels-de-la-qualite-et-de-l-origine-SIQO/Appellation-d-origine-protegee-controlee-AOP-AOC', 2), ('Appellation d\'Origine Protégée (AOP)', 'AOP-logo.png', 'https://www.inao.gouv.fr/Les-signes-officiels-de-la-qualite-et-de-l-origine-SIQO/Appellation-d-origine-protegee-controlee-AOP-AOC', 2),
+('Label Rouge', 'Label-Rouge-logo.png', 'https://www.inao.gouv.fr/Les-signes-officiels-de-la-qualite-et-de-l-origine-SIQO/Label-Rouge', 2), ('Indication Géographique Protégée (IGP)', 'IGP-logo.png', 'https://www.inao.gouv.fr/Les-signes-officiels-de-la-qualite-et-de-l-origine-SIQO/Indication-geographique-protegee', 1), ('Agriculture Biologique (AB)', 'AB-logo.png', 'https://www.inao.gouv.fr/Les-signes-officiels-de-la-qualite-et-de-l-origine-SIQO/Agriculture-biologique', 2), ('Station Verte', 'Station-Verte-logo.png', 'https://www.stationverte.com/fr/', 1), ('Vignobles et Découvertes', 'Vignobles-et-Découvertes-logo.png', 'https://www.atout-france.fr/services/le-label-vignobles-decouvertes', 1);
