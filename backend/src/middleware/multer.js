@@ -1,6 +1,7 @@
-const multer = require("multer");//pour l'upload de l'image de profil
+const multer = require('multer'); //pour l'upload de l'image de profil
 
-const storage = multer.diskStorage({// définit le dossier de destination et le nom du fichier
+const storage = multer.diskStorage({
+  // définit le dossier de destination et le nom du fichier
   destination: function (req, file, cb) {
     cb(null, './public/uploads/'); // Dossier de destination
   },
@@ -12,6 +13,6 @@ const storage = multer.diskStorage({// définit le dossier de destination et le 
   },
 });
 
-const upload = multer({ storage: storage });//utilise le storage pour l'upload
+const upload = multer({ storage: storage }); //utilise le storage pour l'upload
 
 module.exports = upload;

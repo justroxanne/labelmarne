@@ -15,6 +15,10 @@
   "dependencies": {
     "argon2": "^0.30.3",
     "concurrently": "^8.2.0",
+<<<<<<< HEAD
+    "multer": "^1.4.5-lts.1"
+=======
     "recharts": "^2.7.2"
+>>>>>>> dev
   }
 }
