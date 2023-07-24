@@ -1,10 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { FiArrowRight } from 'react-icons/fi';
+import { CategoryContext } from '../../../Context';
 import axios from 'axios';
 import './labelsCarousel.css';
 
 const LabelsCarousel = () => {
   const url = import.meta.env.VITE_BACKEND_URL;
+  const { category } = useContext(CategoryContext);
   const [labels, setLabels] = useState([]);
 
   useEffect(() => {
@@ -13,12 +15,16 @@ const LabelsCarousel = () => {
     });
   }, []);
 
+  const filteredLabels = labels.filter((label) => {
+    return !category || label.category_id === category.id;
+  });
+
   return (
     <div className='labels-carousel-container'>
       <h2>Les labels de la région:</h2>
       <div className='labels-carousel'>
         <ul className='labels-list'>
-          {labels.map((label) => {
+          {filteredLabels.map((label) => {
             return (
               <li key={`label-${label.id}`}>
                 <div className='label-container'>
