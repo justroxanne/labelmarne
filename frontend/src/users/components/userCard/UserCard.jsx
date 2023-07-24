@@ -1,10 +1,11 @@
 import React, { useContext } from 'react';
 import { AiOutlineEdit } from 'react-icons/ai';
 import { UserContext } from '../../../Context';
+import { useNavigate } from 'react-router-dom'; 
 import Avatar from '../../assets/avatar.png';
 import './userCard.css';
 
-const UserCard = ({ handleClick }) => {
+const UserCard = () => {
   const { user } = useContext(UserContext);
 
   return (
@@ -38,7 +39,7 @@ const UserCard = ({ handleClick }) => {
           onClick={handleClick}
         />
       </div>
-      <button className='new-step-btn'>Tester mon éligibilité</button>
+      <button className='new-step-btn'>Faire une demande</button>
     </>
   );
 };

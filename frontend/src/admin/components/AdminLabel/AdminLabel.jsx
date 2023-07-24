@@ -53,7 +53,7 @@ const AdminLabel = () => {
     setEditLabelLogo(labelLogo);
   };
 
-  const handleEditLabelSubmit = async (labelId) => {
+  const handleEditLabelSubmit = async () => {
     try {
       const updatedData = {
         name: editLabelName,
@@ -62,11 +62,7 @@ const AdminLabel = () => {
       };
 
       await axios.put(`${backendUrlInput}/api/labels/${labelId}`, updatedData);
-      setLabels(
-        labels.map((label) =>
-          label.id === labelId ? { ...label, ...updatedData } : label
-        )
-      );
+      setLabels(labels.map((label) => (label.id === labelId ? { ...label, ...updatedData } : label)));
       setEditLabelId(null);
       setEditLabelName('');
       setEditLabelUrl('');
@@ -92,6 +88,12 @@ const AdminLabel = () => {
 
   // Fonction pour gérer l'upload de l'image et l'ajout du label
   const handleAddNewLabel = async () => {
+    // Vérification des champs requis
+    if (!newLabel || !newLabelUrl || !newLabelCategory) {
+      console.error('Veuillez remplir tous les champs obligatoires.');
+      return;
+    }
+
     try {
       const newLabelData = {
         name: newLabel,
@@ -106,7 +108,7 @@ const AdminLabel = () => {
 
       if (newLabelLogoFile) {
         const formData = new FormData();
-        formData.append('image', newLabelLogoFile);
+        formData.append('label', newLabelLogoFile);
 
         const logoUploadResponse = await axios.post(
           `${backendUrlInput}/api/labels/${response.data.id}/logo`,
