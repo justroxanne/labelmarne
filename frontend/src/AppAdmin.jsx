@@ -8,19 +8,16 @@ import { LoginContext } from './Context';
 import LoginAdmin from './admin/components/LoginAdmin/LoginAdmin';
 import './AppAdmin.css';
 
-
-
 function AppAdmin() {
-  const {isLoginDisplayedAdmin} = useContext(LoginContext)
-
+  const { isLoginDisplayedAdmin } = useContext(LoginContext);
 
   return (
     <div className='app-admin'>
       {isLoginDisplayedAdmin && <LoginAdmin />}
       <HeaderAdmin />
-        <Routes>
+      <Routes>
         <Route path='/' element={<HomeAdmin />} />
-        <Route path='/dashboard' element={<AdminDashboard/>} />
+        <Route path='/dashboard' element={<AdminDashboard />} />
       </Routes>
       <FooterAdmin />
     </div>

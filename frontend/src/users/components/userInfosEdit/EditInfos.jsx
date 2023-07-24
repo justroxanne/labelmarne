@@ -18,8 +18,6 @@ const EditInfos = ({ handleClick }) => {
     city: user.city,
   });
 
-  console.log(user);
-
   const handleInputChange = (event) => {
     const { name, value } = event.target;
     setUserInfos((prevUserInfo) => ({
@@ -45,7 +43,6 @@ const EditInfos = ({ handleClick }) => {
         console.log(response.data);
       });
   };
-  console.log(user);
 
   return (
     <div className='edit-user-infos'>
