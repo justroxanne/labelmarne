@@ -1,5 +1,6 @@
 import axios from 'axios';
 import React, { useState, useContext } from 'react';
+import { Link } from 'react-router-dom';
 import { LoginContext } from '../../../Context';
 import { UserContext } from '../../../Context';
 import { useNavigate } from 'react-router-dom';
@@ -78,6 +79,12 @@ const LoginForm = () => {
             onChange={handlePasswordChange}
           />
         </label>
+        <span>
+          Vous n'avez pas encore de compte ? Cliquez{' '}
+          <Link to='/registration' onClick={displayLogin}>
+            ici
+          </Link>
+        </span>
         <button
           type='submit'
           className='login-submit-btn'

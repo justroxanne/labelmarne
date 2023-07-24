@@ -8,10 +8,10 @@ import UserDashboard from './users/pages/UserDashboard';
 import Registration from './users/pages/Registration';
 import Home from './users/pages/Home';
 import './App.css';
+import FAQ from './users/pages/FAQ';
 
 function App() {
   const { isLoginDisplayed } = useContext(LoginContext);
-  
 
   return (
     <div className='app'>
@@ -21,6 +21,7 @@ function App() {
         <Route path='/' element={<Home />} />
         <Route path='/user-dashboard' element={<UserDashboard />} />
         <Route path='/registration' element={<Registration />} />
+        <Route path='/faq' element={<FAQ />} />
       </Routes>
       <Footer />
     </div>
