@@ -1,5 +1,4 @@
 const BaseController = require('./BaseController');
-const { user } = require('../models');
 
 class UserHasLabelController extends BaseController {
   constructor(req, res) {
@@ -7,3 +6,5 @@ class UserHasLabelController extends BaseController {
     this.model = new userHasLabel();
   }
 }
+
+module.exports = UserHasLabelController;

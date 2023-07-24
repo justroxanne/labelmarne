@@ -8,7 +8,7 @@ labelRouter.get('/labels', async (req, res) => {
   new LabelController(req, res).getAll();
 }); //route OK
 
-labelRouter.post('/labels', async (req, res) => {
+labelRouter.post, upload.single('/labels', async (req, res) => {
   new LabelController(req, res).create();
 }); //route OK
 
