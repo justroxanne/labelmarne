@@ -3,7 +3,9 @@ import axios from 'axios';
 import './AdminLabel.css';
 
 const AdminLabel = () => {
-  const [backendUrlInput, setBackendUrlInput] = useState(import.meta.env.VITE_BACKEND_URL);
+  const [backendUrlInput, setBackendUrlInput] = useState(
+    import.meta.env.VITE_BACKEND_URL
+  );
   const [labels, setLabels] = useState([]);
   const [editLabelId, setEditLabelId] = useState(null);
   const [editLabelName, setEditLabelName] = useState('');
@@ -60,7 +62,11 @@ const AdminLabel = () => {
       };
 
       await axios.put(`${backendUrlInput}/api/labels/${labelId}`, updatedData);
-      setLabels(labels.map((label) => (label.id === labelId ? { ...label, ...updatedData } : label)));
+      setLabels(
+        labels.map((label) =>
+          label.id === labelId ? { ...label, ...updatedData } : label
+        )
+      );
       setEditLabelId(null);
       setEditLabelName('');
       setEditLabelUrl('');
@@ -93,7 +99,10 @@ const AdminLabel = () => {
         category_id: newLabelCategory,
       };
 
-      const response = await axios.post(`${backendUrlInput}/api/labels`, newLabelData);
+      const response = await axios.post(
+        `${backendUrlInput}/api/labels`,
+        newLabelData
+      );
 
       if (newLabelLogoFile) {
         const formData = new FormData();
@@ -109,7 +118,10 @@ const AdminLabel = () => {
           }
         );
 
-        const updatedLabel = { ...response.data, logo: logoUploadResponse.data.url };
+        const updatedLabel = {
+          ...response.data,
+          logo: logoUploadResponse.data.url,
+        };
         setLabels([...labels, updatedLabel]);
       } else {
         setLabels([...labels, response.data]);
@@ -121,7 +133,7 @@ const AdminLabel = () => {
       setNewLabelCategory('');
       setNewLabelLogoFile(null);
     } catch (error) {
-      console.error('Erreur lors de l\'ajout du nouveau label :', error);
+      console.error("Erreur lors de l'ajout du nouveau label :", error);
     }
   };
 
@@ -136,61 +148,90 @@ const AdminLabel = () => {
   };
 
   return (
-    <div className="admin-label-container">
+    <div className='admin-label-container'>
       <h2>Labels</h2>
-      <ul className="label-list">
+      <ul className='label-list'>
         {labels.map((label) => (
-          <li key={label.id} className="label-item">
-            <div className="label-info">
+          <li key={label.id} className='label-item'>
+            <div className='label-info'>
               {editLabelId === label.id ? (
-                <div className="edit-label-form">
-                  <div className="form-row">
+                <div className='edit-label-form'>
+                  <div className='form-row'>
                     <label>Nom :</label>
                     <input
-                      type="text"
+                      type='text'
                       value={editLabelName}
                       onChange={(e) => setEditLabelName(e.target.value)}
                     />
                   </div>
-                  <div className="form-row">
+                  <div className='form-row'>
                     <label>Url :</label>
                     <input
-                      type="text"
+                      type='text'
                       value={editLabelUrl}
                       onChange={(e) => setEditLabelUrl(e.target.value)}
                     />
                   </div>
-                  <div className="form-row">
+                  <div className='form-row'>
                     <label>Logo :</label>
                     <input
-                      type="text"
+                      type='text'
                       value={editLabelLogo}
                       onChange={(e) => setEditLabelLogo(e.target.value)}
                     />
                   </div>
-                  <button className="link-button" onClick={() => handleEditLabelSubmit(label.id)}>Enregistrer</button>
-                  <button className="link-button" onClick={() => handleCancelEdit()}>Annuler</button>
+                  <button
+                    className='link-button'
+                    onClick={() => handleEditLabelSubmit(label.id)}
+                  >
+                    Enregistrer
+                  </button>
+                  <button
+                    className='link-button'
+                    onClick={() => handleCancelEdit()}
+                  >
+                    Annuler
+                  </button>
                 </div>
               ) : (
                 <>
                   <span>{label.name}</span>
                   {label.url && (
-                    <div className="label-url">
+                    <div className='label-url'>
                       {showFullUrl ? (
                         <p>{label.url}</p>
                       ) : (
-                        <a href={label.url} target="_blank" rel="noopener noreferrer">
+                        <a
+                          href={label.url}
+                          target='_blank'
+                          rel='noopener noreferrer'
+                        >
                           Voir la page
                         </a>
                       )}
                     </div>
                   )}
                   <div className='btn-modif'>
-                    <button className="btn-adminLabel" onClick={() => handleDeleteLabel(label.id)}>Supprimer</button>
-                    <button className="btn-adminLabel" onClick={() => {
-                      setShowFullUrl(false);
-                      handleEditLabel(label.id, label.name, label.url, label.logo);
-                    }}>Modifier</button>
+                    <button
+                      className='btn-adminLabel'
+                      onClick={() => handleDeleteLabel(label.id)}
+                    >
+                      Supprimer
+                    </button>
+                    <button
+                      className='btn-adminLabel'
+                      onClick={() => {
+                        setShowFullUrl(false);
+                        handleEditLabel(
+                          label.id,
+                          label.name,
+                          label.url,
+                          label.logo
+                        );
+                      }}
+                    >
+                      Modifier
+                    </button>
                   </div>
                 </>
               )}
@@ -199,38 +240,35 @@ const AdminLabel = () => {
         ))}
       </ul>
       <h2>Ajouter un label</h2>
-      <div className="add-label-form">
-        <div className="form-row">
+      <div className='add-label-form'>
+        <div className='form-row'>
           <label>Nom :</label>
           <input
-            type="text"
+            type='text'
             value={newLabel}
             onChange={(e) => setNewLabel(e.target.value)}
           />
         </div>
-        <div className="form-row">
+        <div className='form-row'>
           <label>Url :</label>
           <input
-            type="text"
+            type='text'
             value={newLabelUrl}
             onChange={(e) => setNewLabelUrl(e.target.value)}
           />
         </div>
-        <div className="form-row">
+        <div className='form-row'>
           <label>Logo :</label>
-          <input
-            type="file"
-            onChange={handleNewLabelLogoChange}
-          />
+          <input type='file' onChange={handleNewLabelLogoChange} />
         </div>
-        <div className="form-row">
+        <div className='form-row'>
           <label>Catégorie :</label>
           <select
-            className="select-category"
+            className='select-category'
             value={newLabelCategory}
             onChange={(e) => setNewLabelCategory(e.target.value)}
           >
-            <option value="">Sélectionnez une catégorie</option>
+            <option value=''>Sélectionnez une catégorie</option>
             {categories.map((category) => (
               <option key={category.id} value={category.id}>
                 {category.name}
@@ -238,7 +276,9 @@ const AdminLabel = () => {
             ))}
           </select>
         </div>
-        <button className="add-button" onClick={handleAddNewLabel}>Ajouter</button>
+        <button className='add-button' onClick={handleAddNewLabel}>
+          Ajouter
+        </button>
       </div>
     </div>
   );

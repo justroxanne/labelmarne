@@ -6,7 +6,6 @@ import './userCard.css';
 
 const UserCard = ({ handleClick }) => {
   const { user } = useContext(UserContext);
-  console.log(user);
   return (
     <>
       <div className='usercard'>

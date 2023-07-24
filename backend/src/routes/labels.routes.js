@@ -1,6 +1,7 @@
 const express = require('express');
 const LabelController = require('../controllers/LabelController');
 const { authorization, isAdmin } = require('../middleware/auth');
+const upload = require('../middleware/multer');
 
 const labelRouter = express.Router();
 
@@ -8,7 +9,7 @@ labelRouter.get('/labels', async (req, res) => {
   new LabelController(req, res).getAll();
 }); //route OK
 
-labelRouter.post, upload.single('/labels', async (req, res) => {
+labelRouter.post('/labels', upload.single('logo'), async (req, res) => {
   new LabelController(req, res).create();
 }); //route OK
 
