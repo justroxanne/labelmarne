@@ -13,8 +13,11 @@ const AdminLabel = () => {
   const [newLabelUrl, setNewLabelUrl] = useState('');
   const [newLabelLogo, setNewLabelLogo] = useState('');
   const [newLabelCategory, setNewLabelCategory] = useState('');
-  const [showFullUrl, setShowFullUrl] = useState(false); 
+  const [showFullUrl, setShowFullUrl] = useState(false);
+  const [categories, setCategories] = useState([]);
+  const [newLabelLogoFile, setNewLabelLogoFile] = useState(null);
 
+  //fonction pour récupérer les labels
   const fetchLabels = async () => {
     try {
       const response = await axios.get(`${backendUrlInput}/api/labels`);
@@ -24,10 +27,23 @@ const AdminLabel = () => {
     }
   };
 
+  //fonction pour récupérer les catégories
+  const fetchCategories = async () => {
+    try {
+      const response = await axios.get(`${backendUrlInput}/api/categories`);
+      setCategories(response.data);
+    } catch (error) {
+      console.error('Erreur lors de la récupération des catégories :', error);
+    }
+  };
+
+  //useEffect pour récupérer les labels et les catégories
   useEffect(() => {
     fetchLabels();
+    fetchCategories();
   }, [backendUrlInput]);
 
+  //fonction pour modifier un label
   const handleEditLabel = (labelId, labelName, labelUrl, labelLogo) => {
     setEditLabelId(labelId);
     setEditLabelName(labelName);
@@ -54,6 +70,7 @@ const AdminLabel = () => {
     }
   };
 
+  //fonction pour annuler la modification d'un label
   const handleCancelEdit = () => {
     setEditLabelId(null);
     setEditLabelName('');
@@ -61,26 +78,54 @@ const AdminLabel = () => {
     setEditLabelLogo('');
   };
 
+  // Fonction pour gérer le changement du fichier image du logo
+  const handleNewLabelLogoChange = (e) => {
+    const file = e.target.files[0];
+    setNewLabelLogoFile(file);
+  };
+
+  // Fonction pour gérer l'upload de l'image et l'ajout du label
   const handleAddNewLabel = async () => {
     try {
       const newLabelData = {
         name: newLabel,
         url: newLabelUrl,
-        logo: newLabelLogo,
         category_id: newLabelCategory,
       };
 
       const response = await axios.post(`${backendUrlInput}/api/labels`, newLabelData);
-      setLabels([...labels, response.data]);
+
+      if (newLabelLogoFile) {
+        const formData = new FormData();
+        formData.append('image', newLabelLogoFile);
+
+        const logoUploadResponse = await axios.post(
+          `${backendUrlInput}/api/labels/${response.data.id}/logo`,
+          formData,
+          {
+            headers: {
+              'Content-Type': 'multipart/form-data',
+            },
+          }
+        );
+
+        const updatedLabel = { ...response.data, logo: logoUploadResponse.data.url };
+        setLabels([...labels, updatedLabel]);
+      } else {
+        setLabels([...labels, response.data]);
+      }
+
       setNewLabel('');
       setNewLabelUrl('');
       setNewLabelLogo('');
       setNewLabelCategory('');
+      setNewLabelLogoFile(null);
     } catch (error) {
       console.error('Erreur lors de l\'ajout du nouveau label :', error);
     }
   };
 
+  //fonction pour supprimer un label
   const handleDeleteLabel = async (labelId) => {
     try {
       await axios.delete(`${backendUrlInput}/api/labels/${labelId}`);
@@ -135,7 +180,7 @@ const AdminLabel = () => {
                         <p>{label.url}</p>
                       ) : (
                         <a href={label.url} target="_blank" rel="noopener noreferrer">
-                          Cliquez ici
+                          Voir la page
                         </a>
                       )}
                     </div>
@@ -174,18 +219,23 @@ const AdminLabel = () => {
         <div className="form-row">
           <label>Logo :</label>
           <input
-            type="text"
-            value={newLabelLogo}
-            onChange={(e) => setNewLabelLogo(e.target.value)}
+            type="file"
+            onChange={handleNewLabelLogoChange}
           />
         </div>
         <div className="form-row">
           <label>Catégorie :</label>
-          <select value={newLabelCategory} onChange={(e) => setNewLabelCategory(e.target.value)}>
+          <select
+            className="select-category"
+            value={newLabelCategory}
+            onChange={(e) => setNewLabelCategory(e.target.value)}
+          >
             <option value="">Sélectionnez une catégorie</option>
-            <option value="1">Catégorie 1</option> {/* Remplacez 1 par l'ID de la catégorie */}
-            <option value="2">Catégorie 2</option> {/* Remplacez 2 par l'ID de la catégorie */}
-            {/* Ajoutez d'autres options pour les autres catégories */}
+            {categories.map((category) => (
+              <option key={category.id} value={category.id}>
+                {category.name}
+              </option>
+            ))}
           </select>
         </div>
         <button className="add-button" onClick={handleAddNewLabel}>Ajouter</button>
