@@ -1,0 +1,114 @@
+.category-container{
+    margin:4em;
+    padding:2em;
+}
+.category-container h1{
+    margin-bottom:1em;
+}
+.admin-category {
+    max-width: 60%;
+    padding:1.5em;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .admin-category__list {
+    margin-bottom: 2em;
+  }
+  
+  .admin-category__list > div {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.5em;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #fff;
+    margin-bottom: 1em;
+  }
+  
+  .admin-category__list > div span {
+    font-size: 18px;
+    color: #333;
+  }
+  
+  .admin-category__list > div button {
+    padding: 0.5em 2em;
+    background-color: #ff6b6b;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .admin-category__add input[type="text"] {
+    padding: 0.5em 1em;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  .admin-category__add button {
+    padding: 0.3em 1em;
+    margin-left: 0.5em;
+    font-size: 16px;
+    background-color: #4caf50;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .admin-category__add button:hover,
+  .admin-category__list > div button:hover {
+    opacity: 0.8;
+  }
+
+  /* Media Query */
+@media screen and (max-width: 768px) {
+    .category-container{
+        margin:2em;
+        padding:1em;
+    }
+
+    .admin-category {
+      max-width: 100%;
+    }
+
+    .category-container h1{
+        text-align: center;
+    }
+
+    .admin-category__list > div {
+        flex-direction: column;
+        justify-content: center;
+        text-align: center;
+    }   
+
+    .admin-category__list > div span {
+        margin-bottom: 1em;
+        font-size:small;   
+        justify-content: center;
+    }
+
+    .admin-category__list > div button {
+        margin-bottom: 1em;
+       
+    }
+
+    .admin-category__add button {
+        justify-content: center;
+    }
+    .admin-category__add {
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    .admin-category__add input[type="text"] {
+        margin-bottom: 1em;
+        font-size:x-small;
+        width: 100%;
+    }
+  }

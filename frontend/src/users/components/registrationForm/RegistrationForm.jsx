@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { UserContext } from '../../../Context';
 import axios from 'axios';
 import { IoCloseSharp } from 'react-icons/io5';
+import { BsEyeFill } from 'react-icons/bs';
 import { BiCheck } from 'react-icons/bi';
 import './RegistrationForm.css';
 
@@ -16,6 +17,9 @@ const RegistrationForm = () => {
   const passwordRegex = new RegExp(
     /^(?=.*d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/
   );
+
+  const [profile_picture, setProfile_picture] = useState(null);
+  const [showPassword, setShowPassword] = useState(false);
 
   const [userInfos, setUserInfos] = useState({
     address: '',
@@ -49,7 +53,18 @@ const RegistrationForm = () => {
       if (!passwordRegex.test(userInfos.password)) {
         return;
       } else {
-        const responseUser = await axios.post(`${url}/api/register`, userInfos);
+        const formData = new FormData();
+        formData.append('profile_picture', profile_picture);
+        for (const key in userInfos) {
+          formData.append(key, userInfos[key]);
+        }
+
+        const responseUser = await axios.post(`${url}/api/register`, formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        });
+
         storeUser(responseUser.data);
         navigate('/user-dashboard');
       }
@@ -62,13 +77,21 @@ const RegistrationForm = () => {
     navigate('/');
   };
 
+  const handleChangePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
+
   return (
     <div className='registration-form'>
       <IoCloseSharp
         className='close-registration-form'
         onClick={handleCancel}
       />
-      <form className='registration-form-container'>
+      <form
+        className='registration-form-container'
+        encType='multipart/form-data'
+        method='post'
+      >
         <div className='registration-form-group'>
           <h2>Candidat</h2>
           <div className='registration-form-subdivision'>
@@ -166,15 +189,23 @@ const RegistrationForm = () => {
               />
             </label>
 
-            <label htmlFor='password' className='register-password'>
+            <label
+              htmlFor='password'
+              className='register-password'
+              style={{ position: 'relative' }}
+            >
               Mot de passe *
               <input
-                type='password'
+                type={showPassword ? 'text' : 'password'}
                 id='password'
                 name='password'
                 value={userInfos.password}
                 onChange={handleChange}
                 required
+              />
+              <BsEyeFill
+                onClick={handleChangePasswordVisibility}
+                style={{ position: 'absolute', top: '1.5em', right: '1em' }}
               />
               <ul
                 style={{
@@ -222,6 +253,18 @@ const RegistrationForm = () => {
                   1 chiffre {userInfos.password.match(/[0-9]/) && <BiCheck />}
                 </li>
               </ul>
+            </label>
+            <label
+              htmlFor='profile_picture'
+              className='register-profile-picture'
+            >
+              Photo de profil
+              <input
+                type='file'
+                id='profile_picture'
+                name='profile_picture'
+                onChange={(e) => setProfile_picture(e.target.files[0])}
+              />
             </label>
           </div>
         </div>

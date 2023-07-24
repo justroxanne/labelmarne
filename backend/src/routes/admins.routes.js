@@ -6,23 +6,25 @@ const { authorization, isAdmin } = require('../middleware/auth');
 
 const adminRouter = express.Router();
 
-adminRouter.get('/admins', authorization, isAdmin, async (req, res) =>
+adminRouter.get('/admins', async (req, res) =>
   new AdminController(req, res).getAll()
 );
 
-adminRouter.get('/admins/:id', authorization, isAdmin, async (req, res, next) =>
+adminRouter.get('/admins/:id', async (req, res, next) =>
   new AdminController(req, res, next).getOne()
 );
 
-adminRouter.post('/admin-register', upload.single ('file'), async (req, res) =>
-  new AdminController(req, res).register()
+adminRouter.post(
+  '/admin-register',
+  upload.single('profile_picture'),
+  async (req, res) => new AdminController(req, res).register()
 );
 
 adminRouter.post('/admin-login', async (req, res) =>
   new AdminController(req, res).login()
 );
 
-adminRouter.put('/admin/:id', authorization, isAdmin, async (req, res, next) =>
+adminRouter.put('/admin/:id', async (req, res, next) =>
   new AdminController(req, res, next).update()
 );
 

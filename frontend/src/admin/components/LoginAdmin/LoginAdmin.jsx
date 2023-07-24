@@ -55,7 +55,6 @@ const LoginAdmin = () => {
     <div className="loginAdmin-form-container">
       <form className="loginAdmin-form">
         <h2>Accès à votre espace administrateur</h2>
-        <h3>Saisissez votre nom d'utilisateur:</h3>
         <label htmlFor="username">
           <input
             type="username"

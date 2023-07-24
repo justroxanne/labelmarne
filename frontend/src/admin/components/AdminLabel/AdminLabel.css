@@ -1,0 +1,154 @@
+.admin-label-container {
+  display: flex;
+  flex-direction: column;
+  margin: 4em;
+  padding: 2em;
+}
+
+.admin-label-container h2 {
+  margin-bottom: 1em;
+  color: var(--mouse-color);
+  font-size: 1.5em;
+  font-weight: 500;
+}
+
+.admin-category {
+  max-width: 60%;
+  padding: 1.5em;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #f9f9f9;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.label-list {
+  margin-bottom: 2em;
+}
+
+.label-list li {
+  list-style: none;
+  padding: 0.5em;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  background-color: #fff;
+  margin-bottom: 1em;
+}
+
+.label-list li span {
+  font-size: 18px;
+  color: #333;
+}
+
+.btn-modif {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.label-list li button {
+  padding: 0.5em 2em;
+  margin: 0.5em;
+  background-color: #ff6b6b;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.add-label-form {
+  border: 1px solid var(--mouse-color);
+  border-radius: 5px;
+  padding: 0.5em 1em;
+  cursor: pointer;
+  height: auto;
+  margin-bottom: 2em;
+}
+
+.form-row {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1em;
+}
+
+.form-row input[type="text"] {
+  padding: 0.5em 1em;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin-left: 0.5em;
+}
+
+.select-category {
+  margin-left: 1em;
+  padding: 0.5em 1em;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.add-button {
+  padding: 0.3em 1em;
+  margin-left: 0.5em;
+  font-size: 16px;
+  background-color: #4caf50;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.add-button:hover,
+.label-list li button:hover {
+  opacity: 0.8;
+}
+
+.label-url a {
+  color: var(--mouse-color);
+}
+
+/* Media Query */
+@media screen and (max-width: 768px) {
+  .admin-label-container {
+    margin: 2em;
+    padding: 1em;
+  }
+
+  .admin-category {
+    max-width: 100%;
+  }
+
+  .admin-label-container h2 {
+    text-align: center;
+  }
+
+  .btn-modif {
+    justify-content: center;
+  }
+
+  .label-list li {
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+  }
+
+  .label-list li span {
+    margin-bottom: 1em;
+    font-size: small;
+    justify-content: center;
+  }
+
+  .label-list li button {
+    margin-bottom: 1em;
+  }
+
+  .add-label-form {
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .add-label-form input[type="text"],
+  .select-category {
+    margin-bottom: 1em;
+    font-size: x-small;
+    width: 100%;
+  }
+}
