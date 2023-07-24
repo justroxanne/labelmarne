@@ -7,11 +7,6 @@ import './userCard.css';
 
 const UserCard = () => {
   const { user } = useContext(UserContext);
-  const navigate = useNavigate();
-
-  const handleClick = () => {
-    navigate('/testermoneligibilite'); 
-  };
 
   return (
     <>
@@ -27,6 +22,9 @@ const UserCard = () => {
         />
         <div className='user-infos'>
           <h3>{user.company_name}</h3>
+          <h4>
+            {user.firstname} {user.lastname}
+          </h4>
           <br />
           <span>{user.address}</span>
           <span>
@@ -41,9 +39,7 @@ const UserCard = () => {
           onClick={handleClick}
         />
       </div>
-      <button className='new-step-btn' onClick={handleClick}>
-        Faire une demande
-      </button>
+      <button className='new-step-btn'>Faire une demande</button>
     </>
   );
 };

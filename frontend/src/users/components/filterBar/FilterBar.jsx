@@ -1,67 +1,65 @@
-import React, { useState } from 'react';
-import './FilterBar.css'; // Import the CSS file for styling
+import React, { useEffect, useState, useContext } from 'react';
+import { CategoryContext } from '../../../Context';
+import { IoIosArrowDown } from 'react-icons/io';
+import './filterBar.css';
+import axios from 'axios';
 
 const FilterBar = () => {
-  const [destination, setDestination] = useState('');
-  const [category, setCategory] = useState('');
-  const [label, setLabel] = useState('');
+  const { categories, setCategories, category, setCategory } =
+    useContext(CategoryContext);
 
-  const handleSearch = () => {
-    // Call the filtering function with the selected parameters
-    // onSearch(destination, category, label);
-    console.log(destination, category, label);
-  };
+  const url = import.meta.env.VITE_BACKEND_URL;
 
-  const handleChange = (e, setState) => {
-    const text = e.target.value;
-    setState(text);
+  const [showCategories, setShowCategories] = useState(false);
+
+  useEffect(() => {
+    axios.get(`${url}/api/categories`).then((res) => {
+      setCategories(res.data);
+    });
+  }, []);
+
+  const handleShowCategories = () => {
+    setShowCategories(!showCategories);
   };
 
   return (
     <div className='filter-bar'>
-      <ul className='filter-input-container'>
-        <li>
-          <label htmlFor='destination'>
-            <input
-              type='text'
-              name='destination'
-              id='destination'
-              placeholder='Destination'
-              className='filter-input'
-              onChange={(e) => handleChange(e, setDestination)}
-            ></input>
-          </label>
-        </li>
-        <li>|</li>
-        <li>
-          <label htmlFor='category'>
-            <input
-              type='text'
-              name='category'
-              id='category'
-              placeholder='Catégorie'
-              className='filter-input'
-              onChange={(e) => handleChange(e, setCategory)}
-            ></input>
-          </label>
-        </li>
-        <li>|</li>
-        <li>
-          <label htmlFor='label'>
-            <input
-              type='text'
-              name='label'
-              id='label'
-              placeholder='Label'
-              className='filter-input'
-              onChange={(e) => handleChange(e, setLabel)}
-            ></input>
-          </label>
-        </li>
-        <button className='filter-search-btn' onClick={handleSearch}>
-          Rechercher
-        </button>
-      </ul>
+      <div className='categories-filter'>
+        <span>
+          {category.name ? category.name : 'Sélectionnez une catégorie'}
+          <IoIosArrowDown onClick={handleShowCategories} />
+        </span>
+        {showCategories && (
+          <ul className='categories-dropdown'>
+            <li
+              className='category-item'
+              onClick={() => {
+                setCategory('');
+                setShowCategories(false);
+              }}
+              style={{ color: 'lightgrey' }}
+            >
+              Sélectionnez une catégorie
+            </li>
+            {categories.map((category) => {
+              return (
+                <li
+                  key={category.id}
+                  className='category-item'
+                  value={category.name}
+                  onClick={() => {
+                    setCategory(category);
+                    setShowCategories(false);
+                  }}
+                >
+                  {category.name}
+                </li>
+              );
+            })}
+          </ul>
+        )}
+      </div>
+      <button className='filter-search-btn'>Rechercher</button>
     </div>
   );
 };
