@@ -5,8 +5,14 @@ import { useNavigate } from 'react-router-dom';
 import Avatar from '../../assets/avatar.png';
 import './userCard.css';
 
-const UserCard = () => {
+const UserCard = ({handleClick}) => {
   const { user } = useContext(UserContext);
+
+  const navigate = useNavigate();
+
+  const handleOnClick = () => {
+    navigate('/testermoneligibilite');
+  };
 
   return (
     <>
@@ -39,7 +45,7 @@ const UserCard = () => {
           onClick={handleClick}
         />
       </div>
-      <button className='new-step-btn'>Faire une demande</button>
+      <button className='new-step-btn'onClick={handleOnClick}>Faire une demande</button>
     </>
   );
 };
