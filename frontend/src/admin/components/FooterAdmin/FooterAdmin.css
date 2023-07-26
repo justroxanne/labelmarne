@@ -10,14 +10,30 @@
     overflow: hidden;
   }
   
-  .logo-container {
+  .logo-container-admin {
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
     align-self: flex-start;
     height: 10dvh;
   }
   
   .logo-footer {
+    margin-left: 3.5em;
     object-fit: cover;
     height: 100%;
+  }
+
+  .signatures-admin{
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    align-items: center;
+  }
+
+  .signatures-admin a {
+    color: white;
+    
   }
   
   .contact,
