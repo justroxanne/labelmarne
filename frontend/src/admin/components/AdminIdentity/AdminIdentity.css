@@ -1,42 +1,24 @@
 /* adminIdentity.css */
-.container-admin {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
 .box-admin {
-    display: flex;
-    gap :1em;
-    width: auto;
-    height: auto;
-    padding: 1em;
-    align-self: center;
-    background-color: white;
-    border-radius: 5px;
-    box-shadow: 5px 5px 15px rgb(194, 192, 192);
-    z-index: 2;
-    transform: translateY(-2em);
-   
-    align-items: center;
-    justify-content: flex-start;
-    gap: 2dvw;
-    overflow: hidden;
-    font-size: 1.2dvw;
+  margin: auto;
+  display: flex;
+  gap: 1em;
+  width: 30dvw;
+  height: 20dvh;
+  padding-left: 1em;
+  background-color: white;
+  border-radius: 5px;
+  box-shadow: 5px 5px 15px rgb(194, 192, 192);
+  z-index: 2;
+  transform: translateY(-2em);
+  align-items: center;
+  justify-content: space-between;
+  overflow: hidden;
+  font-size: 1.2dvw;
 }
 
-.identity {
-  flex: 1;
-}
-
-.img-profil {
-  width: 30%;
-}
-
-.img-profil img {
-  width: 100%;
+.admin-profile-picture {
+  height: 100%;
 }
 
 @media screen and (max-width: 768px) {

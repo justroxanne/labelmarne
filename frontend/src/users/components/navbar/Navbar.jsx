@@ -20,10 +20,7 @@ const Navbar = () => {
       <span>|</span>
       <Link to='/contact'>Contact</Link>
       <span>|</span>
-      <FaUserCircle
-        className='user-icon'
-        onClick={user ? goDashboard : displayLogin}
-      />
+      <FaUserCircle className='user-icon' onClick={displayLogin} />
     </div>
   );
 };

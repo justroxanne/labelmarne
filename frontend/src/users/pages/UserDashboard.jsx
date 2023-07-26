@@ -2,6 +2,7 @@ import React, { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { UserContext } from '../../Context';
 import { TbLogout } from 'react-icons/tb';
+import storageService from '../../services/storageService';
 import './userDashboard.css';
 import UserCard from '../components/userCard/UserCard';
 import EditInfos from '../components/userInfosEdit/EditInfos';
@@ -24,7 +25,6 @@ const UserDashboard = () => {
     axios
       .post(`${url}/api/users/${id}/logout`, { withCredentials: true })
       .then(() => {
-        localStorage.removeItem('user');
         navigate('/');
       })
       .catch((err) => {
