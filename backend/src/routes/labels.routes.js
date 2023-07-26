@@ -1,6 +1,5 @@
 const express = require('express');
 const LabelController = require('../controllers/LabelController');
-const { authorization, isAdmin } = require('../middleware/auth');
 const upload = require('../middleware/multer');
 
 const labelRouter = express.Router();

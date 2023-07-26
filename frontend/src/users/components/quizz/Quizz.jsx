@@ -1,118 +1,168 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
-import Quiz from 'react-quiz-component';
+import { CategoryContext } from '../../../Context';
 import './quizz.css';
 
-const Quizz = () => {
-  const url = import.meta.env.VITE_BACKEND_URL;
-  const [categories, setCategories] = useState([]);
+const QuizComponent = () => {
+  const { category, setCategory } = useContext(CategoryContext);
+  const [answers, setAnswers] = useState([]);
+  const [labels, setLabels] = useState([]);
   const [filteredLabels, setFilteredLabels] = useState([]);
+  const [isSubmitted, setIsSubmitted] = useState(false);
+  const [selectedOptions, setSelectedOptions] = useState({});
+
+  const url = import.meta.env.VITE_BACKEND_URL;
 
   useEffect(() => {
     axios.get(`${url}/api/categories`)
-      .then(response => {
-        setCategories(response.data);
+      .then((response) => {
+        setCategory(response.data[0].id); // Mettre par défaut la première catégorie
       })
-      .catch(error => {
+      .catch((error) => {
         console.error('Erreur lors de la récupération des catégories :', error);
+      });
+
+    axios.get(`${url}/api/labels`)
+      .then((response) => {
+        setLabels(response.data);
+        setFilteredLabels(response.data); // Au départ, tous les labels sont affichés
+      })
+      .catch((error) => {
+        console.error('Erreur lors de la récupération des labels :', error);
       });
   }, []);
 
-  const quizData = {
-    quizTitle: "Quiz pour labellisation",
-    questions: [
-      {
-        question: "Quel est le secteur d'activité principal de votre entreprise ?",
-        questionType: "text",
-        answerSelectionType: "multiple",
-        answers: ["Alimentaire", "Environnement et développement durable", "Culture", "Artisanat et tradition"],
-        correctAnswer:[],
-      },
-      {
-        question: "Quelle est la taille de votre entreprise ?",
-        questionType: "text",
-        answerSelectionType: "multiple",
-        answers: ["Micro-entreprise (moins de 10 employés)", "Petite entreprise (10 à 50 employés)", "Moyenne entreprise (50 à 250 employés)", "Grande entreprise (plus de 250 employés)"],
-        correctAnswer: [],
-      },
-      {
-        question: "Quel est l'objectif principal de votre entreprise concernant la labélisation?",
-        questionType: "text",
-        answerSelectionType: "multiple",
-        answers: ["Valoriser mon entreprise", "Valoriser mes produits", "Valoriser mon savoir-faire", "Valoriser mon territoire"],
-        correctAnswer: [],
-      },
-      {
-        question: "Comment decriveriez vous votre engagement en matière de développement durable ?",
-        questionType: "text",
-        answerSelectionType: "multiple",
-        answers: ["Je suis engagé dans une démarche de développement durable", "Je suis engagé dans une démarche de développement durable et je souhaite le valoriser", "Je ne suis pas engagé dans une démarche de développement durable"],
-        correctAnswer: [],
-      },
-      {
-        question: "Comment votre entreprise contribue-t-elle à la communauté locale ?",
-        questionType: "text",
-        answerSelectionType: "multiple",
-        answers:["En créant des emplois et en soutenant l'économie locale.", "En soutenant les associations locales.", "En soutenant les initiatives locales.", "En soutenant les initiatives locales et en créant des emplois."],
-        correctAnswer: [],
-      },
-      {
-        question:"Avez-vous obtenu des certifications ou des labels similaires auparavant ?",
-        questionType: "text",
-        answerSelectionType: "multiple",
-        answers:["Oui", "Non"],
-        correctAnswer: [],
-      },
-      {
-        question: "Quel est le principal défi que votre entreprise souhaite relever avec la labellisation ?",
-        questionType: "text",
-        answerSelectionType: "multiple",
-        answers:["Améliorer notre compétitivité sur le marché.","Renforcer notre responsabilité sociale et environnementale.","Valoriser notre capacité d'innovation et notre R&D.","Préserver et transmettre notre patrimoine culturel."],
-        correctAnswer: [],  
-      },
-    ],
-  };
-
-  const handleQuizComplete = (userAnswers) => {
-    // Filtrer les catégories sélectionnées par l'utilisateur
-    const userAnswerToQ1 = userAnswers['0'];
-    const filteredCategories = categories.filter(category => category.name === userAnswerToQ1);
-
-    // Récupérer les labels correspondant aux catégories sélectionnées
-    if (filteredCategories.length > 0) {
-      const categoryId = filteredCategories[0].id;
-      axios.get(`${url}/api/labels?categoryId=${categoryId}`)
-        .then(response => {
-          setFilteredLabels(response.data);
-        })
-        .catch(error => {
-          console.error('Erreur lors de la récupération des labels :', error);
-        });
+  // Fonction pour obtenir la catégorie correspondante en fonction de la réponse sélectionnée
+  const getCorrespondingCategory = (selectedAnswer) => {
+    switch (selectedAnswer) {
+      case 'Alimentaire':
+        return 2;
+      case 'Tourisme':
+        return 1;
+      case 'Vignoble & Découverte':
+        return 3;
+      case 'Culture & Patrimoine':
+        return 7;
+      default:
+        return null;
     }
   };
 
+  const handleFormSubmit = () => {
+    setIsSubmitted(true);
+  };
+
+  const handleAnswerSelection = (questionId, selectedAnswer) => {
+    setSelectedOptions((prevOptions) => ({
+      ...prevOptions,
+      [questionId]: selectedAnswer,
+    }));
+
+    setAnswers((prevAnswers) => {
+      // Remove the previous answer for the same question
+      const updatedAnswers = prevAnswers.filter((answer) => answer.questionId !== questionId);
+      // Add the new selected answer for the current question
+      return [...updatedAnswers, { questionId, selectedAnswer }];
+    });
+
+    // Filtrer les labels en fonction de la catégorie correspondante
+    if (labels.length > 0) {
+      const correspondingCategory = getCorrespondingCategory(selectedAnswer);
+      if (correspondingCategory) {
+        const filtered = labels.filter((label) => label.category_id === correspondingCategory);
+        setFilteredLabels(filtered);
+      }
+    }
+  };
+
+  const questions = [
+    {
+      id: 1,
+      text: 'Quel est le secteur d\'activité principal de votre entreprise ?',
+      options: ['Alimentaire', 'Tourisme', ' Vignoble & Découverte', 'Culture & Patrimoine'],
+    },
+    {
+      id: 2,
+      text: 'Quelle est la taille de votre entreprise ?',
+      options: ['Micro-entreprise (moins de 10 employés)', 'Petite entreprise (10 à 50 employés)', 'Moyenne entreprise (50 à 250 employés)', 'Grande entreprise (plus de 250 employés)'],
+    },
+    {
+      id: 3,
+      text: 'Quel est l\'objectif principal de votre entreprise concernant la labellisation ?',
+      options: ['Améliorer la visibilité et la réputation de l\'entreprise', 'Renforcer l\'engagement environnemental et social', 'Développer des produits ou services innovants', 'Préserver et promouvoir un savoir-faire traditionnel'],
+    },
+    {
+      id: 4,
+      text: 'Quel est le principal défi que votre entreprise souhaite relever avec la labellisation ?',
+      options: ['Améliorer notre compétitivité sur le marché.', 'Renforcer notre responsabilité sociale et environnementale.', 'Développer des produits ou services innovants', 'Préserver et transmettre notre patrimoine culturel.'],
+    },
+  ];
+
   return (
-    <div className="quiz-container">
-      <Quiz quiz={quizData} onComplete={handleQuizComplete} />
-      {filteredLabels.length > 0 && (
-        <div>
-          <h2>Résultat du Quiz</h2>
-          <p>Les labels qui correspondent le mieux à votre entreprise sont :</p>
-          <ul>
-            {filteredLabels.map(label => (
-              <li key={label.id}>{label.name}</li>
-            ))}
-          </ul>
+    <div className='quizz-container'>
+      <div className='quizz'>
+        <h2>Quel label est fait pour vous ?</h2>
+        <div className='quizz-questions'>
+          {questions.map((question) => {
+            return (
+              <div key={question.id} className='question'>
+                <h3>{question.text}</h3>
+                <ul className='question-options'>
+                  {question.options.map((option) => {
+                    const isSelected =
+                      selectedOptions[question.id] === option ||
+                      answers.some((answer) => answer.questionId === question.id && answer.selectedAnswer === option);
+
+                    return (
+                      <li key={option}>
+                        <label>
+                          <input
+                            type='radio'
+                            name={`question-${question.id}`}
+                            value={option}
+                            checked={isSelected}
+                            onChange={() => handleAnswerSelection(question.id, option)}
+                          />
+                          {option}
+                        </label>
+                      </li>
+                    );
+                  })}
+                </ul>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+      <button onClick={handleFormSubmit}>Valider</button>
+      {isSubmitted && (
+        // Afficher les résultats seulement si le formulaire est soumis
+        <div className='quizz-results'>
+          <h2>Résultats</h2>
+          <div className='quizz-results-container'>
+            <div className='quizz-results-labels'>
+              <ul>
+                {filteredLabels.map((label) => {
+                  return (
+                    <li key={label.id}>
+                      <img
+                        className='label-logo'
+                        src={`/api/public/uploads/${label.logo}`}
+                        alt={`logo ${label.name}`}
+                      />
+                      <span> <a href={label.url} target='_blank' rel='noopener noreferrer'>
+                        {label.name}
+                      </a></span>
+                    </li>
+                  );
+                })}
+              </ul>
+            </div>
+          </div>
         </div>
       )}
     </div>
   );
 };
 
-export default Quizz;
-
-
-
-
-
-
+export default QuizComponent;

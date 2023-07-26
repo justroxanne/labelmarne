@@ -19,6 +19,7 @@
 }
 
 .footer-logo {
+  margin-left: 3.5em;
   object-fit: cover;
   height: 100%;
 }
