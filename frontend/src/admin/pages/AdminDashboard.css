@@ -43,6 +43,7 @@
 
 .tab-buttons button:hover {
   background: #025dbf;
+  color: white;
 }
 
 .tab-buttons .active-tab {
@@ -59,6 +60,12 @@
 
 .tab-content {
   max-width: 100%;
+}
+
+.admins-organiser {
+  display: flex;
+  padding: 5em;
+  justify-content: space-evenly;
 }
 
 /* Media Query pour les appareils mobiles */

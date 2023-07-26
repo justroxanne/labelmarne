@@ -5,10 +5,9 @@ class LabelModel extends BaseModel {
     super('label');
   }
 
-  async createLabel(labelData, category) {
+  async createLabel(labelData, categoryId) {
     const labelKeys = Object.keys(labelData);
     const labelValues = Object.values(labelData);
-    const categoryId = category.id;
 
     const labelFillKeys = labelKeys.map((key) => key).join(', ');
     const labelFillValues = labelValues.map((value) => `?`).join(', ');

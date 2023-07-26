@@ -15,10 +15,6 @@ userRouter.get('/users/:id', async (req, res, next) =>
   new UserController(req, res, next).getOne()
 );
 
-userRouter.post('/users/:id/logout', async (req, res, next) =>
-  new UserController(req, res, next).logout()
-);
-
 userRouter.put('/users/:id', async (req, res, next) =>
   new UserController(req, res, next).update()
 );
@@ -32,5 +28,9 @@ userRouter.post(
 userRouter.post('/login', async (req, res) => {
   new UserController(req, res).login();
 });
+
+userRouter.post('/users/:id/logout', async (req, res, next) =>
+  new UserController(req, res, next).logout()
+);
 
 module.exports = userRouter;
