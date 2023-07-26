@@ -49,3 +49,26 @@
   z-index: 3;
   transform: translate(60dvw, -10dvh);
 }
+/* CSS pour les écrans plus petits que 600px (par exemple, les smartphones en mode portrait) */
+@media (max-width: 600px) {
+  .usercard {
+    flex-direction: column;
+    width: 70vw;
+    height: auto;
+    gap: 1rem;
+    transform: translateY(-1rem);
+    font-size: 1em;
+  }
+
+  .usercard img{
+    width: 30%;
+    height:auto;
+    padding: 0.5em;
+  }
+
+  .edit-infos {
+    position: static;
+    margin: 1rem 0 0;
+  }
+
+}
