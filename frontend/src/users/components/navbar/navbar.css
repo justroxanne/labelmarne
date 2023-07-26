@@ -44,3 +44,15 @@
   transform: scaleX(1);
   transform-origin: bottom left;
 }
+
+/* Add media query for responsiveness */
+@media screen and (max-width: 768px) {
+  .navbar {
+    flex-direction: row;
+    font-size: 1em;
+  }
+
+  .navbar a {
+    display: block;
+  }
+}
