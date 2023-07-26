@@ -1,0 +1,49 @@
+.add-label-container {
+  border: 1px solid var(--clear-color);
+  border-radius: 5px;
+  padding: 0.5em 1em;
+  cursor: pointer;
+  height: 40dvh;
+  width: 40dvw;
+  margin-bottom: 2em;
+}
+
+.add-label-form {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  justify-content: space-evenly;
+}
+
+.add-label-form-label {
+  display: flex;
+  gap: 1em;
+  align-items: center;
+}
+
+.add-label-form-label input[type='text'],
+.add-label-form-label select {
+  flex-grow: 1;
+  padding: 0.5em 1em;
+  font-size: 1em;
+  border: 1px solid var(--clear-color);
+  border-radius: 5px;
+  margin-left: 0.5em;
+}
+
+.add-label-form-button {
+  padding: 0.5em 1em;
+  margin-left: 0.5em;
+  font-size: 1em;
+  background-color: #4caf50;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  width: 30%;
+  align-self: flex-end;
+}
+
+.add-label-form-button:hover {
+  opacity: 0.8;
+}

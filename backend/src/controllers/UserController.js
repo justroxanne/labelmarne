@@ -41,7 +41,7 @@ class UserController extends BaseController {
         !email ||
         !password
       ) {
-        throw new Error('Please fill in all the fields');
+        throw new Error('Veuillez remplir tous les champs');
       }
 
       const hashedPassword = await argon2.hash(password, {
@@ -75,7 +75,7 @@ class UserController extends BaseController {
 
       const [result] = await this.model.register(addressData, userData);
 
-      this.res.status(200).json({
+      this.res.status(201).json({
         message: 'User registered successfully',
         id: result.insertId,
         company_name: userData.company_name,
@@ -97,20 +97,6 @@ class UserController extends BaseController {
       console.error(err);
       this.res.status(500).json({ error: err.message });
     }
-  }
-
-  profile_picture() {
-    //upload de l'image de profil
-    return new Promise((resolve, reject) => {
-      upload.single('profile_picture')(this.req, this.res, (err) => {
-        //utilise le middleware multer
-        if (err) {
-          reject(err); //renvoie une erreur si il y a un problème
-        } else {
-          resolve(this.req.file ? this.req.file.path : null); //renvoie le chemin de l'image
-        }
-      });
-    });
   }
 
   async login() {
@@ -145,6 +131,7 @@ class UserController extends BaseController {
         this.res
           .cookie('token', token, {
             httpOnly: true,
+            expires: new Date(Date.now() + 3600000),
             secure: process.env.NODE_ENV === 'production',
           })
           .status(200)
@@ -171,7 +158,14 @@ class UserController extends BaseController {
   }
 
   logout() {
-    this.res.clearCookie('token').json({ message: 'Logged out' });
+    this.res
+      .clearCookie('token', {
+        httpOnly: true,
+        secure: false,
+        domain: 'localhost',
+        path: '/',
+      })
+      .json({ message: 'Logged out' });
   }
 }
 

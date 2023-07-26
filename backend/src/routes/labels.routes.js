@@ -9,7 +9,7 @@ labelRouter.get('/labels', async (req, res) => {
 }); //route OK
 
 labelRouter.post('/labels', upload.single('logo'), async (req, res) => {
-  new LabelController(req, res).create();
+  new LabelController(req, res).newLabel();
 }); //route OK
 
 labelRouter.delete('/labels/:id', async (req, res) => {

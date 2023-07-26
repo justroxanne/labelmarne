@@ -1,7 +1,8 @@
 .admin-label-container {
   display: flex;
   flex-direction: column;
-  margin: 4em;
+  width: 75%;
+  margin: auto;
   padding: 2em;
 }
 
@@ -25,7 +26,12 @@
   margin-bottom: 2em;
 }
 
-.label-list li {
+.label-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1em;
+  height: 15vh;
   list-style: none;
   padding: 0.5em;
   border: 1px solid #ddd;
@@ -33,18 +39,23 @@
   background-color: #fff;
   margin-bottom: 1em;
 }
-
-.label-list li span {
-  font-size: 18px;
-  color: #333;
-}
-
-.btn-modif {
+.admin-label-infos {
+  height: 100%;
   display: flex;
-  justify-content: flex-end;
+  align-items: center;
+  gap: 1em;
 }
 
-.label-list li button {
+.admin-label-logo {
+  height: 80%;
+}
+
+.update-btn {
+  display: flex;
+  flex-direction: column;
+}
+
+.label-item button {
   padding: 0.5em 2em;
   margin: 0.5em;
   background-color: #ff6b6b;
@@ -52,57 +63,6 @@
   border: none;
   border-radius: 5px;
   cursor: pointer;
-}
-
-.add-label-form {
-  border: 1px solid var(--mouse-color);
-  border-radius: 5px;
-  padding: 0.5em 1em;
-  cursor: pointer;
-  height: auto;
-  margin-bottom: 2em;
-}
-
-.form-row {
-  display: flex;
-  align-items: center;
-  margin-bottom: 1em;
-}
-
-.form-row input[type="text"] {
-  padding: 0.5em 1em;
-  font-size: 16px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  margin-left: 0.5em;
-}
-
-.select-category {
-  margin-left: 1em;
-  padding: 0.5em 1em;
-  font-size: 16px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-}
-
-.add-button {
-  padding: 0.3em 1em;
-  margin-left: 0.5em;
-  font-size: 16px;
-  background-color: #4caf50;
-  color: #fff;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-.add-button:hover,
-.label-list li button:hover {
-  opacity: 0.8;
-}
-
-.label-url a {
-  color: var(--mouse-color);
 }
 
 /* Media Query */
@@ -145,7 +105,7 @@
     justify-content: center;
   }
 
-  .add-label-form input[type="text"],
+  .add-label-form input[type='text'],
   .select-category {
     margin-bottom: 1em;
     font-size: x-small;

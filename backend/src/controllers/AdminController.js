@@ -18,9 +18,7 @@ class AdminController extends BaseController {
     try {
       //vérifie que tous les champs sont remplis
       if (!email || !password || !firstname || !lastname) {
-        console.log(email, password, firstname, lastname, profile_picture);
-        console.log(this.req.file);
-        throw new Error('Please fill all the fields');
+        throw new Error('Veuillez remplir tous les champs');
       }
 
       const hashedPassword = await argon2.hash(password, {
@@ -41,8 +39,8 @@ class AdminController extends BaseController {
         email,
         password: hashedPassword,
       };
-      if (this.req.file && this.req.file.path) {
-        adminData.profile_picture = this.req.file.path;
+      if (this.req.file) {
+        adminData.profile_picture = this.req.file.filename;
       }
 
       const [result] = await this.model.create(adminData);
@@ -107,7 +105,6 @@ class AdminController extends BaseController {
         if (!passwordMatchAdmin) {
           return this.res.status(401).json({ error: 'Mot de passe incorrect' });
         }
-        console.log(loggedInAdmin);
         const payload = { id: loggedInAdmin.id };
 
         const token = jwt.sign(payload, process.env.JWT_AUTH_SECRET, {

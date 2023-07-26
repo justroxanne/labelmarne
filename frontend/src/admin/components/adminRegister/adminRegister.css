@@ -1,0 +1,166 @@
+.admin-registration {
+  width: 100%;
+  height: 100%;
+  color: white;
+  z-index: 5;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.admin-registration-form {
+  background: var(--clear-color);
+  width: 50%;
+  height: 50%;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.5em;
+  position: relative;
+}
+
+.title-card {
+  justify-content: center;
+  font-size: 1.7em;
+  font-weight: 300;
+}
+
+.admin-registration-form input {
+  text-align: center;
+  margin-bottom: 1em;
+  width: 80%;
+  height: 2.5em;
+  border-radius: 12px;
+  border: none;
+  padding: 0.5em;
+  font-size: 1.2em;
+  cursor: pointer;
+}
+
+.admin-registration-form input:focus {
+  outline: var(--dark-color) solid 2px;
+}
+
+.admin-registration-form-label {
+  width: 80%;
+  margin: 1em;
+  cursor: pointer;
+}
+
+.profile-picture-select {
+  display: flex;
+  justify-content: center;
+  width: 90%;
+  margin-top: 1em;
+  gap: 1em;
+}
+
+.custom-file-input input {
+  display: none;
+}
+
+.custom-file-input {
+  background-color: var(--dark-color);
+  color: white;
+  width: 30%;
+  height: 2.5em;
+  padding: 0.5em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.custom-file-input:hover {
+  background-color: white;
+  color: var(--dark-color);
+}
+
+.select-picture-label {
+  display: flex;
+  align-items: center;
+}
+
+.select-picture {
+  display: flex;
+  align-items: center;
+}
+
+.admin-registration-submit {
+  margin-top: 5%;
+  padding: 1em 1.5em;
+  font-size: 1.2em;
+  color: white;
+  border: 2px solid var(--dark-color);
+  border-radius: 10px;
+  background-color: transparent;
+  font-weight: 500;
+  overflow: hidden;
+  width: 60%;
+  display: flex;
+  gap: 1.5em;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+.admin-registration-submit:hover {
+  background-color: var(--dark-color);
+  color: white;
+  scale: 1;
+  transition: all 0.25s ease-in-out;
+
+  .admin-registration-arrow-right {
+    transform: translateX(1em);
+    transition: all 0.25s ease-in;
+  }
+}
+
+/* Styles pour la version mobile */
+
+@media only screen and (max-width: 700px) {
+  .adminConnect-form {
+    width: 80%;
+    height: auto;
+  }
+
+  .adminConnect-form h2 {
+    font-size: 1.4em;
+  }
+
+  .adminConnect-form h3 {
+    font-size: 1em;
+  }
+
+  .adminConnect-form #email,
+  .adminConnect-form #firstname,
+  .adminConnect-form #lastname,
+  .adminConnect-form #password-admin1,
+  .adminConnect-form #profile_picture {
+    width: 100%;
+  }
+
+  .login-submit-btn-admin {
+    width: 70%;
+  }
+
+  .title-card {
+    justify-content: center;
+  }
+
+  .label-input {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .label-input h3 {
+    margin-top: 1em;
+  }
+
+  .adminConnect-login {
+    width: 70%;
+  }
+}
