@@ -5,6 +5,9 @@ Initialisez le fichier .env du backend en vous basant sur les informations du fi
 Exécutez le script suivant depuis la racine du projet pour configurer l'environnement :
 
 npm run setup
-Démarrez le projet en exécutant la commande suivante :
 
-npm run dev
+Configurez la base de données en executant le script :
+
+npm run migrate
+
+
