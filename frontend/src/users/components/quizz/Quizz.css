@@ -61,17 +61,13 @@
   border: 1px solid var(--main-color);
 }
 
-<<<<<<< HEAD
 .question-options input[type='radio']:checked {
   background-color: var(--main-color);
 }
 
 .quizz-container button {
-=======
-.quizz-container button{
   color: white;
-  border:none;
->>>>>>> c17d0b7ae526b6e1563e02eee0f97cd3d0e676c6
+  border: none;
   margin-top: 1em;
   padding: 0.5em 1em;
   border-radius: 5px;
