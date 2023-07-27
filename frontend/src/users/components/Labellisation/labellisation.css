@@ -1,0 +1,131 @@
+.container-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding-left: 1em;
+  margin-right: 12em;
+  margin-top: 5em;
+
+}
+
+.content-info{
+    display: flex;
+    flex-direction: row;
+
+}
+.container-info h1 {
+    font-size: 1.5em;
+    font-weight: 300;
+    text-align: left;
+    margin: 1rem 0 1rem 0;
+}
+
+.container-info p {
+    font-size: 1em;
+    font-weight: 300;
+    text-align: left;
+    margin: 1rem 0 1rem 0;
+}   
+
+.intro-labellisation {
+    width: 30em;
+    height: auto;
+    font-size: 1rem;
+    font-weight: 300;
+    text-align: left;
+    border: 1px solid #e0e0e0;
+    border-radius: 5px;
+    margin: 1rem 0 1rem 0;
+    padding: 1em;
+}
+
+.img-intro {
+    display: flex;
+    justify-content: center;
+}
+
+.img-intro img {
+    width: 90%;
+    max-width: 500px;
+    height: auto;
+    transform: scale (0.5) ;
+    transform:translateX(-50%, -50%);
+    box-shadow: 0 0 10px rgba(0,0,0,0.5);
+}
+
+.content-what{
+    flex-direction: row;
+    align-items: center;
+}
+.what{
+    width: 30em;
+    height: auto;
+    color: var(--third-color);
+    background-color: var(--main-color);
+    font-size: 1rem;
+    font-weight: 300;
+    text-align: left;
+    border-radius: 5px;
+    padding: 1em;
+    transform: translate(47%, -40%);
+    box-shadow: 0 0 10px rgba(0,0,0,0.5);
+}
+
+.what h1{
+    font-size: 1.5rem;
+    font-weight: 300;
+    text-align: left;
+    margin: 1rem 0 1rem 0;
+}
+
+.what p{
+    font-size: 1rem;
+    font-weight: 300;
+    text-align: left;
+    margin: 1rem 0 1rem 0;
+}
+
+
+.what-img img{
+    width: 50%;
+    height: auto;
+    box-shadow: 0 0 10px rgba(0,0,0,0.5);
+    transform: translate(110%, -120%);
+} 
+
+/* Styles pour les écrans jusqu'à 768px de largeur */
+@media (max-width: 768px) {
+    .container-info {
+      display: flex;
+        flex-direction: column;
+        margin: 4em;
+    }
+  
+    .content-info {
+      flex-direction: column;
+      width: 100%;
+      justify-content: center;
+      align-items: center;
+    }
+  
+    .img-intro img {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+      max-width: 50%;
+      transform: none;
+      
+    }
+  
+    .what {
+    
+      transform: none;
+    }
+  
+    .what-img img {
+      transform: none;
+    }
+  }
+  
