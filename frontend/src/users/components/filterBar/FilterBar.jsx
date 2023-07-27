@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { CategoryContext } from '../../../Context';
-import { IoIosArrowDown } from 'react-icons/io';
+import { RiArrowDropDownFill } from 'react-icons/ri';
 import './filterBar.css';
 import axios from 'axios';
 
@@ -24,42 +24,42 @@ const FilterBar = () => {
 
   return (
     <div className='filter-bar'>
-      <div className='categories-filter'>
-        <span>
-          {category.name ? category.name : 'Sélectionnez une catégorie'}
-          <IoIosArrowDown onClick={handleShowCategories} />
-        </span>
-        {showCategories && (
-          <ul className='categories-dropdown'>
-            <li
-              className='category-item'
-              onClick={() => {
-                setCategory('');
-                setShowCategories(false);
-              }}
-              style={{ color: 'lightgrey' }}
-            >
-              Sélectionnez une catégorie
-            </li>
-            {categories.map((category) => {
-              return (
-                <li
-                  key={category.id}
-                  className='category-item'
-                  value={category.name}
-                  onClick={() => {
-                    setCategory(category);
-                    setShowCategories(false);
-                  }}
-                >
-                  {category.name}
-                </li>
-              );
-            })}
-          </ul>
-        )}
-      </div>
-      <button className='filter-search-btn'>Rechercher</button>
+      <span>
+        {category.name ? category.name : 'Sélectionnez une catégorie'}
+        <RiArrowDropDownFill
+          className='filter-bar-btn'
+          onClick={handleShowCategories}
+        />
+      </span>
+      {showCategories && (
+        <ul className='categories-dropdown'>
+          <li
+            className='category-item'
+            onClick={() => {
+              setCategory('');
+              setShowCategories(false);
+            }}
+            style={{ color: 'lightgrey' }}
+          >
+            Toutes les catégories
+          </li>
+          {categories.map((category) => {
+            return (
+              <li
+                key={category.id}
+                className='category-item'
+                value={category.name}
+                onClick={() => {
+                  setCategory(category);
+                  setShowCategories(false);
+                }}
+              >
+                {category.name}
+              </li>
+            );
+          })}
+        </ul>
+      )}
     </div>
   );
 };

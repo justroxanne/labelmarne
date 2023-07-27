@@ -47,7 +47,7 @@ const AdminLabel = () => {
     setEditLabelLogo(labelLogo);
   };
 
-  const handleEditLabelSubmit = async () => {
+  const handleEditLabelSubmit = async (labelId) => {
     try {
       const updatedData = {
         name: editLabelName,

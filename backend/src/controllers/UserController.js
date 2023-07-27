@@ -99,6 +99,20 @@ class UserController extends BaseController {
     }
   }
 
+  profile_picture() {
+    //upload de l'image de profil
+    return new Promise((resolve, reject) => {
+      upload.single('profile_picture')(this.req, this.res, (err) => {
+        //utilise le middleware multer
+        if (err) {
+          reject(err); //renvoie une erreur si il y a un problème
+        } else {
+          resolve(this.req.file ? this.req.file.path : null); //renvoie le chemin de l'image
+        }
+      });
+    });
+  }
+
   async login() {
     const { email, password } = this.req.body;
 
@@ -131,7 +145,6 @@ class UserController extends BaseController {
         this.res
           .cookie('token', token, {
             httpOnly: true,
-            expires: new Date(Date.now() + 3600000),
             secure: process.env.NODE_ENV === 'production',
           })
           .status(200)
@@ -159,12 +172,11 @@ class UserController extends BaseController {
 
   logout() {
     this.res
-      .clearCookie('token', {
+      .cookie('token', '', {
         httpOnly: true,
-        secure: false,
-        domain: 'localhost',
-        path: '/',
+        secure: process.env.NODE_ENV === 'production',
       })
+      .status(200)
       .json({ message: 'Logged out' });
   }
 }

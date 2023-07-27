@@ -1,8 +1,8 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import logo_marne from '../../assets/logoMarne_partenariat_white.png';
-import './header.css';
 import Navbar from '../navbar/navbar';
+import './header.css';
 
 const Header = () => {
   const navigate = useNavigate();

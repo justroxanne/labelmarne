@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
 import { AdminContext } from './../../../Context/AdminContext';
+import Avatar from '../../assets/avatar.png';
 import './adminIdentity.css';
 
 const AdminIdentity = () => {
