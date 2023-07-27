@@ -7,7 +7,7 @@ import AdminLabel from '../components/AdminLabel/AdminLabel';
 import AdminCategory from '../components/AdminCategory/AdminCategory';
 import './AdminDashboard.css';
 import DataVisualization from '../components/DataVisualization/DataVisualization';
-import AdminRegister from '../components/adminRegister/adminRegister';
+import AdminRegister from '../components/adminRegister/AdminRegister';
 import AdminsList from '../components/adminsList/AdminsList';
 import axios from 'axios';
 import storageService from '../../services/storageService';
