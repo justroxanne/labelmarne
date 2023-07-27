@@ -51,3 +51,22 @@
 .filter-bar-btn:hover {
   background-color: var(--main-color);
 }
+@media screen and (max-width: 768px) {
+  .filter-bar {
+    flex-direction: column;
+    width: 90%;
+    transform: none;
+    margin: 0 auto 1em;
+    transform: translateY(-1em);
+  }
+
+  .categories-filter {
+    margin-bottom: 0.5em;
+  }
+
+  .categories-dropdown {
+    height: auto;
+    max-height: 150px;
+    overflow-y: auto;
+  }
+}
