@@ -14,7 +14,8 @@ const QuizComponent = () => {
   const url = import.meta.env.VITE_BACKEND_URL;
 
   useEffect(() => {
-    axios.get(`${url}/api/categories`)
+    axios
+      .get(`${url}/api/categories`)
       .then((response) => {
         setCategory(response.data[0].id); // Mettre par défaut la première catégorie
       })
@@ -22,7 +23,8 @@ const QuizComponent = () => {
         console.error('Erreur lors de la récupération des catégories :', error);
       });
 
-    axios.get(`${url}/api/labels`)
+    axios
+      .get(`${url}/api/labels`)
       .then((response) => {
         setLabels(response.data);
         setFilteredLabels(response.data); // Au départ, tous les labels sont affichés
@@ -60,7 +62,9 @@ const QuizComponent = () => {
 
     setAnswers((prevAnswers) => {
       // Remove the previous answer for the same question
-      const updatedAnswers = prevAnswers.filter((answer) => answer.questionId !== questionId);
+      const updatedAnswers = prevAnswers.filter(
+        (answer) => answer.questionId !== questionId
+      );
       // Add the new selected answer for the current question
       return [...updatedAnswers, { questionId, selectedAnswer }];
     });
@@ -69,7 +73,9 @@ const QuizComponent = () => {
     if (labels.length > 0) {
       const correspondingCategory = getCorrespondingCategory(selectedAnswer);
       if (correspondingCategory) {
-        const filtered = labels.filter((label) => label.category_id === correspondingCategory);
+        const filtered = labels.filter(
+          (label) => label.category_id === correspondingCategory
+        );
         setFilteredLabels(filtered);
       }
     }
@@ -78,23 +84,43 @@ const QuizComponent = () => {
   const questions = [
     {
       id: 1,
-      text: 'Quel est le secteur d\'activité principal de votre entreprise ?',
-      options: ['Alimentaire', 'Tourisme', ' Vignoble & Découverte', 'Culture & Patrimoine'],
+      text: "Quel est le secteur d'activité principal de votre entreprise ?",
+      options: [
+        'Alimentaire',
+        'Tourisme',
+        ' Vignoble & Découverte',
+        'Culture & Patrimoine',
+      ],
     },
     {
       id: 2,
       text: 'Quelle est la taille de votre entreprise ?',
-      options: ['Micro-entreprise (moins de 10 employés)', 'Petite entreprise (10 à 50 employés)', 'Moyenne entreprise (50 à 250 employés)', 'Grande entreprise (plus de 250 employés)'],
+      options: [
+        'Micro-entreprise (moins de 10 employés)',
+        'Petite entreprise (10 à 50 employés)',
+        'Moyenne entreprise (50 à 250 employés)',
+        'Grande entreprise (plus de 250 employés)',
+      ],
     },
     {
       id: 3,
-      text: 'Quel est l\'objectif principal de votre entreprise concernant la labellisation ?',
-      options: ['Améliorer la visibilité et la réputation de l\'entreprise', 'Renforcer l\'engagement environnemental et social', 'Développer des produits ou services innovants', 'Préserver et promouvoir un savoir-faire traditionnel'],
+      text: "Quel est l'objectif principal de votre entreprise concernant la labellisation ?",
+      options: [
+        "Améliorer la visibilité et la réputation de l'entreprise",
+        "Renforcer l'engagement environnemental et social",
+        'Développer des produits ou services innovants',
+        'Préserver et promouvoir un savoir-faire traditionnel',
+      ],
     },
     {
       id: 4,
       text: 'Quel est le principal défi que votre entreprise souhaite relever avec la labellisation ?',
-      options: ['Améliorer notre compétitivité sur le marché.', 'Renforcer notre responsabilité sociale et environnementale.', 'Développer des produits ou services innovants', 'Préserver et transmettre notre patrimoine culturel.'],
+      options: [
+        'Améliorer notre compétitivité sur le marché.',
+        'Renforcer notre responsabilité sociale et environnementale.',
+        'Développer des produits ou services innovants',
+        'Préserver et transmettre notre patrimoine culturel.',
+      ],
     },
   ];
 
@@ -111,7 +137,11 @@ const QuizComponent = () => {
                   {question.options.map((option) => {
                     const isSelected =
                       selectedOptions[question.id] === option ||
-                      answers.some((answer) => answer.questionId === question.id && answer.selectedAnswer === option);
+                      answers.some(
+                        (answer) =>
+                          answer.questionId === question.id &&
+                          answer.selectedAnswer === option
+                      );
 
                     return (
                       <li key={option}>
@@ -121,7 +151,9 @@ const QuizComponent = () => {
                             name={`question-${question.id}`}
                             value={option}
                             checked={isSelected}
-                            onChange={() => handleAnswerSelection(question.id, option)}
+                            onChange={() =>
+                              handleAnswerSelection(question.id, option)
+                            }
                           />
                           {option}
                         </label>
@@ -140,24 +172,26 @@ const QuizComponent = () => {
         <div className='quizz-results'>
           <h2>Résultats</h2>
           <div className='quizz-results-container'>
-            <div className='quizz-results-labels'>
-              <ul>
-                {filteredLabels.map((label) => {
-                  return (
-                    <li key={label.id}>
+            <ul className='quizz-results-labels'>
+              {filteredLabels.map((label) => {
+                return (
+                  <li key={label.id}>
+                    <a
+                      href={label.url}
+                      target='_blank'
+                      rel='noopener noreferrer'
+                    >
                       <img
                         className='label-logo'
                         src={`/api/public/uploads/${label.logo}`}
                         alt={`logo ${label.name}`}
                       />
-                      <span> <a href={label.url} target='_blank' rel='noopener noreferrer'>
-                        {label.name}
-                      </a></span>
-                    </li>
-                  );
-                })}
-              </ul>
-            </div>
+                      <span> {label.name}</span>
+                    </a>
+                  </li>
+                );
+              })}
+            </ul>
           </div>
         </div>
       )}
