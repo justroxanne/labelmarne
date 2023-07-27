@@ -1,7 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import logo_marne from '../../assets/logoMarne_partenariat_white.png';
-import Navbar from '../navbar/navbar';
+import Navbar from '../navbar/Navbar';
 import './header.css';
 
 const Header = () => {
