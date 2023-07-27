@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import { CategoryContext } from '../../../Context';
-import './quizz.css';
+import './Quizz.css';
 
 const QuizComponent = () => {
   const { category, setCategory } = useContext(CategoryContext);
