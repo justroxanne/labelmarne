@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { AdminContext } from './../../../Context/AdminContext';
 import Avatar from '../../assets/avatar.png';
-import './adminIdentity.css';
+import './AdminIdentity.css';
 
 const AdminIdentity = () => {
   const { admin } = useContext(AdminContext); // Récupère les données de l'administrateur du contexte
