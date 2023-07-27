@@ -1,6 +1,6 @@
 .registration-form {
   width: 60dvw;
-  height: 65dvh;
+  padding: 2em;
   display: flex;
   justify-content: center;
   align-items: center;
