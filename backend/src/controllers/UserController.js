@@ -41,7 +41,7 @@ class UserController extends BaseController {
         !email ||
         !password
       ) {
-        throw new Error('Please fill in all the fields');
+        throw new Error('Veuillez remplir tous les champs');
       }
 
       const hashedPassword = await argon2.hash(password, {
@@ -75,7 +75,7 @@ class UserController extends BaseController {
 
       const [result] = await this.model.register(addressData, userData);
 
-      this.res.status(200).json({
+      this.res.status(201).json({
         message: 'User registered successfully',
         id: result.insertId,
         company_name: userData.company_name,
@@ -171,7 +171,13 @@ class UserController extends BaseController {
   }
 
   logout() {
-    this.res.clearCookie('token').json({ message: 'Logged out' });
+    this.res
+      .cookie('token', '', {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === 'production',
+      })
+      .status(200)
+      .json({ message: 'Logged out' });
   }
 }
 

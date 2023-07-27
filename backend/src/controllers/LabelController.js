@@ -8,27 +8,50 @@ class LabelController extends BaseController {
   }
 
   async newLabel() {
-    const { name, logo, url } = this.req.body;
+    const { name, url } = this.req.body;
+    const categoryId = this.req.body.category_id;
 
     try {
-      if (!name || !logo || !url) {
+      if (!name || !url || !categoryId) {
         throw new Error('Veuillez remplir tous les champs');
       }
 
       const labelData = {
         name,
-        logo,
         url,
       };
+      if (this.req.file) {
+        labelData.logo = this.req.file.filename;
+      }
 
-      const [result] = await this.model.createLabel(labelData);
+      const [result] = await this.model.createLabel(labelData, categoryId);
 
       if (result.affectedRows !== 0) {
-        return this.sendResponse(201, 'Label created');
+        return this.res.status(201).json({
+          message: 'Label créé avec succès',
+          id: result.insertId,
+          name: labelData.name,
+          url: labelData.url,
+          logo: labelData.logo,
+          category_id: labelData.category_id,
+        });
       }
     } catch (error) {
-      this.sendResponse(500, error.message);
+      this.res.status(500).json({ error: error.message });
     }
+  }
+
+  getLogo() {
+    return new Promise((resolve, reject) => {
+      upload.single('logo')(this.req, this.res, (err) => {
+        //utilise le middleware multer
+        if (err) {
+          reject(err); //renvoie une erreur si il y a un problème
+        } else {
+          resolve(this.req.file ? this.req.file.path : null); //renvoie le chemin de l'image
+        }
+      });
+    });
   }
 }
 

@@ -7,11 +7,16 @@ import Footer from './users/components/footer/Footer';
 import UserDashboard from './users/pages/UserDashboard';
 import Registration from './users/pages/Registration';
 import Home from './users/pages/Home';
+import ContactPage from './users/pages/ContactPage';
+import PageQuizz from './users/pages/PageQuizz';
+import FAQ from './users/pages/FAQ';
 import './App.css';
+
+
+
 
 function App() {
   const { isLoginDisplayed } = useContext(LoginContext);
-  
 
   return (
     <div className='app'>
@@ -21,6 +26,9 @@ function App() {
         <Route path='/' element={<Home />} />
         <Route path='/user-dashboard' element={<UserDashboard />} />
         <Route path='/registration' element={<Registration />} />
+        <Route path='/testermoneligibilite' element={<PageQuizz />} />
+        <Route path='/faq' element={<FAQ />} />
+        <Route path='/contact' element={<ContactPage />} />
       </Routes>
       <Footer />
     </div>

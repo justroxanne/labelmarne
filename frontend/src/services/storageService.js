@@ -11,5 +11,9 @@ const storageService = {
       return data;
     }
   },
+
+  clearStorage(key) {
+    return localStorage.removeItem(key);
+  },
 };
 export default storageService;

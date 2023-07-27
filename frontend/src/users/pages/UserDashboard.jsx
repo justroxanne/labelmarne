@@ -1,7 +1,5 @@
-import React, { useState, useContext } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useContext, useEffect } from 'react';
 import { UserContext } from '../../Context';
-import { TbLogout } from 'react-icons/tb';
 import './userDashboard.css';
 import UserCard from '../components/userCard/UserCard';
 import EditInfos from '../components/userInfosEdit/EditInfos';
@@ -11,32 +9,52 @@ const UserDashboard = () => {
   const url = import.meta.env.VITE_BACKEND_URL;
 
   const [isEditOpen, setIsEditOpen] = useState(false);
+  const [userHasLabels, setUserHasLabels] = useState([]);
 
   const { user } = useContext(UserContext);
-  const navigate = useNavigate();
 
   const handleClick = () => {
     setIsEditOpen(!isEditOpen);
   };
 
-  const logout = () => {
-    const id = user.id;
+  useEffect(() => {
     axios
-      .post(`${url}/api/users/${id}/logout`, { withCredentials: true })
-      .then(() => {
-        localStorage.removeItem('user');
-        navigate('/');
+      .get(`${url}/api/userHasLabels`, {
+        params: { user_id: user.id },
+        withCredentials: true,
+      })
+      .then((res) => {
+        setUserHasLabels(res.data);
       })
       .catch((err) => {
         console.log(err);
       });
-  };
+  }, []);
 
   return (
     <div className='user-dashboard'>
-      <TbLogout className='logout' onClick={logout} />
       {isEditOpen && <EditInfos handleClick={handleClick} />}
       <UserCard handleClick={handleClick} />
+      <div className='my-labels'>
+        Mes labels
+        <hr />
+        {userHasLabels.length === 0 ? (
+          <span>Vous n'avez pas encore de label</span>
+        ) : (
+          <ul className='user-labels-list'>
+            {userHasLabels.map((label) => {
+              return (
+                <li key={label.id} className='user-label-item'>
+                  {label.logo && (
+                    <img src={`/api/public/uploads/${label.logo}`} />
+                  )}
+                  <span>{label.name}</span>
+                </li>
+              );
+            })}
+          </ul>
+        )}
+      </div>
       <div className='my-steps'>
         Mes demandes en cours
         <hr />
@@ -58,10 +76,6 @@ const UserDashboard = () => {
             </tr>
           </tbody>
         </table>
-      </div>
-      <div className='my-labels'>
-        Mes labels
-        <hr />
       </div>
     </div>
   );

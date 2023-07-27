@@ -1,3 +1,4 @@
-.homeadmin{
+.homeadmin {
   display: flex;
+  flex-direction: row;
 }

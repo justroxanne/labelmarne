@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { UserContext } from '../../../Context';
 import { IoCloseSharp } from 'react-icons/io5';
 import axios from 'axios';
@@ -8,6 +8,7 @@ const EditInfos = ({ handleClick }) => {
   const url = import.meta.env.VITE_BACKEND_URL;
 
   const { user, storeUser } = useContext(UserContext);
+
   const [userInfos, setUserInfos] = useState({
     phone: user.phone,
   });
@@ -18,12 +19,15 @@ const EditInfos = ({ handleClick }) => {
     city: user.city,
   });
 
-  const handleInputChange = (event) => {
+  const handleUserInfosChange = (event) => {
     const { name, value } = event.target;
     setUserInfos((prevUserInfo) => ({
       ...prevUserInfo,
       [name]: value,
     }));
+  };
+  const handleAddressInfosChange = (event) => {
+    const { name, value } = event.target;
     setAddressInfos((prevAddressInfo) => ({
       ...prevAddressInfo,
       [name]: value,
@@ -56,7 +60,7 @@ const EditInfos = ({ handleClick }) => {
               name='address'
               className='user-infos-label'
               value={addressInfos.address}
-              onChange={handleInputChange}
+              onChange={handleAddressInfosChange}
               required
             ></input>
           </label>
@@ -67,7 +71,7 @@ const EditInfos = ({ handleClick }) => {
               name='complement'
               className='user-infos-label'
               value={addressInfos.complement}
-              onChange={handleInputChange}
+              onChange={handleAddressInfosChange}
             ></input>
           </label>
           <label htmlFor='zip_code'>
@@ -77,7 +81,7 @@ const EditInfos = ({ handleClick }) => {
               name='zip_code'
               className='user-infos-label'
               value={addressInfos.zip_code}
-              onChange={handleInputChange}
+              onChange={handleAddressInfosChange}
               required
             ></input>
           </label>
@@ -88,7 +92,7 @@ const EditInfos = ({ handleClick }) => {
               name='city'
               className='user-infos-label'
               value={addressInfos.city}
-              onChange={handleInputChange}
+              onChange={handleAddressInfosChange}
               required
             ></input>
           </label>
@@ -101,7 +105,7 @@ const EditInfos = ({ handleClick }) => {
               name='phone'
               className='user-infos-label'
               value={userInfos.phone}
-              onChange={handleInputChange}
+              onChange={handleUserInfosChange}
               required
             ></input>
           </label>

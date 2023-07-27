@@ -24,6 +24,10 @@ adminRouter.post('/admin-login', async (req, res) =>
   new AdminController(req, res).login()
 );
 
+adminRouter.post('/admins/:id/logout', async (req, res) =>
+  new AdminController(req, res).logout()
+);
+
 adminRouter.put('/admin/:id', async (req, res, next) =>
   new AdminController(req, res, next).update()
 );
