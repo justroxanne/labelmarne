@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import FilterBar from '../components/filterBar/FilterBar';
 import LabelsCarousel from '../components/labels/LabelsCarousel';
 import './Home.css';

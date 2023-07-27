@@ -9,8 +9,11 @@ import './AdminDashboard.css';
 import DataVisualization from '../components/DataVisualization/DataVisualization';
 import AdminRegister from '../components/adminRegister/adminRegister';
 import AdminsList from '../components/adminsList/AdminsList';
+import axios from 'axios';
+import storageService from '../../services/storageService';
 
 function AdminDashboard() {
+  const url = import.meta.env.VITE_BACKEND_URL;
   const { admin, setAdmin } = useContext(AdminContext);
   const navigate = useNavigate();
 
@@ -18,8 +21,18 @@ function AdminDashboard() {
 
   // Fonction pour gérer la déconnexion et revenir à la page d'accueil
   const handleLogout = () => {
-    setAdmin(null);
-    navigate('/admin');
+    const id = admin.id;
+    axios
+      .post(`${url}/api/admins/${id}/logout`, {
+        withCredentials: true,
+      })
+      .then(() => {
+        storageService.clearStorage('admin');
+        navigate('/admin');
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   // Fonction pour changer d'onglet

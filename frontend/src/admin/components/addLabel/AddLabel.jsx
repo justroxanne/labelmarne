@@ -17,6 +17,10 @@ const AddLabel = ({ categories, labels, setLabels }) => {
     setLabelInfos({ ...labelInfos, [name]: value });
   };
 
+  const handleSelectLogo = (e) => {
+    setLogo(e.target.files[0]);
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -33,6 +37,12 @@ const AddLabel = ({ categories, labels, setLabels }) => {
         },
       });
       setLabels([...labels, responseLabel.data]);
+      setLabelInfos({
+        name: '',
+        url: '',
+        category_id: '',
+      });
+      setLogo(null);
     } catch (error) {
       console.log('error', error);
     }
@@ -88,7 +98,7 @@ const AddLabel = ({ categories, labels, setLabels }) => {
             type='file'
             name='logo'
             id='logo'
-            onChange={(e) => setLogo(e.target.files[0])}
+            onChange={handleSelectLogo}
           />
         </label>
         <button className='add-label-form-button' type='submit'>

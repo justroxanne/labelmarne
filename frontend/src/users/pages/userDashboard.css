@@ -10,9 +10,7 @@
   width: 2em;
   height: 2em;
   color: white;
-  position: fixed;
-  top: 5em;
-  right: 5em;
+  cursor: pointer;
 }
 
 .my-steps,
@@ -23,6 +21,28 @@
   border-radius: 5px;
   box-shadow: 5px 5px 15px rgb(194, 192, 192);
   padding: 1em;
+  overflow-y: scroll;
+}
+
+.user-labels-list {
+  margin-top: 1em;
+  height: 80%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1em;
+}
+
+.user-label-item {
+  height: 20%;
+  display: flex;
+  align-items: center;
+  gap: 1em;
+}
+
+.user-label-item img {
+  height: 100%;
 }
 
 .user-dashboard hr {

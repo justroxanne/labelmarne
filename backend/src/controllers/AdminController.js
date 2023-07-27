@@ -132,7 +132,13 @@ class AdminController extends BaseController {
   }
 
   logout() {
-    this.res.clearCookie('token').status(200).json({ message: 'Logged out' });
+    this.res
+      .cookie('token', '', {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === 'production',
+      })
+      .status(200)
+      .json({ message: 'Logged out' });
   }
 }
 

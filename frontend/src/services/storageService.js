@@ -12,7 +12,7 @@ const storageService = {
     }
   },
 
-  removeItem(key) {
+  clearStorage(key) {
     return localStorage.removeItem(key);
   },
 };

@@ -40,6 +40,19 @@ class LabelController extends BaseController {
       this.res.status(500).json({ error: error.message });
     }
   }
+
+  getLogo() {
+    return new Promise((resolve, reject) => {
+      upload.single('logo')(this.req, this.res, (err) => {
+        //utilise le middleware multer
+        if (err) {
+          reject(err); //renvoie une erreur si il y a un problème
+        } else {
+          resolve(this.req.file ? this.req.file.path : null); //renvoie le chemin de l'image
+        }
+      });
+    });
+  }
 }
 
 module.exports = LabelController;
